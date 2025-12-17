@@ -74,18 +74,25 @@ function switchProject(projectId) {
 
 function loadActiveProject() {
     const project = DB.projects.getActive();
+    const projects = DB.projects.getAll();
     const infoEl = document.getElementById('active-project-info');
     const nameEl = document.getElementById('dashboard-project-name');
+    const setupBtn = document.getElementById('btn-setup-lumakara');
     
     if (project) {
         infoEl.textContent = `${project.brandName || project.name} • ${project.niche}`;
         nameEl.textContent = project.brandName || project.name;
         document.getElementById('btn-auto-generate').disabled = false;
+        if (setupBtn) setupBtn.style.display = 'none';
         loadDashboard();
     } else {
         infoEl.textContent = 'No project selected';
         nameEl.textContent = 'Pilih atau buat project untuk memulai';
         document.getElementById('btn-auto-generate').disabled = true;
+        // Show Lumakara setup button if no projects exist
+        if (setupBtn && projects.length === 0) {
+            setupBtn.style.display = 'flex';
+        }
     }
 }
 
