@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumakaraContent — Strategic Content System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">LumakaraContent</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">◉</span>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" data-section="one-click">
+                    <span class="nav-icon">→</span>
+                    <span>One-Click Generate</span>
+                </li>
+                <li class="nav-item" data-section="strategy">
+                    <span class="nav-icon">◎</span>
+                    <span>Strategy</span>
+                </li>
+                <li class="nav-item" data-section="calendar">
+                    <span class="nav-icon">▦</span>
+                    <span>Calendar</span>
+                </li>
+                <li class="nav-item" data-section="generator">
+                    <span class="nav-icon">◇</span>
+                    <span>AI Generator</span>
+                </li>
+                <li class="nav-item" data-section="viral">
+                    <span class="nav-icon">△</span>
+                    <span>Viral Engine</span>
+                </li>
+                <li class="nav-item" data-section="database">
+                    <span class="nav-icon">▣</span>
+                    <span>Database</span>
+                </li>
+                <li class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="platform-status">
+                    <span class="status-dot active"></span>
+                    <span>All Systems Ready</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                    <p>Overview & Quick Actions</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">◈</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="total-content">0</span>
+                            <span class="stat-label">Total Konten</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">▦</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="scheduled-content">0</span>
+                            <span class="stat-label">Terjadwal</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✓</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="published-content">0</span>
+                            <span class="stat-label">Published</span>
+                        </div>
+                    </div>
+                    <div class="stat-card viral">
+                        <div class="stat-icon">△</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="viral-score">0%</span>
+                            <span class="stat-label">Avg Viral Score</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-generate-card">
+                    <div class="quick-generate-header">
+                        <h2>Quick Generate — Satu Input untuk Semua Platform</h2>
+                        <p>Masukkan ide konten, AI akan generate untuk semua platform sekaligus</p>
+                    </div>
+                    <div class="quick-generate-form">
+                        <textarea id="quick-idea" placeholder="Contoh: Tips produktif kerja dari rumah untuk gen Z yang sering distracted sama HP"></textarea>
+                        <button class="mega-generate-btn" onclick="quickGenerateAll()">
+                            <span class="btn-icon">→</span>
+                            <span class="btn-text">Generate untuk Semua Platform</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="platform-overview">
+                    <h3>Platform Status</h3>
+                    <div class="platform-cards">
+                        <div class="platform-card"><span class="platform-icon">IG</span><span class="platform-name">Instagram</span><span class="platform-count" id="ig-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">TT</span><span class="platform-name">TikTok</span><span class="platform-count" id="tt-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">X</span><span class="platform-name">Twitter</span><span class="platform-count" id="tw-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">LI</span><span class="platform-name">LinkedIn</span><span class="platform-count" id="li-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">FB</span><span class="platform-name">Facebook</span><span class="platform-count" id="fb-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">BL</span><span class="platform-name">Blog</span><span class="platform-count" id="blog-count">0</span></div>
+                        <div class="platform-card"><span class="platform-icon">YT</span><span class="platform-name">YouTube</span><span class="platform-count" id="yt-count">0</span></div>
+                    </div>
+                </div>
+
+                <div class="recent-content">
+                    <h3>Konten Terbaru</h3>
+                    <div id="recent-content-list" class="content-list"></div>
+                </div>
+            </section>
+
+            <!-- ONE-CLICK GENERATE SECTION -->
+            <section id="one-click" class="section">
+                <div class="section-header">
+                    <h1>One-Click Generate</h1>
+                    <p>Satu input → Konten untuk semua platform otomatis</p>
+                </div>
+
+                <div class="one-click-container">
+                    <div class="input-card main-input">
+                        <h3>Masukkan Ide Konten</h3>
+                        <div class="form-group">
+                            <label>Topik/Ide Utama</label>
+                            <textarea id="main-topic" placeholder="Contoh: 5 cara meningkatkan produktivitas kerja dari rumah tanpa burnout" rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Niche/Kategori</label>
+                                <select id="content-niche">
+                                    <option value="tech">Technology</option>
+                                    <option value="lifestyle">Lifestyle</option>
+                                    <option value="business">Business</option>
+                                    <option value="education">Education</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="health">Health & Fitness</option>
+                                    <option value="food">Food & Culinary</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="fashion">Fashion & Beauty</option>
+                                    <option value="finance">Finance</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tone</label>
+                                <select id="content-tone">
+                                    <option value="casual">Casual & Friendly</option>
+                                    <option value="professional">Professional</option>
+                                    <option value="humorous">Humorous</option>
+                                    <option value="inspirational">Inspirational</option>
+                                    <option value="educational">Educational</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Keywords (opsional)</label>
+                            <input type="text" id="content-keywords" placeholder="Contoh: WFH, produktif, tips, work life balance">
+                        </div>
+                    </div>
+
+                    <div class="input-card platform-select">
+                        <h3>Pilih Platform Target</h3>
+                        <div class="platform-toggles">
+                            <label class="platform-toggle active" data-platform="instagram"><input type="checkbox" checked><span class="toggle-icon">IG</span><div><span class="toggle-name">Instagram</span><span class="toggle-types">Feed, Reels, Story, Carousel</span></div></label>
+                            <label class="platform-toggle active" data-platform="tiktok"><input type="checkbox" checked><span class="toggle-icon">TT</span><div><span class="toggle-name">TikTok</span><span class="toggle-types">Video Script, Caption</span></div></label>
+                            <label class="platform-toggle active" data-platform="twitter"><input type="checkbox" checked><span class="toggle-icon">X</span><div><span class="toggle-name">Twitter/X</span><span class="toggle-types">Tweet, Thread</span></div></label>
+                            <label class="platform-toggle active" data-platform="linkedin"><input type="checkbox" checked><span class="toggle-icon">LI</span><div><span class="toggle-name">LinkedIn</span><span class="toggle-types">Post, Article</span></div></label>
+                            <label class="platform-toggle" data-platform="facebook"><input type="checkbox"><span class="toggle-icon">FB</span><div><span class="toggle-name">Facebook</span><span class="toggle-types">Post, Story</span></div></label>
+                            <label class="platform-toggle" data-platform="blog"><input type="checkbox"><span class="toggle-icon">BL</span><div><span class="toggle-name">Blog Article</span><span class="toggle-types">Full Article, SEO</span></div></label>
+                            <label class="platform-toggle" data-platform="youtube"><input type="checkbox"><span class="toggle-icon">YT</span><div><span class="toggle-name">YouTube</span><span class="toggle-types">Shorts Script, Description</span></div></label>
+                        </div>
+                    </div>
+
+                    <div class="input-card generate-options">
+                        <h3>Opsi Generate</h3>
+                        <div class="options-grid">
+                            <label class="option-item"><input type="checkbox" id="opt-hooks" checked><span>Viral Hooks</span></label>
+                            <label class="option-item"><input type="checkbox" id="opt-hashtags" checked><span>Hashtags</span></label>
+                            <label class="option-item"><input type="checkbox" id="opt-cta" checked><span>Call to Action</span></label>
+                            <label class="option-item"><input type="checkbox" id="opt-emoji" checked><span>Emoji</span></label>
+                            <label class="option-item"><input type="checkbox" id="opt-image" checked><span>Image Prompts</span></label>
+                            <label class="option-item"><input type="checkbox" id="opt-video"><span>Video Scripts</span></label>
+                        </div>
+                    </div>
+
+                    <button class="mega-generate-btn" onclick="generateAllPlatforms()">
+                        <span class="btn-icon">→</span>
+                        <span class="btn-text">GENERATE SEMUA PLATFORM</span>
+                        <span class="btn-sub">AI akan membuat konten untuk semua platform yang dipilih</span>
+                    </button>
+                </div>
+
+                <div id="generation-results" class="generation-results" style="display: none;">
+                    <div class="results-header">
+                        <h2>Hasil Generate</h2>
+                        <div class="results-actions">
+                            <button class="action-btn" onclick="saveAllResults()">Save All</button>
+                            <button class="action-btn" onclick="exportAllResults()">Export All</button>
+                        </div>
+                    </div>
+                    
+                    <div class="results-tabs">
+                        <button class="result-tab active" data-result="instagram">Instagram</button>
+                        <button class="result-tab" data-result="tiktok">TikTok</button>
+                        <button class="result-tab" data-result="twitter">Twitter</button>
+                        <button class="result-tab" data-result="linkedin">LinkedIn</button>
+                        <button class="result-tab" data-result="facebook">Facebook</button>
+                        <button class="result-tab" data-result="blog">Blog</button>
+                        <button class="result-tab" data-result="youtube">YouTube</button>
+                    </div>
+
+                    <div class="results-content">
+                        <div class="result-panel active" id="result-instagram">
+                            <div class="result-section"><h4>Instagram Feed Caption</h4><div class="result-box" id="ig-feed-result"></div><div class="result-actions"><button onclick="copyResult('ig-feed-result')">Copy</button><button onclick="saveResult('instagram', 'feed')">Save</button></div></div>
+                            <div class="result-section"><h4>Instagram Reels Script</h4><div class="result-box" id="ig-reels-result"></div><div class="result-actions"><button onclick="copyResult('ig-reels-result')">Copy</button><button onclick="saveResult('instagram', 'reels')">Save</button></div></div>
+                            <div class="result-section"><h4>Instagram Story</h4><div class="result-box" id="ig-story-result"></div><div class="result-actions"><button onclick="copyResult('ig-story-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Carousel Slides</h4><div class="result-box" id="ig-carousel-result"></div><div class="result-actions"><button onclick="copyResult('ig-carousel-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Image Prompts</h4><div class="result-box" id="ig-image-result"></div></div>
+                        </div>
+                        <div class="result-panel" id="result-tiktok">
+                            <div class="result-section"><h4>TikTok Video Script</h4><div class="result-box" id="tt-script-result"></div><div class="result-actions"><button onclick="copyResult('tt-script-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>TikTok Caption</h4><div class="result-box" id="tt-caption-result"></div><div class="result-actions"><button onclick="copyResult('tt-caption-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Sound/Music Suggestions</h4><div class="result-box" id="tt-music-result"></div></div>
+                        </div>
+                        <div class="result-panel" id="result-twitter">
+                            <div class="result-section"><h4>Single Tweet</h4><div class="result-box" id="tw-tweet-result"></div><div class="result-actions"><button onclick="copyResult('tw-tweet-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Twitter Thread</h4><div class="result-box" id="tw-thread-result"></div><div class="result-actions"><button onclick="copyResult('tw-thread-result')">Copy</button></div></div>
+                        </div>
+                        <div class="result-panel" id="result-linkedin">
+                            <div class="result-section"><h4>LinkedIn Post</h4><div class="result-box" id="li-post-result"></div><div class="result-actions"><button onclick="copyResult('li-post-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>LinkedIn Article Outline</h4><div class="result-box" id="li-article-result"></div><div class="result-actions"><button onclick="copyResult('li-article-result')">Copy</button></div></div>
+                        </div>
+                        <div class="result-panel" id="result-facebook">
+                            <div class="result-section"><h4>Facebook Post</h4><div class="result-box" id="fb-post-result"></div><div class="result-actions"><button onclick="copyResult('fb-post-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Facebook Story</h4><div class="result-box" id="fb-story-result"></div></div>
+                        </div>
+                        <div class="result-panel" id="result-blog">
+                            <div class="result-section"><h4>Blog Article</h4><div class="result-box large" id="blog-article-result"></div><div class="result-actions"><button onclick="copyResult('blog-article-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>SEO Meta</h4><div class="result-box" id="blog-seo-result"></div></div>
+                        </div>
+                        <div class="result-panel" id="result-youtube">
+                            <div class="result-section"><h4>YouTube Shorts Script</h4><div class="result-box" id="yt-shorts-result"></div><div class="result-actions"><button onclick="copyResult('yt-shorts-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Video Description</h4><div class="result-box" id="yt-desc-result"></div><div class="result-actions"><button onclick="copyResult('yt-desc-result')">Copy</button></div></div>
+                            <div class="result-section"><h4>Tags & Keywords</h4><div class="result-box" id="yt-tags-result"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategy Section -->
+            <section id="strategy" class="section">
+                <div class="section-header">
+                    <h1>Strategy & Planning</h1>
+                    <p>Setup brand dan strategi konten</p>
+                </div>
+                <div class="strategy-container">
+                    <div class="strategy-card">
+                        <h3>Brand Setup</h3>
+                        <div class="form-group"><label>Nama Brand</label><input type="text" id="brand-name" placeholder="Nama brand/akun kamu"></div>
+                        <div class="form-group"><label>Niche</label><select id="niche-select"><option value="tech">Technology</option><option value="lifestyle">Lifestyle</option><option value="business">Business</option><option value="education">Education</option><option value="entertainment">Entertainment</option></select></div>
+                        <div class="form-group"><label>Target Audience</label><textarea id="target-audience" placeholder="Deskripsi target audience"></textarea></div>
+                        <div class="form-group"><label>Tone of Voice</label><select id="tone-voice"><option value="casual">Casual & Friendly</option><option value="professional">Professional</option><option value="humorous">Humorous</option><option value="inspirational">Inspirational</option></select></div>
+                    </div>
+                    <div class="strategy-card">
+                        <h3>Content Pillars</h3>
+                        <div id="content-pillars" class="pillars-container"></div>
+                        <div class="add-pillar"><input type="text" id="new-pillar" placeholder="Tambah pillar baru..."><button onclick="addContentPillar()">+ Tambah</button></div>
+                    </div>
+                </div>
+                <button class="save-btn" onclick="saveStrategy()">Simpan Strategy</button>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="calendar" class="section">
+                <div class="section-header">
+                    <h1>Content Calendar</h1>
+                    <p>Jadwal konten mingguan/bulanan</p>
+                </div>
+                <div class="calendar-controls">
+                    <div class="calendar-nav"><button onclick="prevMonth()">←</button><span id="current-month">Desember 2024</span><button onclick="nextMonth()">→</button></div>
+                    <div class="calendar-actions"><button class="action-btn" onclick="generateWeeklyPlan()">Auto-Generate Minggu Ini</button></div>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </section>
+
+            <!-- Generator Section -->
+            <section id="generator" class="section">
+                <div class="section-header">
+                    <h1>AI Generator</h1>
+                    <p>Generate konten individual</p>
+                </div>
+                <div class="generator-tabs">
+                    <button class="tab-btn active" data-tab="text">Text</button>
+                    <button class="tab-btn" data-tab="image">Image</button>
+                    <button class="tab-btn" data-tab="video">Video</button>
+                </div>
+                <div class="generator-panel active" id="text-panel">
+                    <div class="generator-form">
+                        <div class="form-group"><label>Topik</label><textarea id="text-topic" placeholder="Masukkan topik konten..."></textarea></div>
+                        <div class="form-group"><label>Tipe Konten</label><select id="text-type"><option value="caption">Caption</option><option value="thread">Thread</option><option value="carousel">Carousel</option><option value="hook">Hook</option></select></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Panjang</label><select id="text-length"><option value="short">Pendek</option><option value="medium" selected>Medium</option><option value="long">Panjang</option></select></div>
+                            <div class="form-group"><label>Variasi</label><select id="text-variations"><option value="1">1</option><option value="3" selected>3</option><option value="5">5</option></select></div>
+                        </div>
+                        <div class="options-grid" style="margin-bottom:14px">
+                            <label class="option-item"><input type="checkbox" id="add-hooks" checked><span>Hooks</span></label>
+                            <label class="option-item"><input type="checkbox" id="add-hashtags" checked><span>Hashtags</span></label>
+                            <label class="option-item"><input type="checkbox" id="add-cta" checked><span>CTA</span></label>
+                        </div>
+                        <button class="generate-btn" onclick="generateText()">Generate Text</button>
+                    </div>
+                    <div class="generator-result" id="text-result"></div>
+                </div>
+                <div class="generator-panel" id="image-panel">
+                    <div class="generator-form">
+                        <div class="form-group"><label>Deskripsi Gambar</label><textarea id="image-prompt" placeholder="Contoh: Professional workspace with laptop, coffee, minimalist style"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Style</label><select id="image-style"><option value="realistic">Realistic</option><option value="aesthetic">Aesthetic</option><option value="cartoon">Cartoon</option><option value="3d">3D Render</option></select></div>
+                            <div class="form-group"><label>Aspect Ratio</label><select id="image-ratio"><option value="1:1">1:1 Square</option><option value="9:16">9:16 Story</option><option value="16:9">16:9 Landscape</option><option value="4:5">4:5 Portrait</option></select></div>
+                        </div>
+                        <div class="form-group"><label>Jumlah Gambar</label><select id="image-count"><option value="1">1</option><option value="2">2</option><option value="4" selected>4</option></select></div>
+                        <button class="generate-btn" onclick="generateImage()">Generate Image</button>
+                    </div>
+                    <div class="generator-result image-grid" id="image-result"></div>
+                </div>
+                <div class="generator-panel" id="video-panel">
+                    <div class="generator-form">
+                        <div class="form-group"><label>Topik Video</label><textarea id="video-topic" placeholder="Contoh: 5 tips produktif kerja dari rumah"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Tipe Video</label><select id="video-type"><option value="reels">Reels/TikTok</option><option value="shorts">YouTube Shorts</option><option value="tutorial">Tutorial</option><option value="storytelling">Storytelling</option></select></div>
+                            <div class="form-group"><label>Durasi</label><select id="video-duration"><option value="15">15 detik</option><option value="30" selected>30 detik</option><option value="60">60 detik</option><option value="90">90 detik</option></select></div>
+                        </div>
+                        <button class="generate-btn" onclick="generateVideoScript()">Generate Script</button>
+                    </div>
+                    <div class="generator-result" id="video-result"></div>
+                </div>
+            </section>
+
+            <!-- Viral Engine Section -->
+            <section id="viral" class="section">
+                <div class="section-header">
+                    <h1>Viral Engine</h1>
+                    <p>Optimasi konten untuk viral</p>
+                </div>
+                <div class="viral-container">
+                    <div class="viral-card">
+                        <h3>Viral Hooks</h3>
+                        <select id="hook-category"><option value="curiosity">Curiosity Gap</option><option value="controversy">Controversial</option><option value="story">Storytelling</option><option value="question">Question-based</option></select>
+                        <button class="action-btn" onclick="generateViralHooks()">Generate Hooks</button>
+                        <div id="viral-hooks" class="hooks-list"></div>
+                    </div>
+                    <div class="viral-card">
+                        <h3>Viral Score Analyzer</h3>
+                        <textarea id="content-to-analyze" placeholder="Paste konten untuk dianalisis..."></textarea>
+                        <button class="action-btn primary" onclick="analyzeViralScore()">Analyze</button>
+                        <div id="viral-analysis" class="analysis-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database Section -->
+            <section id="database" class="section">
+                <div class="section-header">
+                    <h1>Content Database</h1>
+                    <p>Semua konten tersimpan</p>
+                </div>
+                <div class="database-controls">
+                    <div class="search-box"><input type="text" id="search-content" placeholder="Cari konten..."></div>
+                    <div class="filter-controls">
+                        <select id="filter-platform"><option value="all">Semua Platform</option><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="twitter">Twitter</option><option value="linkedin">LinkedIn</option><option value="facebook">Facebook</option><option value="blog">Blog</option><option value="youtube">YouTube</option></select>
+                        <select id="filter-status"><option value="all">Semua Status</option><option value="draft">Draft</option><option value="scheduled">Scheduled</option><option value="published">Published</option></select>
+                    </div>
+                    <button class="action-btn" onclick="exportDatabase()">Export All</button>
+                </div>
+                <div class="database-grid" id="database-grid"></div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section">
+                <div class="section-header">
+                    <h1>Settings</h1>
+                    <p>Konfigurasi dan integrasi</p>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>API Integrations</h3>
+                        <div class="form-group"><label>Pollinations AI</label><p class="hint">✓ Aktif — Gratis unlimited</p></div>
+                        <div class="form-group"><label>N8N Webhook (opsional)</label><input type="text" id="n8n-webhook" placeholder="https://your-n8n.com/webhook/..."></div>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Data Management</h3>
+                        <button class="action-btn" onclick="exportAllData()">Export All Data</button>
+                        <button class="action-btn" onclick="importData()">Import Data</button>
+                        <button class="action-btn danger" onclick="clearAllData()">Clear All</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="content-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loading">
+        <div class="loader"></div>
+        <p id="loading-text">Generating content...</p>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/database.js"></script>
+    <script src="js/pollinations.js"></script>
+    <script src="js/viral-engine.js"></script>
+    <script src="js/content-planner.js"></script>
+    <script src="js/multi-platform.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

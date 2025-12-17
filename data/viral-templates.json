@@ -1,0 +1,155 @@
+{
+  "hooks": {
+    "curiosity": [
+      "Ini yang mereka gak mau kamu tau...",
+      "Ternyata selama ini kita salah tentang...",
+      "Cuma 1% orang yang paham ini...",
+      "Rahasia di balik [topic]...",
+      "Yang bikin [result] bukan [expected], tapi..."
+    ],
+    "controversy": [
+      "Unpopular opinion: [statement]",
+      "Maaf, tapi [common belief] itu salah",
+      "Aku bakal di-cancel karena ini, tapi...",
+      "Hot take: [controversial statement]",
+      "Ini mungkin bikin kamu marah, tapi..."
+    ],
+    "story": [
+      "Cerita ini mengubah hidup aku...",
+      "3 tahun lalu, aku [situation]...",
+      "Aku hampir menyerah sampai...",
+      "Ini kisah nyata yang jarang aku ceritain...",
+      "Plot twist: ternyata..."
+    ],
+    "question": [
+      "Pernah ngerasa [relatable feeling]?",
+      "Kenapa [common problem] selalu terjadi?",
+      "Gimana kalau aku bilang [surprising fact]?",
+      "Kamu tim [option A] atau [option B]?",
+      "Siapa lagi yang [relatable situation]?"
+    ],
+    "shock": [
+      "STOP! Jangan [action] sebelum baca ini",
+      "Fakta: [shocking statistic]",
+      "Ini yang terjadi kalau kamu [action]...",
+      "Warning: [topic] bisa [negative outcome]",
+      "Aku shock pas tau [revelation]..."
+    ],
+    "relatable": [
+      "POV: [relatable situation]",
+      "Me trying to [relatable struggle]",
+      "Ketika [common experience]...",
+      "Nobody: ... Me: [relatable behavior]",
+      "Raise your hand kalau kamu juga [experience]"
+    ]
+  },
+  "cta": {
+    "engagement": [
+      "Save buat nanti! 📌",
+      "Share ke temen yang butuh! 🔄",
+      "Comment pendapat kamu! 💬",
+      "Follow untuk tips lainnya! ✨",
+      "Double tap kalau setuju! ❤️"
+    ],
+    "action": [
+      "Tag temen kamu yang relate! 👇",
+      "Mau part 2? Comment! 📝",
+      "DM 'INFO' untuk detail lengkap",
+      "Klik link di bio! 🔗",
+      "Coba sekarang dan share hasilnya!"
+    ],
+    "community": [
+      "Join komunitas kita! Link di bio",
+      "Gabung 10k+ member lainnya",
+      "Diskusi lebih lanjut di comment!",
+      "Ceritain pengalaman kamu di bawah!",
+      "Bantu temen kamu dengan share ini!"
+    ]
+  },
+  "formulas": {
+    "pov": {
+      "template": "POV: [situasi relatable]",
+      "examples": [
+        "POV: Kamu baru tau kalau AI bisa bikin konten",
+        "POV: Ketika deadline besok tapi belum mulai",
+        "POV: Finally paham cara kerja algoritma"
+      ]
+    },
+    "listicle": {
+      "template": "[Angka] [hal] yang [benefit]",
+      "examples": [
+        "5 aplikasi gratis yang bikin kerjaan lebih cepat",
+        "3 kesalahan yang bikin konten kamu gak viral",
+        "7 habit orang sukses yang jarang dibahas"
+      ]
+    },
+    "before-after": {
+      "template": "Dulu [problem], sekarang [solution]",
+      "examples": [
+        "Dulu bikin konten 3 jam, sekarang 30 menit",
+        "Dulu followers stuck, sekarang naik 10k/bulan",
+        "Dulu bingung mau post apa, sekarang konten ready 1 bulan"
+      ]
+    },
+    "secret": {
+      "template": "Rahasia [topic] yang [qualifier]",
+      "examples": [
+        "Rahasia algoritma yang creator pro gak mau share",
+        "Hack editing yang bikin video kamu cinematic",
+        "Secret sauce konten viral yang jarang dibahas"
+      ]
+    },
+    "challenge": {
+      "template": "Coba [action] selama [waktu]",
+      "examples": [
+        "Coba posting setiap hari selama 30 hari",
+        "Challenge: reply semua comment selama 1 minggu",
+        "Eksperimen: pakai hook ini di 10 konten"
+      ]
+    },
+    "story": {
+      "template": "[Pembuka dramatis] yang mengubah [aspect]",
+      "examples": [
+        "Cerita ini mengubah cara aku lihat bisnis...",
+        "Satu keputusan yang bikin hidupku 180 derajat berbeda",
+        "Aku hampir menyerah, sampai..."
+      ]
+    }
+  },
+  "hashtag_categories": {
+    "general_viral": [
+      "#fyp", "#viral", "#trending", "#explore", "#reels",
+      "#foryou", "#foryoupage", "#viralvideo", "#trend"
+    ],
+    "indonesia": [
+      "#indonesia", "#jakarta", "#indonesian", "#kontenindonesia",
+      "#creatorsindo", "#tiktokindonesia", "#igindo"
+    ],
+    "engagement": [
+      "#tips", "#tutorial", "#howto", "#lifehacks", "#motivation",
+      "#inspiration", "#education", "#learning"
+    ]
+  },
+  "posting_times": {
+    "instagram": {
+      "best_days": ["Tuesday", "Wednesday", "Thursday"],
+      "best_times": ["07:00", "12:00", "19:00"],
+      "peak_hours": "19:00-21:00"
+    },
+    "tiktok": {
+      "best_days": ["Tuesday", "Thursday", "Friday"],
+      "best_times": ["07:00", "12:00", "19:00", "22:00"],
+      "peak_hours": "19:00-22:00"
+    },
+    "youtube": {
+      "best_days": ["Thursday", "Friday", "Saturday"],
+      "best_times": ["14:00", "17:00", "21:00"],
+      "peak_hours": "17:00-21:00"
+    },
+    "twitter": {
+      "best_days": ["Wednesday", "Thursday"],
+      "best_times": ["08:00", "12:00", "17:00"],
+      "peak_hours": "12:00-13:00"
+    }
+  }
+}

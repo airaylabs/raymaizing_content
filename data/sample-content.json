@@ -1,0 +1,70 @@
+{
+  "sample_captions": {
+    "tech": [
+      {
+        "hook": "Stop scrolling! Ini 5 aplikasi AI gratis yang bakal ubah cara kamu kerja 🚀",
+        "body": "Aku udah test semua dan ini yang paling worth it:\n\n1. ChatGPT - Asisten AI serba bisa\n2. Canva AI - Design dalam hitungan detik\n3. Notion AI - Produktivitas level up\n4. Grammarly - Writing assistant\n5. Pollinations - Generate gambar gratis unlimited\n\nMana yang udah kamu coba?",
+        "cta": "Save buat nanti! 📌\nShare ke temen yang butuh! 🔄",
+        "hashtags": "#AI #teknologi #produktivitas #tips #aplikasi #gratis #fyp #viral"
+      }
+    ],
+    "lifestyle": [
+      {
+        "hook": "POV: Kamu baru tau morning routine ini bisa ubah hidupmu 180 derajat ✨",
+        "body": "Dulu aku bangun langsung scroll HP, sekarang:\n\n☀️ 5:30 - Bangun, no phone\n💧 5:35 - Minum air putih\n🧘 5:40 - Stretching 10 menit\n📝 5:50 - Journaling\n☕ 6:00 - Sarapan mindful\n\nHasilnya? Lebih fokus, lebih produktif, lebih happy.\n\nCoba 1 minggu, rasain bedanya!",
+        "cta": "Tag temen yang butuh ini! 👇",
+        "hashtags": "#morningroutine #lifestyle #produktif #selfcare #habits #fyp"
+      }
+    ],
+    "business": [
+      {
+        "hook": "Rahasia closing deal yang sales pro gak mau share... 🤫",
+        "body": "Setelah 5 tahun di sales, ini yang aku pelajari:\n\n❌ Jangan langsung jualan\n✅ Bangun trust dulu\n\n❌ Jangan fokus fitur\n✅ Fokus benefit & pain point\n\n❌ Jangan desperate\n✅ Tunjukkan value\n\nSimple tapi powerful. Coba dan lihat hasilnya!",
+        "cta": "Mau tips sales lainnya? Follow! ✨",
+        "hashtags": "#sales #bisnis #marketing #tips #entrepreneur #fyp"
+      }
+    ]
+  },
+  "sample_video_scripts": {
+    "tutorial": {
+      "hook": "[0-3 detik] 'Dalam 30 detik, kamu bakal tau cara edit foto aesthetic tanpa aplikasi berbayar'",
+      "scenes": [
+        {
+          "time": "3-10 detik",
+          "visual": "Screen recording buka Canva",
+          "narration": "Buka Canva, pilih template yang kamu suka"
+        },
+        {
+          "time": "10-20 detik",
+          "visual": "Upload foto, apply filter",
+          "narration": "Upload foto, pilih filter aesthetic, adjust brightness"
+        },
+        {
+          "time": "20-27 detik",
+          "visual": "Before-after comparison",
+          "narration": "Dan ini hasilnya! Gampang kan?"
+        }
+      ],
+      "cta": "[27-30 detik] 'Follow untuk tutorial lainnya!'",
+      "music": "Trending audio / Lo-fi beats",
+      "transitions": "Smooth zoom, cut on beat"
+    }
+  },
+  "sample_image_prompts": {
+    "aesthetic": [
+      "Minimalist flat lay photography of coffee cup, notebook, and succulent plant on white marble surface, soft natural lighting, instagram aesthetic, 4k quality",
+      "Cozy home office setup with MacBook, warm lighting, plants, aesthetic workspace, clean and minimal, professional photography",
+      "Aesthetic morning routine flat lay with skincare products, coffee, and fresh flowers, soft pink tones, instagram worthy"
+    ],
+    "tech": [
+      "Futuristic workspace with multiple monitors showing code, neon blue lighting, cyberpunk aesthetic, high tech setup",
+      "Clean minimal desk setup with latest gadgets, white background, product photography style, tech aesthetic",
+      "AI robot assistant helping human at computer, friendly design, modern office, warm lighting"
+    ],
+    "food": [
+      "Aesthetic brunch flat lay with avocado toast, coffee, and fresh fruits, natural lighting, food photography",
+      "Cozy coffee shop interior with latte art, warm tones, bokeh background, instagram aesthetic",
+      "Healthy meal prep containers, colorful vegetables, clean eating aesthetic, bright lighting"
+    ]
+  }
+}
