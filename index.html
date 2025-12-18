@@ -3,563 +3,2788 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LumakaraContent — Omnichannel Content System</title>
+    <title>Lumakara — Ultra Smart Content Creator Platform</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/content-hub-v2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- Project Selector Bar -->
-        <div class="project-bar">
-            <div class="project-selector">
-                <select id="project-select" onchange="switchProject(this.value)">
-                    <option value="">Pilih Project...</option>
-                </select>
-                <button class="btn-icon" onclick="openProjectModal('create')" title="New Project">+</button>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <div class="project-selector">
+                    <select id="project-select" onchange="switchProject(this.value)">
+                        <option value="">Pilih Project...</option>
+                    </select>
+                    <button class="btn-icon" onclick="openProjectModal()" title="New Project">+</button>
+                </div>
             </div>
-            <div class="project-info" id="active-project-info"></div>
+            <div class="top-bar-center">
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="navigateTo('generator')" title="AI Generator">⚡</button>
+                    <button class="quick-action-btn" onclick="navigateTo('magic-studio')" title="Magic Studio">🔮</button>
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="ai-status"><span class="dot"></span><span>AI Ready</span></div>
+                <button class="btn-icon" onclick="navigateTo('settings')" title="Settings">⚙</button>
+            </div>
         </div>
 
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar -->
         <nav class="sidebar">
             <div class="logo">
-                <span class="logo-icon">◈</span>
-                <span class="logo-text">LumakaraContent</span>
+                <div class="logo-icon">◈</div>
+                <span class="logo-text">Lumakara</span>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item active" data-section="dashboard">
-                    <span class="nav-icon">◉</span>
-                    <span>Dashboard</span>
-                </li>
-                <li class="nav-item" data-section="content-hub">
-                    <span class="nav-icon">▦</span>
-                    <span>Content Hub</span>
-                </li>
-                <li class="nav-item" data-section="knowledge-base">
-                    <span class="nav-icon">◎</span>
-                    <span>Knowledge Base</span>
-                </li>
-                <li class="nav-item" data-section="generator">
-                    <span class="nav-icon">→</span>
-                    <span>AI Generator</span>
-                </li>
-                <li class="nav-item" data-section="calendar">
-                    <span class="nav-icon">▣</span>
-                    <span>Calendar</span>
-                </li>
-                <li class="nav-item" data-section="settings">
-                    <span class="nav-icon">⚙</span>
-                    <span>Settings</span>
-                </li>
-            </ul>
+            
+            <div class="nav-section">
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-section="dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></li>
+                    <li class="nav-item" data-section="content-hub"><span class="nav-icon">📋</span><span>Content Hub</span><span class="nav-badge" id="content-count">0</span></li>
+                    <li class="nav-item" data-section="generator"><span class="nav-icon">⚡</span><span>AI Generator</span></li>
+                    <li class="nav-item" data-section="magic-studio"><span class="nav-icon">🔮</span><span>Magic Studio</span><span class="nav-badge new" style="background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;">100+</span></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Tools</div>
+                <ul class="nav-menu">
+                    <li class="nav-item" data-section="knowledge-base"><span class="nav-icon">📚</span><span>Knowledge Base</span></li>
+                    <li class="nav-item" data-section="settings"><span class="nav-icon">⚙️</span><span>Settings</span></li>
+                </ul>
+            </div>
+
             <div class="sidebar-footer">
-                <div class="platform-status">
-                    <span class="status-dot active"></span>
-                    <span>AI Ready</span>
+                <div class="user-info">
+                    <div class="user-avatar">L</div>
+                    <div class="user-details">
+                        <span class="user-name" id="project-name-sidebar">No Project</span>
+                        <span class="user-plan">Pro Plan</span>
+                    </div>
                 </div>
             </div>
         </nav>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
             
-            <!-- ==================== DASHBOARD ==================== -->
+            <!-- DASHBOARD -->
             <section id="dashboard" class="section active">
                 <div class="section-header">
                     <div>
-                        <h1>Dashboard</h1>
-                        <p id="dashboard-project-name">Pilih atau buat project untuk memulai</p>
+                        <h1>👋 Welcome to Lumakara</h1>
+                        <p>Ultra Smart Content Creator Platform</p>
                     </div>
                     <div class="header-actions">
-                        <button class="btn-secondary" onclick="setupLumakaraProject()" id="btn-setup-lumakara" style="display:none;">
-                            <span>◈</span> Setup Lumakara Project
-                        </button>
-                        <button class="btn-primary" onclick="autoGenerateMonthlyContent()" id="btn-auto-generate">
-                            <span>⚡</span> Auto-Generate 1 Bulan
-                        </button>
+                        <button class="btn-secondary" onclick="navigateTo('magic-studio')">🔮 Magic Studio</button>
+                        <button class="btn-primary" onclick="navigateTo('generator')">⚡ Create Content</button>
                     </div>
                 </div>
 
-                <!-- Stats Cards -->
                 <div class="stats-grid">
-                    <div class="stat-card" onclick="navigateTo('content-hub'); document.getElementById('filter-status').value='all'; filterContent();" style="cursor:pointer;" title="View all content">
-                        <div class="stat-icon">◈</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="stat-total">0</span>
-                            <span class="stat-label">Total Konten</span>
-                        </div>
+                    <div class="stat-card" onclick="navigateTo('content-hub')">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info"><span class="stat-value" id="stat-total">0</span><span class="stat-label">Total Content</span></div>
                     </div>
-                    <div class="stat-card" onclick="navigateTo('content-hub'); document.getElementById('filter-status').value='draft'; filterContent();" style="cursor:pointer;" title="View drafts">
+                    <div class="stat-card" onclick="filterByStatus('draft')">
                         <div class="stat-icon">📝</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="stat-draft">0</span>
-                            <span class="stat-label">Draft</span>
-                        </div>
+                        <div class="stat-info"><span class="stat-value" id="stat-draft">0</span><span class="stat-label">Drafts</span></div>
                     </div>
-                    <div class="stat-card" onclick="navigateTo('content-hub'); document.getElementById('filter-status').value='scheduled'; filterContent();" style="cursor:pointer;" title="View scheduled">
+                    <div class="stat-card" onclick="filterByStatus('scheduled')">
                         <div class="stat-icon">📅</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="stat-scheduled">0</span>
-                            <span class="stat-label">Scheduled</span>
-                        </div>
+                        <div class="stat-info"><span class="stat-value" id="stat-scheduled">0</span><span class="stat-label">Scheduled</span></div>
                     </div>
-                    <div class="stat-card" onclick="navigateTo('content-hub'); document.getElementById('filter-status').value='published'; filterContent();" style="cursor:pointer;" title="View published">
-                        <div class="stat-icon">✓</div>
-                        <div class="stat-info">
-                            <span class="stat-value" id="stat-published">0</span>
-                            <span class="stat-label">Published</span>
-                        </div>
+                    <div class="stat-card" onclick="filterByStatus('published')">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info"><span class="stat-value" id="stat-published">0</span><span class="stat-label">Published</span></div>
                     </div>
                 </div>
 
-                <!-- Platform Overview -->
+                <div class="quick-generate-card">
+                    <div class="qg-header"><h3>⚡ Quick Generate</h3><span class="qg-badge">AI + Knowledge Base</span></div>
+                    <div class="qg-body">
+                        <input type="text" id="quick-gen-topic" placeholder="Describe what you want to create..." class="qg-input">
+                        <div class="qg-options">
+                            <select id="quick-gen-type" class="qg-select">
+                                <option value="video_short">📱 Video Short-Form</option>
+                                <option value="video_story">⏱️ Video Story</option>
+                                <option value="image_carousel">🎨 Image Carousel</option>
+                                <option value="text_thread">🐦 Text Thread</option>
+                                <option value="text_article">📝 Text Article</option>
+                                <option value="video_long">🎬 Video Long-Form</option>
+                            </select>
+                            <button class="btn-primary qg-btn" onclick="quickGenerate()">Generate →</button>
+                        </div>
+                    </div>
+                    <div class="qg-footer"><span>Or use</span><button class="qg-link" onclick="navigateTo('magic-studio')">🔮 Magic Studio</button><span>for 35 AI workflows</span></div>
+                </div>
+
                 <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <h3>Platform Distribution</h3>
-                        <div class="platform-bars" id="platform-distribution"></div>
+                    <div class="card">
+                        <div class="card-header"><h3>📋 Recent Content</h3><button class="btn-ghost" onclick="navigateTo('content-hub')">View All →</button></div>
+                        <div class="card-body" id="recent-content"><div class="empty-state small"><p>No content yet</p></div></div>
                     </div>
-                    <div class="dashboard-card">
-                        <h3>This Week</h3>
-                        <div class="week-preview" id="week-preview"></div>
+                    <div class="card">
+                        <div class="card-header"><h3>📅 Upcoming</h3><button class="btn-ghost" onclick="navigateTo('content-hub'); setTimeout(() => ContentHub.switchView('calendar'), 100);">Calendar →</button></div>
+                        <div class="card-body" id="upcoming-content"><div class="empty-state small"><p>No scheduled content</p></div></div>
                     </div>
-                </div>
-
-                <!-- Quick Generate Card -->
-                <div class="dashboard-card full-width">
-                    <div class="card-header">
-                        <h3>⚡ Quick Generate</h3>
-                        <span style="color:var(--text-muted);font-size:13px;">Generate single content with AI</span>
-                    </div>
-                    <div style="display:flex;gap:12px;align-items:flex-end;">
-                        <div style="flex:1;">
-                            <input type="text" id="quick-gen-topic" placeholder="Enter topic or idea..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);">
-                        </div>
-                        <select id="quick-gen-platform" style="padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);">
-                            <option value="instagram">Instagram</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="twitter">Twitter</option>
-                            <option value="linkedin">LinkedIn</option>
-                        </select>
-                        <button class="btn-primary" onclick="quickGenerateFromDashboard()">Generate →</button>
-                    </div>
-                </div>
-
-                <!-- Quick Content Preview -->
-                <div class="dashboard-card full-width">
-                    <div class="card-header">
-                        <h3>Upcoming Content</h3>
-                        <button class="btn-text" onclick="navigateTo('content-hub')">View All →</button>
-                    </div>
-                    <div class="content-preview-list" id="upcoming-content"></div>
                 </div>
             </section>
 
-            <!-- ==================== CONTENT HUB (Notion-like) ==================== -->
+            <!-- CONTENT HUB -->
             <section id="content-hub" class="section">
                 <div class="section-header">
-                    <div>
-                        <h1>Content Hub</h1>
-                        <p>Kelola semua konten dalam satu tempat</p>
-                    </div>
+                    <div><h1>📋 Content Hub</h1><p>Manage all your omnichannel content</p></div>
                     <div class="header-actions">
-                        <div class="view-switcher">
-                            <button class="view-btn active" data-view="table" onclick="switchView('table')">☰ Table</button>
-                            <button class="view-btn" data-view="kanban" onclick="switchView('kanban')">▦ Kanban</button>
-                            <button class="view-btn" data-view="calendar" onclick="switchView('calendar')">📅 Calendar</button>
+                        <button class="btn-secondary" onclick="ContentHub.exportAll()">📤 Export</button>
+                        <button class="btn-primary" onclick="ContentHub.createNew()">+ New Content</button>
+                    </div>
+                </div>
+
+                <div class="hub-tabs">
+                    <button class="hub-tab active" data-view="simple" onclick="ContentHub.switchView('simple')">📊 Simple</button>
+                    <button class="hub-tab" data-view="full" onclick="ContentHub.switchView('full')">📋 Full View</button>
+                    <button class="hub-tab" data-view="kanban" onclick="ContentHub.switchView('kanban')">▦ Kanban</button>
+                    <button class="hub-tab" data-view="calendar" onclick="ContentHub.switchView('calendar')">📅 Calendar</button>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="hub-search" placeholder="Search..." oninput="ContentHub.filter()"></div>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-filter="all" onclick="ContentHub.setFilter('all')">All</button>
+                        <button class="filter-chip" data-filter="draft" onclick="ContentHub.setFilter('draft')">📝 Draft</button>
+                        <button class="filter-chip" data-filter="scheduled" onclick="ContentHub.setFilter('scheduled')">📅 Scheduled</button>
+                        <button class="filter-chip" data-filter="published" onclick="ContentHub.setFilter('published')">✅ Published</button>
+                    </div>
+                    <select id="filter-type" onchange="ContentHub.filter()">
+                        <option value="all">All Types</option>
+                        <option value="text_article">📝 Text Article</option>
+                        <option value="text_thread">🐦 Text Thread</option>
+                        <option value="video_long">🎬 Video Long-Form</option>
+                        <option value="video_short">📱 Video Short-Form</option>
+                        <option value="video_story">⏱️ Video Story</option>
+                        <option value="image_carousel">🎨 Image Carousel</option>
+                    </select>
+                </div>
+
+                <div class="hub-view active" id="simple-view">
+                    <div class="simple-table-container">
+                        <table class="simple-table">
+                            <thead><tr><th><input type="checkbox" onchange="ContentHub.selectAll(this)"></th><th>Title</th><th>Type</th><th>Platforms</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                            <tbody id="simple-table-body"></tbody>
+                        </table>
+                        <div class="table-footer"><button class="btn-ghost" onclick="ContentHub.createNew()">+ Add new</button><span class="row-count" id="simple-row-count">0 items</span></div>
+                    </div>
+                </div>
+
+                <div class="hub-view" id="full-view">
+                    <div class="airtable-container">
+                        <div class="airtable-grid">
+                            <table class="airtable">
+                                <thead><tr><th><input type="checkbox" onchange="ContentHub.selectAll(this)"></th><th></th><th>Title</th><th>Type</th><th>Platforms</th><th>Status</th><th>Date</th><th>Media</th><th>Caption</th><th>Hashtags</th><th>Pillar</th><th>Actions</th></tr></thead>
+                                <tbody id="airtable-body"></tbody>
+                            </table>
                         </div>
-                        <button class="btn-primary" onclick="openContentEditor()">+ New Content</button>
+                        <div class="airtable-footer"><button class="add-row-btn" onclick="ContentHub.createNew()">+ Add new row</button><span class="row-count" id="full-row-count">0 items</span></div>
                     </div>
                 </div>
 
-                <!-- Filters -->
-                <div class="content-filters">
-                    <div class="filter-group">
-                        <input type="text" id="search-content" placeholder="Search content..." oninput="filterContent()">
-                    </div>
-                    <div class="filter-group">
-                        <select id="filter-platform" onchange="filterContent()">
-                            <option value="all">All Platforms</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="twitter">Twitter/X</option>
-                            <option value="linkedin">LinkedIn</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="youtube">YouTube</option>
-                            <option value="blog">Blog</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <select id="filter-status" onchange="filterContent()">
-                            <option value="all">All Status</option>
-                            <option value="idea">💡 Idea</option>
-                            <option value="draft">📝 Draft</option>
-                            <option value="review">👀 Review</option>
-                            <option value="scheduled">📅 Scheduled</option>
-                            <option value="published">✅ Published</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <select id="filter-month" onchange="filterContent()">
-                            <option value="all">All Time</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Table View -->
-                <div class="content-view table-view active" id="table-view">
-                    <table class="content-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Platform</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="content-table-body"></tbody>
-                    </table>
-                </div>
-
-                <!-- Kanban View -->
-                <div class="content-view kanban-view" id="kanban-view">
+                <div class="hub-view" id="kanban-view">
                     <div class="kanban-board">
-                        <div class="kanban-column" data-status="idea">
-                            <div class="kanban-header">💡 Ideas</div>
-                            <div class="kanban-cards" id="kanban-idea"></div>
-                        </div>
-                        <div class="kanban-column" data-status="draft">
-                            <div class="kanban-header">📝 Draft</div>
-                            <div class="kanban-cards" id="kanban-draft"></div>
-                        </div>
-                        <div class="kanban-column" data-status="review">
-                            <div class="kanban-header">👀 Review</div>
-                            <div class="kanban-cards" id="kanban-review"></div>
-                        </div>
-                        <div class="kanban-column" data-status="scheduled">
-                            <div class="kanban-header">📅 Scheduled</div>
-                            <div class="kanban-cards" id="kanban-scheduled"></div>
-                        </div>
-                        <div class="kanban-column" data-status="published">
-                            <div class="kanban-header">✅ Published</div>
-                            <div class="kanban-cards" id="kanban-published"></div>
-                        </div>
+                        <div class="kanban-column" data-status="idea"><div class="kanban-header"><span class="kanban-status">💡 Ideas</span><span class="kanban-count" id="kanban-count-idea">0</span></div><div class="kanban-cards" id="kanban-idea"></div><button class="kanban-add" onclick="ContentHub.createWithStatus('idea')">+ Add</button></div>
+                        <div class="kanban-column" data-status="draft"><div class="kanban-header"><span class="kanban-status">📝 Draft</span><span class="kanban-count" id="kanban-count-draft">0</span></div><div class="kanban-cards" id="kanban-draft"></div><button class="kanban-add" onclick="ContentHub.createWithStatus('draft')">+ Add</button></div>
+                        <div class="kanban-column" data-status="review"><div class="kanban-header"><span class="kanban-status">👀 Review</span><span class="kanban-count" id="kanban-count-review">0</span></div><div class="kanban-cards" id="kanban-review"></div><button class="kanban-add" onclick="ContentHub.createWithStatus('review')">+ Add</button></div>
+                        <div class="kanban-column" data-status="scheduled"><div class="kanban-header"><span class="kanban-status">📅 Scheduled</span><span class="kanban-count" id="kanban-count-scheduled">0</span></div><div class="kanban-cards" id="kanban-scheduled"></div><button class="kanban-add" onclick="ContentHub.createWithStatus('scheduled')">+ Add</button></div>
+                        <div class="kanban-column" data-status="published"><div class="kanban-header"><span class="kanban-status">✅ Published</span><span class="kanban-count" id="kanban-count-published">0</span></div><div class="kanban-cards" id="kanban-published"></div></div>
                     </div>
                 </div>
 
-                <!-- Calendar View -->
-                <div class="content-view calendar-view" id="calendar-view">
-                    <div class="calendar-nav">
-                        <button onclick="changeMonth(-1)">←</button>
-                        <span id="calendar-month-label">December 2024</span>
-                        <button onclick="changeMonth(1)">→</button>
-                    </div>
-                    <div class="calendar-grid" id="calendar-grid"></div>
+                <div class="hub-view" id="calendar-view">
+                    <!-- Calendar will be rendered by ContentHubUltra.renderCalendar() -->
                 </div>
             </section>
 
-            <!-- ==================== KNOWLEDGE BASE ==================== -->
-            <section id="knowledge-base" class="section">
-                <div class="section-header">
-                    <div>
-                        <h1>Knowledge Base</h1>
-                        <p>Informasi brand yang akan digunakan AI untuk generate konten</p>
-                    </div>
-                </div>
-
-                <div class="kb-container">
-                    <!-- Brand Guidelines -->
-                    <div class="kb-card">
-                        <h3>📋 Brand Guidelines</h3>
-                        <div class="form-group">
-                            <label>Brand Voice & Personality</label>
-                            <textarea id="kb-brand-voice" rows="3" placeholder="Contoh: Friendly, professional, sedikit humor, tidak terlalu formal..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Key Messages (USP)</label>
-                            <textarea id="kb-key-messages" rows="3" placeholder="Pesan utama yang harus selalu disampaikan..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Words to Use</label>
-                            <input type="text" id="kb-words-use" placeholder="Kata-kata yang sering digunakan, pisahkan dengan koma">
-                        </div>
-                        <div class="form-group">
-                            <label>Words to Avoid</label>
-                            <input type="text" id="kb-words-avoid" placeholder="Kata-kata yang harus dihindari, pisahkan dengan koma">
-                        </div>
-                        <button class="btn-secondary" onclick="saveGuidelines()">Save Guidelines</button>
-                    </div>
-
-                    <!-- Documents -->
-                    <div class="kb-card">
-                        <h3>📄 Documents & Files</h3>
-                        <p class="kb-desc">Upload dokumen tentang brand, produk, atau informasi penting lainnya</p>
-                        
-                        <div class="kb-upload-area" id="kb-upload-area">
-                            <input type="file" id="kb-file-input" multiple accept=".txt,.md,.pdf,.doc,.docx" onchange="handleKBFileUpload(event)">
-                            <p>Drop files here or click to upload</p>
-                            <span>Supports: TXT, MD, PDF, DOC</span>
-                        </div>
-
-                        <div class="kb-documents-list" id="kb-documents-list"></div>
-                    </div>
-
-                    <!-- Quick Notes -->
-                    <div class="kb-card">
-                        <h3>📝 Quick Notes</h3>
-                        <p class="kb-desc">Tambahkan catatan cepat tentang brand</p>
-                        
-                        <div class="kb-note-input">
-                            <select id="kb-note-category">
-                                <option value="brand">Brand Info</option>
-                                <option value="product">Product Info</option>
-                                <option value="audience">Audience Info</option>
-                                <option value="competitor">Competitor Info</option>
-                                <option value="general">General</option>
-                            </select>
-                            <textarea id="kb-note-text" rows="2" placeholder="Tambahkan catatan..."></textarea>
-                            <button class="btn-secondary" onclick="addKBNote()">+ Add Note</button>
-                        </div>
-
-                        <div class="kb-notes-list" id="kb-notes-list"></div>
-                    </div>
-
-                    <!-- Content Pillars -->
-                    <div class="kb-card">
-                        <h3>🎯 Content Pillars</h3>
-                        <p class="kb-desc">Topik utama yang akan menjadi fokus konten</p>
-                        
-                        <div class="pillars-input">
-                            <input type="text" id="new-pillar-input" placeholder="Tambah pillar baru...">
-                            <button class="btn-secondary" onclick="addPillar()">+ Add</button>
-                        </div>
-                        <div class="pillars-list" id="pillars-list"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ==================== AI GENERATOR ==================== -->
+            <!-- AI GENERATOR ULTRA - MULTI-TYPE GENERATION -->
             <section id="generator" class="section">
                 <div class="section-header">
                     <div>
-                        <h1>AI Generator</h1>
-                        <p>Generate konten dengan AI berdasarkan Knowledge Base</p>
-                    </div>
-                </div>
-
-                <div class="generator-container">
-                    <div class="generator-form-card">
-                        <h3>Generate Content</h3>
-                        
-                        <div class="form-group">
-                            <label>Topic / Idea</label>
-                            <textarea id="gen-topic" rows="3" placeholder="Masukkan topik atau ide konten..."></textarea>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Platform</label>
-                                <select id="gen-platform">
-                                    <option value="instagram">Instagram</option>
-                                    <option value="tiktok">TikTok</option>
-                                    <option value="twitter">Twitter/X</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="facebook">Facebook</option>
-                                    <option value="youtube">YouTube</option>
-                                    <option value="blog">Blog</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Content Type</label>
-                                <select id="gen-type">
-                                    <option value="post">Feed Post</option>
-                                    <option value="reel">Reel/Short Video</option>
-                                    <option value="story">Story</option>
-                                    <option value="carousel">Carousel</option>
-                                    <option value="thread">Thread</option>
-                                    <option value="article">Article</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Content Pillar</label>
-                            <select id="gen-pillar">
-                                <option value="">Select pillar...</option>
-                            </select>
-                        </div>
-
-                        <div class="gen-options">
-                            <label><input type="checkbox" id="gen-image" checked> Generate Image</label>
-                            <label><input type="checkbox" id="gen-hashtags" checked> Include Hashtags</label>
-                            <label><input type="checkbox" id="gen-cta" checked> Include CTA</label>
-                        </div>
-
-                        <button class="btn-primary full-width" onclick="generateSingleContent()">
-                            ⚡ Generate Content
-                        </button>
-                    </div>
-
-                    <div class="generator-result-card">
-                        <h3>Generated Result</h3>
-                        <div id="gen-result" class="gen-result-area">
-                            <p class="placeholder-text">Result will appear here...</p>
-                        </div>
-                        <div class="gen-result-actions" id="gen-result-actions" style="display:none;">
-                            <button class="btn-secondary" onclick="copyGeneratedContent()">📋 Copy</button>
-                            <button class="btn-secondary" onclick="regenerateContent()">🔄 Regenerate</button>
-                            <button class="btn-primary" onclick="saveGeneratedContent()">💾 Save to Hub</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ==================== CALENDAR ==================== -->
-            <section id="calendar" class="section">
-                <div class="section-header">
-                    <div>
-                        <h1>Content Calendar</h1>
-                        <p>Visualisasi jadwal konten bulanan</p>
+                        <h1>⚡ AI Content Generator Ultra</h1>
+                        <p>Generate multi-platform content with AI + Knowledge Base + Content Hub integration</p>
                     </div>
                     <div class="header-actions">
-                        <button class="btn-secondary" onclick="exportCalendar()">📤 Export</button>
+                        <span style="background:linear-gradient(135deg,#10b981,#059669);color:white;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;">📚 Knowledge Base Active</span>
+                        <a href="https://aistudio.google.com/" target="_blank" class="btn-secondary" style="margin-left:8px;">🚀 Open AI Studio</a>
                     </div>
                 </div>
+                
+                <div class="generator-layout" style="display:grid;grid-template-columns:380px 1fr;gap:24px;">
+                    <!-- LEFT: Form -->
+                    <div class="generator-form-panel" style="background:var(--bg-card);padding:24px;border-radius:16px;border:1px solid var(--border);">
+                        <!-- Source Selection -->
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label style="display:block;margin-bottom:10px;font-weight:600;color:var(--text-primary);font-size:14px;">📋 Content Source</label>
+                            <div style="display:flex;gap:8px;margin-bottom:12px;">
+                                <button class="source-btn active" data-source="new" onclick="Generator.setSource('new')" style="flex:1;padding:12px;border:2px solid var(--primary);background:var(--primary);color:white;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.2s;">✨ New Content</button>
+                                <button class="source-btn" data-source="existing" onclick="Generator.setSource('existing')" style="flex:1;padding:12px;border:2px solid var(--border);background:var(--bg-muted);color:var(--text-primary);border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.2s;">📋 From Hub</button>
+                            </div>
+                            <select id="gen-content-select" style="display:none;width:100%;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--bg-input);color:var(--text-primary);font-size:13px;" onchange="Generator.loadFromHub(this.value)">
+                                <option value="">Select existing content...</option>
+                            </select>
+                        </div>
 
-                <div class="calendar-container">
-                    <div class="calendar-nav">
-                        <button onclick="changeCalendarMonth(-1)">← Previous</button>
-                        <h2 id="full-calendar-month">December 2024</h2>
-                        <button onclick="changeCalendarMonth(1)">Next →</button>
+                        <!-- Topic -->
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label style="display:block;margin-bottom:10px;font-weight:600;color:var(--text-primary);font-size:14px;">💡 Topic / Idea</label>
+                            <textarea id="gen-topic" rows="4" placeholder="Describe your content idea in detail...&#10;&#10;Example: Tips membangun personal brand untuk entrepreneur muda di era digital" style="width:100%;padding:14px;border:2px solid var(--border);border-radius:10px;background:var(--bg-input);color:var(--text-primary);resize:vertical;font-size:13px;line-height:1.5;"></textarea>
+                        </div>
+
+                        <!-- Content Types - Enhanced Grid -->
+                        <div class="form-group" style="margin-bottom:20px;">
+                            <label style="display:block;margin-bottom:10px;font-weight:600;color:var(--text-primary);font-size:14px;">📱 Content Types to Generate</label>
+                            <div id="gen-types-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--primary);border-radius:10px;cursor:pointer;border:2px solid var(--primary);color:white;" class="type-checkbox" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                                    <input type="checkbox" value="text_article" checked style="width:18px;height:18px;"> <span style="font-size:13px;">📝 Article</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-muted);border-radius:10px;cursor:pointer;border:2px solid var(--border);" class="type-checkbox">
+                                    <input type="checkbox" value="text_thread" style="width:18px;height:18px;"> <span style="font-size:13px;">🐦 Thread</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-muted);border-radius:10px;cursor:pointer;border:2px solid var(--border);" class="type-checkbox">
+                                    <input type="checkbox" value="video_short" style="width:18px;height:18px;"> <span style="font-size:13px;">📱 Short Video</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-muted);border-radius:10px;cursor:pointer;border:2px solid var(--border);" class="type-checkbox">
+                                    <input type="checkbox" value="image_carousel" style="width:18px;height:18px;"> <span style="font-size:13px;">🎨 Carousel</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-muted);border-radius:10px;cursor:pointer;border:2px solid var(--border);" class="type-checkbox">
+                                    <input type="checkbox" value="video_story" style="width:18px;height:18px;"> <span style="font-size:13px;">⏱️ Story</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-muted);border-radius:10px;cursor:pointer;border:2px solid var(--border);" class="type-checkbox">
+                                    <input type="checkbox" value="video_long" style="width:18px;height:18px;"> <span style="font-size:13px;">🎬 Long Video</span>
+                                </label>
+                            </div>
+                            <button onclick="document.querySelectorAll('.type-checkbox input').forEach(cb=>cb.checked=true);Generator.updateSelectedTypes();" style="margin-top:10px;padding:8px 16px;background:var(--bg-muted);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:11px;color:var(--text-muted);">Select All Types</button>
+                        </div>
+
+                        <!-- Tone & Pillar -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+                            <div class="form-group">
+                                <label style="display:block;margin-bottom:8px;font-weight:500;color:var(--text-secondary);font-size:12px;">🎭 Tone</label>
+                                <select id="gen-tone" style="width:100%;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--bg-input);color:var(--text-primary);font-size:13px;">
+                                    <option value="professional">Professional</option>
+                                    <option value="casual">Casual</option>
+                                    <option value="educational">Educational</option>
+                                    <option value="inspirational">Inspirational</option>
+                                    <option value="humorous">Humorous</option>
+                                    <option value="authoritative">Authoritative</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="display:block;margin-bottom:8px;font-weight:500;color:var(--text-secondary);font-size:12px;">📚 Pillar</label>
+                                <select id="gen-pillar" style="width:100%;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--bg-input);color:var(--text-primary);font-size:13px;">
+                                    <option value="Education">Education</option>
+                                    <option value="Inspiration">Inspiration</option>
+                                    <option value="Tips & Tricks">Tips & Tricks</option>
+                                    <option value="Behind the Scenes">Behind the Scenes</option>
+                                    <option value="Promotion">Promotion</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button class="btn-primary" onclick="Generator.generateAll()" style="width:100%;padding:16px;font-size:15px;font-weight:600;margin-bottom:16px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#4f46e5);display:flex;align-items:center;justify-content:center;gap:10px;">
+                            <span style="font-size:20px;">⚡</span> Generate All Selected Types
+                        </button>
+                        
+                        <!-- Quick Actions -->
+                        <div style="display:flex;gap:8px;margin-bottom:16px;">
+                            <button onclick="navigateTo('magic-studio')" style="flex:1;padding:10px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:white;border:none;border-radius:10px;cursor:pointer;font-size:12px;">🔮 Magic Studio</button>
+                            <button onclick="navigateTo('content-hub')" style="flex:1;padding:10px;background:var(--bg-muted);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;">📋 Content Hub</button>
+                        </div>
+                        
+                        <!-- KB Info -->
+                        <div style="padding:14px;background:linear-gradient(135deg,var(--success)10,var(--primary)10);border-radius:10px;font-size:12px;color:var(--text-muted);border:1px solid var(--border);">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                                <span style="color:var(--success);font-weight:600;">📚 Knowledge Base Active</span>
+                            </div>
+                            <div style="color:var(--text-secondary);">Brand context & audience data will be automatically applied to all generated content.</div>
+                        </div>
                     </div>
-                    <div class="full-calendar-grid" id="full-calendar-grid"></div>
+
+                    <!-- RIGHT: Results -->
+                    <div class="generator-results-panel" style="background:var(--bg-card);padding:24px;border-radius:16px;border:1px solid var(--border);min-height:500px;">
+                        <div id="generator-results">
+                            <div class="empty-state" style="text-align:center;padding:80px 20px;">
+                                <div style="font-size:64px;margin-bottom:20px;">⚡</div>
+                                <h3 style="color:var(--text-primary);margin-bottom:12px;font-size:20px;">Ready to Generate</h3>
+                                <p style="color:var(--text-muted);font-size:14px;max-width:300px;margin:0 auto;line-height:1.6;">Select content types, enter your topic, and click Generate to create AI-powered prompts for multiple platforms.</p>
+                                <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+                                    <span style="background:var(--bg-muted);padding:8px 16px;border-radius:20px;font-size:12px;">📝 Articles</span>
+                                    <span style="background:var(--bg-muted);padding:8px 16px;border-radius:20px;font-size:12px;">🎬 Videos</span>
+                                    <span style="background:var(--bg-muted);padding:8px 16px;border-radius:20px;font-size:12px;">🎨 Carousels</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- ==================== SETTINGS ==================== -->
-            <section id="settings" class="section">
+            <!-- MAGIC STUDIO ULTRA - 100+ AI WORKFLOWS -->
+            <section id="magic-studio" class="section">
                 <div class="section-header">
                     <div>
-                        <h1>Settings</h1>
-                        <p>Konfigurasi project dan preferensi</p>
+                        <h1>🔮 Magic Studio Ultra</h1>
+                        <p>100+ AI Workflows for Professional Content Creators & Marketers</p>
+                    </div>
+                    <div class="header-actions">
+                        <span style="background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;">⚡ ULTRA EDITION</span>
+                        <a href="https://aistudio.google.com/" target="_blank" class="btn-primary" style="margin-left:8px;">🚀 Open Google AI Studio →</a>
                     </div>
                 </div>
 
-                <div class="settings-container">
-                    <!-- Project Settings -->
-                    <div class="settings-card">
-                        <h3>📁 Project Settings</h3>
-                        <div class="form-group">
-                            <label>Project Name</label>
-                            <input type="text" id="setting-project-name">
-                        </div>
-                        <div class="form-group">
-                            <label>Brand Name</label>
-                            <input type="text" id="setting-brand-name">
-                        </div>
-                        <div class="form-group">
-                            <label>Niche / Industry</label>
-                            <select id="setting-niche">
-                                <option value="tech">Technology</option>
-                                <option value="lifestyle">Lifestyle</option>
-                                <option value="business">Business</option>
-                                <option value="education">Education</option>
-                                <option value="health">Health & Fitness</option>
-                                <option value="food">Food & Culinary</option>
-                                <option value="fashion">Fashion & Beauty</option>
-                                <option value="finance">Finance</option>
-                                <option value="travel">Travel</option>
-                                <option value="entertainment">Entertainment</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Target Audience</label>
-                            <textarea id="setting-audience" rows="2" placeholder="Describe your target audience..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Tone of Voice</label>
-                            <select id="setting-tone">
-                                <option value="casual">Casual & Friendly</option>
-                                <option value="professional">Professional</option>
-                                <option value="humorous">Humorous</option>
-                                <option value="inspirational">Inspirational</option>
-                                <option value="educational">Educational</option>
-                            </select>
-                        </div>
-                        <button class="btn-primary" onclick="saveProjectSettings()">Save Settings</button>
+                <!-- Stats Bar -->
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px;">
+                    <div style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);padding:16px;border-radius:12px;text-align:center;color:white;">
+                        <div style="font-size:28px;font-weight:700;" id="stat-total-workflows">100+</div>
+                        <div style="font-size:11px;opacity:0.9;">Total Workflows</div>
                     </div>
+                    <div style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);padding:16px;border-radius:12px;text-align:center;color:white;">
+                        <div style="font-size:28px;font-weight:700;">10</div>
+                        <div style="font-size:11px;opacity:0.9;">Categories</div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,#ec4899,#be185d);padding:16px;border-radius:12px;text-align:center;color:white;">
+                        <div style="font-size:28px;font-weight:700;">20</div>
+                        <div style="font-size:11px;opacity:0.9;">Text Tools</div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,#10b981,#047857);padding:16px;border-radius:12px;text-align:center;color:white;">
+                        <div style="font-size:28px;font-weight:700;">25</div>
+                        <div style="font-size:11px;opacity:0.9;">Image Tools</div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,#f59e0b,#d97706);padding:16px;border-radius:12px;text-align:center;color:white;">
+                        <div style="font-size:28px;font-weight:700;">15</div>
+                        <div style="font-size:11px;opacity:0.9;">Video Tools</div>
+                    </div>
+                </div>
 
-                    <!-- Posting Schedule -->
-                    <div class="settings-card">
-                        <h3>📅 Posting Schedule</h3>
-                        <div class="form-group">
-                            <label>Posting Days</label>
-                            <div class="day-selector">
-                                <label><input type="checkbox" value="mon" checked> Mon</label>
-                                <label><input type="checkbox" value="tue"> Tue</label>
-                                <label><input type="checkbox" value="wed" checked> Wed</label>
-                                <label><input type="checkbox" value="thu"> Thu</label>
-                                <label><input type="checkbox" value="fri" checked> Fri</label>
-                                <label><input type="checkbox" value="sat"> Sat</label>
-                                <label><input type="checkbox" value="sun"> Sun</label>
-                            </div>
+                <!-- Search & Content Hub Integration -->
+                <div style="background:var(--bg-card);padding:20px;border-radius:16px;margin-bottom:24px;border:1px solid var(--border);">
+                    <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;">
+                        <div>
+                            <label style="display:block;margin-bottom:8px;font-weight:600;color:var(--text-primary);font-size:13px;">🔍 Search Workflows</label>
+                            <input type="text" id="magic-search" placeholder="Search by name, description, or category..." style="width:100%;padding:14px 18px;border:2px solid var(--border);border-radius:12px;background:var(--bg-input);color:var(--text-primary);font-size:14px;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
                         </div>
-                        <div class="form-group">
-                            <label>Posts Per Day</label>
-                            <select id="setting-posts-per-day">
-                                <option value="1">1 post</option>
-                                <option value="2">2 posts</option>
-                                <option value="3">3 posts</option>
+                        <div style="display:flex;gap:8px;">
+                            <select id="magic-content-select" style="padding:14px 18px;border:2px solid var(--border);border-radius:12px;background:var(--bg-input);color:var(--text-primary);min-width:200px;" onchange="MagicStudioUltra.loadFromHub(this.value)">
+                                <option value="">📋 Load from Content Hub...</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Active Platforms</label>
-                            <div class="platform-checkboxes">
-                                <label><input type="checkbox" value="instagram" checked> Instagram</label>
-                                <label><input type="checkbox" value="tiktok" checked> TikTok</label>
-                                <label><input type="checkbox" value="twitter"> Twitter/X</label>
-                                <label><input type="checkbox" value="linkedin"> LinkedIn</label>
-                                <label><input type="checkbox" value="facebook"> Facebook</label>
-                                <label><input type="checkbox" value="youtube"> YouTube</label>
-                            </div>
+                            <button class="btn-secondary" onclick="MagicStudioUltra.refreshContentList()" style="padding:14px 18px;border-radius:12px;">🔄</button>
                         </div>
                     </div>
+                    <div id="magic-loaded-content" style="display:none;margin-top:16px;padding:14px;background:var(--bg-muted);border-radius:10px;border-left:4px solid var(--primary);">
+                        <div style="font-size:13px;color:var(--text-muted);">📄 Loaded: <strong id="magic-loaded-title" style="color:var(--text-primary);"></strong></div>
+                    </div>
+                </div>
 
-                    <!-- Data Management -->
-                    <div class="settings-card">
-                        <h3>💾 Data Management</h3>
-                        <div class="data-actions">
-                            <button class="btn-secondary" onclick="exportProjectData()">📤 Export Project</button>
-                            <button class="btn-secondary" onclick="importProjectData()">📥 Import Project</button>
-                            <button class="btn-danger" onclick="deleteProject()">🗑️ Delete Project</button>
-                        </div>
+                <!-- Category Filter -->
+                <div id="magic-studio-categories" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);"></div>
+
+                <!-- Workflows Grid -->
+                <div id="magic-studio-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
+
+                <!-- Workflow Modal -->
+                <div id="magic-workflow-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;backdrop-filter:blur(4px);"></div>
+            </section>
+
+            <!-- KNOWLEDGE BASE -->
+            <section id="knowledge-base" class="section">
+                <div class="section-header">
+                    <div>
+                        <h1>📚 Knowledge Base</h1>
+                        <p>Complete brand identity, audience insights, and content strategy - automatically applied to ALL content generation</p>
+                    </div>
+                    <div class="header-actions">
+                        <span style="background:var(--success);color:white;padding:6px 12px;border-radius:20px;font-size:11px;">✓ Auto-Applied to AI</span>
+                    </div>
+                </div>
+                
+                <!-- Brand Identity -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>🏢 Brand Identity</h3><button class="btn-ghost" onclick="KnowledgeBase.editBrand()">Edit</button></div>
+                    <div class="card-body" id="kb-brand"></div>
+                </div>
+
+                <!-- Target Audience -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>🎯 Target Audience</h3><button class="btn-ghost" onclick="KnowledgeBase.editAudience()">Edit</button></div>
+                    <div class="card-body" id="kb-audience"></div>
+                </div>
+
+                <!-- Content Pillars -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>📚 Content Pillars</h3><button class="btn-ghost" onclick="KnowledgeBase.addPillar()">+ Add Pillar</button></div>
+                    <div class="card-body" id="kb-pillars"></div>
+                </div>
+
+                <!-- Tone of Voice -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>🎤 Tone of Voice</h3><button class="btn-ghost" onclick="KnowledgeBase.editTone()">Edit</button></div>
+                    <div class="card-body" id="kb-tone"></div>
+                </div>
+
+                <!-- Content Types / Omnichannel Distribution -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>📱 Omnichannel Content Types</h3></div>
+                    <div class="card-body" id="kb-content-types"></div>
+                </div>
+
+                <!-- Platform Strategy -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3>📡 Platform Strategy</h3></div>
+                    <div class="card-body" id="kb-platforms"></div>
+                </div>
+
+                <!-- Visual Identity -->
+                <div class="card">
+                    <div class="card-header"><h3>🎨 Visual Identity</h3></div>
+                    <div class="card-body" id="kb-visual"></div>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settings" class="section">
+                <div class="section-header"><div><h1>⚙️ Settings</h1><p>Configure your workspace</p></div></div>
+                <div class="card"><div class="card-header"><h3>🗄️ Data Management</h3></div>
+                    <div class="card-body" style="display:flex;gap:12px;">
+                        <button class="btn-secondary" onclick="Settings.exportAll()">📤 Export All</button>
+                        <button class="btn-secondary" onclick="Settings.importData()">📥 Import</button>
+                        <button class="btn-danger" onclick="Settings.clearAll()">🗑️ Clear All</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Modals -->
-    <div class="modal" id="modal">
-        <div class="modal-overlay" onclick="closeModal()"></div>
-        <div class="modal-content" id="modal-content"></div>
-    </div>
+    <!-- Expanded Modal -->
+    <div class="expanded-row-modal" id="expanded-modal"><div class="expanded-row-overlay" onclick="ContentHub.closeExpanded()"></div><div class="expanded-row-content" id="expanded-content"></div></div>
 
     <!-- Loading -->
-    <div class="loading-overlay" id="loading">
-        <div class="loading-spinner"></div>
-        <p id="loading-text">Generating content...</p>
-    </div>
+    <div class="loading-overlay" id="loading"><div class="loading-spinner"></div><p class="loading-text" id="loading-text">Loading...</p></div>
 
-    <!-- Toast Container -->
+    <!-- Toast -->
     <div class="toast-container" id="toast-container"></div>
 
     <!-- Scripts -->
-    <script src="js/database.js"></script>
-    <script src="js/pollinations.js"></script>
-    <script src="js/content-generator.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/lumakara-setup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="js/ultra-studio.js"></script>
+
+    <script>
+    // Debug: Log localStorage on load
+    console.log('=== LUMAKARA DEBUG ===');
+    console.log('localStorage lumakara-content:', localStorage.getItem('lumakara-content'));
+    
+    // ==================== DATABASE ====================
+    const DB = {
+        content: {
+            // Always read fresh from localStorage to ensure sync
+            getAll() { 
+                const data = localStorage.getItem('lumakara-content');
+                console.log('DB.content.getAll() - raw data:', data);
+                const parsed = data ? JSON.parse(data) : [];
+                console.log('DB.content.getAll() - parsed:', parsed.length, 'items');
+                return parsed;
+            },
+            getById(id) { 
+                return this.getAll().find(item => item.id === id); 
+            },
+            add(item) { 
+                const data = this.getAll();
+                item.id = Date.now().toString(); 
+                item.createdAt = new Date().toISOString(); 
+                data.push(item); 
+                this.save(data); 
+                return item; 
+            },
+            update(id, updates) { 
+                const data = this.getAll();
+                const i = data.findIndex(item => item.id === id); 
+                if (i !== -1) { 
+                    data[i] = { ...data[i], ...updates }; 
+                    this.save(data); 
+                    return data[i]; 
+                } 
+                return null; 
+            },
+            delete(id) { 
+                const data = this.getAll().filter(item => item.id !== id); 
+                this.save(data); 
+            },
+            save(data) { 
+                localStorage.setItem('lumakara-content', JSON.stringify(data)); 
+            },
+            clear() {
+                localStorage.removeItem('lumakara-content');
+            }
+        },
+        brand: JSON.parse(localStorage.getItem('lumakara-brand') || '{"name":"Lumakara","tagline":"Ultra Smart Content Creator","colors":["#5B9A94","#8B9A7A"],"tone":"Professional yet friendly"}'),
+        saveBrand(data) { localStorage.setItem('lumakara-brand', JSON.stringify(data)); this.brand = data; }
+    };
+
+    // ==================== KNOWLEDGE BASE DATA ====================
+    const KnowledgeBaseData = {
+        // Brand Identity - dari Complete Brand Story.md
+        brandIdentity: {
+            name: "Lumakara",
+            meaning: "Luma (cahaya/kejelasan) + Kara (tindakan/karya) = Kejelasan yang Menghasilkan Karya Nyata",
+            tagline: "Let's grow your brand with clarity, step by step",
+            philosophy: "Kami bukan sekadar konsultan, tapi teman seperjalanan yang bantu bikin brand kamu lebih jelas, lebih percaya diri, dan siap tumbuh bareng target audience-mu.",
+            type: "Strategic Brand & Business Transformation Advisor",
+            positioning: "Brand Strategist & Transformation Advisor - bukan sekadar creative studio",
+            uniqueValue: "Partnership, Not Consultancy - jalan bareng, bukan cuma kasih advice",
+            clientFocus: "Hanya 2 brand per kuartal dengan fokus penuh",
+            approach: "Clarity → Strategy → Execution → Growth"
+        },
+
+        // Target Audience - dari Research Planning
+        targetAudience: {
+            primary: {
+                name: "Pengusaha Muda & Startup Founders",
+                age: "25-40 tahun",
+                characteristics: [
+                    "Punya ide keren, produk oke, atau komunitas loyal",
+                    "Bingung bikin identitas brand yang kuat",
+                    "Kesulitan connect sama market",
+                    "Kehilangan arah di tengah jalan",
+                    "Butuh clarity dan strategic direction"
+                ],
+                painPoints: [
+                    "Lack of Clarity - nggak jelas siapa mereka, untuk siapa, dan kenapa berbeda",
+                    "Inconsistent Execution - strategi bagus tapi eksekusi berantakan",
+                    "No Strategic Direction - jalan tanpa peta, reaktif bukan proaktif",
+                    "Overwhelmed - terlalu banyak pilihan, nggak tau prioritas",
+                    "Wrong Guidance - dapat advice yang generic atau nggak cocok",
+                    "Isolated Journey - jalan sendiri tanpa support system"
+                ]
+            },
+            secondary: {
+                name: "SME & Growing Businesses",
+                needs: ["Rebranding struktural", "Business transformation", "Brand architecture", "Narrative restructuring"]
+            },
+            generational: {
+                genZ: "Modern, clean, relatable, digital-native aesthetic",
+                genX: "Premium, strategis, kredibel, professional"
+            }
+        },
+
+        // Content Pillars - dari Brand Strategy
+        contentPillars: {
+            education: {
+                name: "Education",
+                description: "Konten edukatif tentang branding, strategi bisnis, dan transformasi",
+                topics: ["Brand building fundamentals", "Strategic planning", "Market positioning", "Business transformation"],
+                ratio: "40%"
+            },
+            inspiration: {
+                name: "Inspiration",
+                description: "Cerita sukses, case studies, dan motivasi untuk entrepreneurs",
+                topics: ["Client success stories", "Transformation journeys", "Founder insights", "Industry trends"],
+                ratio: "25%"
+            },
+            behindTheScenes: {
+                name: "Behind the Scenes",
+                description: "Proses kerja, tim, dan budaya Lumakara",
+                topics: ["Team collaboration", "Project process", "Workshop moments", "Company culture"],
+                ratio: "15%"
+            },
+            tipsAndTricks: {
+                name: "Tips & Tricks",
+                description: "Actionable tips yang bisa langsung diterapkan",
+                topics: ["Quick branding tips", "Content creation hacks", "Marketing shortcuts", "Productivity tools"],
+                ratio: "15%"
+            },
+            promotion: {
+                name: "Promotion",
+                description: "Layanan, penawaran, dan call-to-action",
+                topics: ["Service highlights", "Special offers", "Client testimonials", "Partnership announcements"],
+                ratio: "5%"
+            }
+        },
+
+        // Tone of Voice - dari Karakter Lumakara.md
+        toneOfVoice: {
+            primary: "Professional yet Friendly",
+            characteristics: [
+                "Calm Premium - tenang, elegan, strategis",
+                "Modern Urban Intelligence - smart, digital-native",
+                "Warm & Approachable - tidak kaku atau corporate",
+                "Confident without trying too hard - percaya diri tanpa berlebihan",
+                "Relatable - menggunakan bahasa yang mudah dipahami"
+            ],
+            doThis: [
+                "Gunakan bahasa yang relatable dan digestible",
+                "Be decisive, precise, and clear",
+                "Supportive, bukan authoritative",
+                "Positive dan optimistic",
+                "Warm dan friendly",
+                "Quick dan easy cadence"
+            ],
+            avoidThis: [
+                "Bahasa terlalu formal atau korporat",
+                "Hyperbole dan superlatives berlebihan",
+                "Tone yang condescending atau off-putting",
+                "Kalimat panjang dan elaborate",
+                "Exclamation points berlebihan"
+            ],
+            languageStyle: {
+                indonesian: "Bahasa Indonesia yang santai tapi profesional, mix dengan istilah bisnis yang umum",
+                english: "Professional English dengan sentuhan casual untuk Gen Z appeal"
+            }
+        },
+
+        // Visual Identity - dari Karakter Lumakara.md
+        visualIdentity: {
+            essence: "Calm Premium Meets Modern Urban Intelligence",
+            colors: {
+                primary: [
+                    { name: "Charcoal Black", hex: "#121212", use: "Solid, elegant, strategic" },
+                    { name: "Graphite Grey", hex: "#2D2D2D", use: "Depth, focus" },
+                    { name: "Concrete Light", hex: "#E3E3E3", use: "Clarity, minimal space" },
+                    { name: "Steel Grey", hex: "#6B6B6B", use: "Neutral text anchor" }
+                ],
+                secondary: [
+                    { name: "Sage Green", hex: "#8FA98F", use: "Calm freshness, Gen Z aesthetic" },
+                    { name: "Muted Teal", hex: "#6FA5A0", use: "Cool intellect, digital-native" },
+                    { name: "Burnt Sand", hex: "#D7A98C", use: "Warmth subtle, elegan" },
+                    { name: "Soft Indigo Grey", hex: "#8690A6", use: "Smart, tech-forward" }
+                ]
+            },
+            typography: {
+                primary: "Inter / Söhne / Neue Haas Grotesk - rapi, premium, digital-friendly",
+                secondary: "Neue Montreal / Space Grotesk - untuk headline Gen Z modern sharp"
+            },
+            photography: {
+                mood: "Urban calm, modern smart living, productivity aesthetic",
+                style: "Close-up workspace, hands-on-laptop, coffee table scene, candid moments",
+                avoid: "Stock photo korporat, ekspresi berlebihan, image saturated"
+            }
+        },
+
+        // Services - dari Service Framework
+        services: {
+            growthSystem: {
+                name: "The Lumakara Growth System™",
+                philosophy: "Sistem yang gampang diikuti, kayak roadmap perjalanan",
+                steps: [
+                    {
+                        name: "DISCOVER YOUR ESSENCE",
+                        tagline: "Gali cerita unik, nilai, dan insight audiensmu",
+                        duration: "2-4 weeks",
+                        deliverables: ["Brand DNA Document", "Audience Persona Profiles", "Competitive Positioning Map", "Strategic Insights Summary"]
+                    },
+                    {
+                        name: "BUILD YOUR NARRATIVE",
+                        tagline: "Bikin brand story, visual, dan tone of voice yang bikin orang connect",
+                        duration: "3-6 weeks",
+                        deliverables: ["Brand Story Document", "Messaging Framework", "Visual Identity System", "Brand Guidelines Book"]
+                    },
+                    {
+                        name: "ACTIVATE FOR GROWTH",
+                        tagline: "Eksekusi strategi biar bisnismu makin dekat sama tujuan",
+                        duration: "3-12 months",
+                        deliverables: ["Go-to-Market Playbook", "Content Calendar", "Marketing Campaign Assets", "Monthly Performance Reports"]
+                    }
+                ]
+            }
+        },
+
+        // Omnichannel Strategy - dari Omnichannel_strategy folder
+        omnichannelStrategy: {
+            textArticle: {
+                platforms: ["Blog", "LinkedIn", "Medium", "Facebook"],
+                specs: { minWords: 800, maxWords: 3000, hasImage: true, hasSEO: true },
+                bestPractices: [
+                    "SEO-optimized title (60 chars max)",
+                    "Meta description (155 chars)",
+                    "H2, H3 structure untuk readability",
+                    "FAQ section untuk featured snippets",
+                    "Internal & external links"
+                ]
+            },
+            textThread: {
+                platforms: ["Twitter/X", "LinkedIn", "Threads"],
+                specs: { tweetCount: "5-15", charLimit: 280, hasHashtags: true },
+                bestPractices: [
+                    "Hook tweet yang viral-worthy",
+                    "Value-packed middle tweets",
+                    "Strong CTA di akhir",
+                    "Relevant hashtags (3-5)"
+                ]
+            },
+            videoLongForm: {
+                platforms: ["YouTube", "Facebook", "LinkedIn"],
+                specs: { duration: "5-60 min", aspectRatio: "16:9", hasScript: true, hasThumbnail: true },
+                bestPractices: [
+                    "Hook dalam 5 detik pertama",
+                    "Clear structure dengan timestamps",
+                    "Engaging thumbnail",
+                    "SEO-optimized title & description"
+                ]
+            },
+            videoShortForm: {
+                platforms: ["TikTok", "Instagram Reels", "YouTube Shorts", "Facebook Reels"],
+                specs: { duration: "15-90 sec", aspectRatio: "9:16", hasHook: true, hasMusic: true },
+                bestPractices: [
+                    "Hook dalam 1-3 detik",
+                    "Trending audio/music",
+                    "Text overlay untuk accessibility",
+                    "Strong CTA"
+                ]
+            },
+            videoStory: {
+                platforms: ["Instagram Story", "Facebook Story", "WhatsApp Status"],
+                specs: { duration: "15 sec per slide", aspectRatio: "9:16", hasStickers: true, hasPolls: true },
+                bestPractices: [
+                    "Interactive elements (polls, questions)",
+                    "Behind-the-scenes content",
+                    "Swipe up/link stickers",
+                    "Consistent visual style"
+                ]
+            },
+            imageCarousel: {
+                platforms: ["Instagram", "LinkedIn", "Facebook", "Twitter"],
+                specs: { slides: "2-10", aspectRatio: "1:1 or 4:5", hasCaption: true },
+                bestPractices: [
+                    "Hook slide pertama",
+                    "Value di slides tengah",
+                    "CTA di slide terakhir",
+                    "Consistent design system"
+                ]
+            }
+        },
+
+        // Contact Info
+        contact: {
+            email: "lumakara.id@gmail.com",
+            website: "lumakara.web.id",
+            instagram: "@lumakara.id",
+            linkedin: "Lumakara",
+            location: "Bandung, Indonesia"
+        },
+
+        // Get full context for AI generation
+        getFullContext() {
+            return `
+=== LUMAKARA KNOWLEDGE BASE ===
+
+📌 BRAND IDENTITY:
+- Name: ${this.brandIdentity.name}
+- Meaning: ${this.brandIdentity.meaning}
+- Tagline: "${this.brandIdentity.tagline}"
+- Type: ${this.brandIdentity.type}
+- Philosophy: ${this.brandIdentity.philosophy}
+- Unique Value: ${this.brandIdentity.uniqueValue}
+- Client Focus: ${this.brandIdentity.clientFocus}
+
+🎯 TARGET AUDIENCE:
+- Primary: ${this.targetAudience.primary.name} (${this.targetAudience.primary.age})
+- Characteristics: ${this.targetAudience.primary.characteristics.join(', ')}
+- Pain Points: ${this.targetAudience.primary.painPoints.join(', ')}
+- Gen Z Appeal: ${this.targetAudience.generational.genZ}
+- Gen X Appeal: ${this.targetAudience.generational.genX}
+
+📚 CONTENT PILLARS:
+${Object.values(this.contentPillars).map(p => `- ${p.name} (${p.ratio}): ${p.description}`).join('\n')}
+
+🎤 TONE OF VOICE:
+- Primary: ${this.toneOfVoice.primary}
+- Characteristics: ${this.toneOfVoice.characteristics.join(', ')}
+- Do: ${this.toneOfVoice.doThis.join(', ')}
+- Avoid: ${this.toneOfVoice.avoidThis.join(', ')}
+
+🎨 VISUAL IDENTITY:
+- Essence: ${this.visualIdentity.essence}
+- Primary Colors: ${this.visualIdentity.colors.primary.map(c => c.name).join(', ')}
+- Secondary Colors: ${this.visualIdentity.colors.secondary.map(c => c.name).join(', ')}
+- Photography Mood: ${this.visualIdentity.photography.mood}
+
+💼 SERVICES:
+- System: ${this.services.growthSystem.name}
+- Steps: ${this.services.growthSystem.steps.map(s => s.name).join(' → ')}
+
+📞 CONTACT:
+- Email: ${this.contact.email}
+- Website: ${this.contact.website}
+- Instagram: ${this.contact.instagram}
+`;
+        },
+
+        // Get context for specific content type
+        getContextForType(contentType) {
+            const strategy = this.omnichannelStrategy[contentType.replace('_', '')] || this.omnichannelStrategy.textArticle;
+            return `
+${this.getFullContext()}
+
+📱 CONTENT TYPE SPECS (${contentType}):
+- Platforms: ${strategy.platforms.join(', ')}
+- Specs: ${JSON.stringify(strategy.specs)}
+- Best Practices:
+${strategy.bestPractices.map(bp => `  • ${bp}`).join('\n')}
+`;
+        },
+
+        // Get tone guidelines
+        getToneGuidelines() {
+            return `
+TONE OF VOICE GUIDELINES:
+- Style: ${this.toneOfVoice.primary}
+- ${this.toneOfVoice.characteristics.join('\n- ')}
+
+DO:
+- ${this.toneOfVoice.doThis.join('\n- ')}
+
+DON'T:
+- ${this.toneOfVoice.avoidThis.join('\n- ')}
+
+LANGUAGE:
+- Indonesian: ${this.toneOfVoice.languageStyle.indonesian}
+- English: ${this.toneOfVoice.languageStyle.english}
+`;
+        },
+
+        // Save custom data
+        saveCustomData(key, data) {
+            const customData = JSON.parse(localStorage.getItem('lumakara-kb-custom') || '{}');
+            customData[key] = data;
+            localStorage.setItem('lumakara-kb-custom', JSON.stringify(customData));
+        },
+
+        // Get custom data
+        getCustomData(key) {
+            const customData = JSON.parse(localStorage.getItem('lumakara-kb-custom') || '{}');
+            return customData[key];
+        }
+    };
+
+    // ==================== CONFIG - OMNICHANNEL ====================
+    const Config = {
+        // Content Types sesuai Omnichannel_Distribution
+        contentTypes: {
+            text_article: { 
+                name: 'Text Article', icon: '📝', color: '#8B9A7A',
+                platforms: ['blog', 'linkedin', 'medium', 'facebook'],
+                description: 'Long-form written content for blogs and professional platforms',
+                specs: { minWords: 800, maxWords: 3000, hasImage: true, hasSEO: true }
+            },
+            text_thread: { 
+                name: 'Text Thread', icon: '🐦', color: '#6A9AB0',
+                platforms: ['twitter', 'linkedin', 'threads'],
+                description: 'Multi-post thread format for social engagement',
+                specs: { tweetCount: '5-15', charLimit: 280, hasHashtags: true }
+            },
+            video_long: { 
+                name: 'Video Long-Form', icon: '🎬', color: '#9A7A8B',
+                platforms: ['youtube', 'facebook', 'linkedin'],
+                description: 'Long-form video content (5-60 minutes)',
+                specs: { duration: '5-60 min', aspectRatio: '16:9', hasScript: true, hasThumbnail: true }
+            },
+            video_short: { 
+                name: 'Video Short-Form', icon: '📱', color: '#E07A9A',
+                platforms: ['tiktok', 'instagram', 'youtube', 'facebook'],
+                description: 'Short vertical videos (15-90 seconds)',
+                specs: { duration: '15-90 sec', aspectRatio: '9:16', hasHook: true, hasMusic: true }
+            },
+            video_story: { 
+                name: 'Video Story', icon: '⏱️', color: '#E8C468',
+                platforms: ['instagram', 'facebook', 'whatsapp', 'linkedin'],
+                description: '24-hour ephemeral content',
+                specs: { duration: '15 sec', aspectRatio: '9:16', hasStickers: true, hasPolls: true }
+            },
+            image_carousel: { 
+                name: 'Image Carousel', icon: '🎨', color: '#C4A574',
+                platforms: ['instagram', 'linkedin', 'facebook', 'twitter'],
+                description: 'Multi-slide image posts',
+                specs: { slides: '2-10', aspectRatio: '1:1 or 4:5', hasCaption: true }
+            }
+        },
+        // Platforms
+        platforms: {
+            instagram: { name: 'Instagram', icon: '📸', color: '#E1306C' },
+            tiktok: { name: 'TikTok', icon: '🎵', color: '#000000' },
+            youtube: { name: 'YouTube', icon: '📺', color: '#FF0000' },
+            twitter: { name: 'Twitter/X', icon: '🐦', color: '#1DA1F2' },
+            linkedin: { name: 'LinkedIn', icon: '💼', color: '#0077B5' },
+            facebook: { name: 'Facebook', icon: '📘', color: '#1877F2' },
+            threads: { name: 'Threads', icon: '🧵', color: '#000000' },
+            blog: { name: 'Blog', icon: '📝', color: '#FF5722' },
+            medium: { name: 'Medium', icon: '📖', color: '#00AB6C' },
+            whatsapp: { name: 'WhatsApp', icon: '💬', color: '#25D366' }
+        },
+        // Content Pillars
+        pillars: JSON.parse(localStorage.getItem('lumakara-pillars') || '["Education","Entertainment","Inspiration","Promotion","Behind the Scenes","Tips & Tricks"]'),
+        savePillars(p) { localStorage.setItem('lumakara-pillars', JSON.stringify(p)); this.pillars = p; },
+        getType(t) { return this.contentTypes[t] || { name: t, icon: '📄', color: '#666' }; },
+        getPlatforms(t) { const type = this.contentTypes[t]; return type ? type.platforms.map(p => this.platforms[p]).filter(Boolean) : []; }
+    };
+
+    // ==================== AI ====================
+    const AI = {
+        // Generate text WITH Knowledge Base context automatically
+        async generateText(prompt, options = {}) {
+            const { useKnowledgeBase = true, contentType = null } = options;
+            
+            let fullPrompt = prompt;
+            
+            // Automatically inject Knowledge Base context
+            if (useKnowledgeBase) {
+                const kbContext = contentType 
+                    ? KnowledgeBaseData.getContextForType(contentType)
+                    : KnowledgeBaseData.getFullContext();
+                
+                const toneGuidelines = KnowledgeBaseData.getToneGuidelines();
+                
+                fullPrompt = `
+${kbContext}
+
+${toneGuidelines}
+
+=== TASK ===
+${prompt}
+
+=== IMPORTANT RULES ===
+1. ALWAYS follow the brand identity and tone of voice above
+2. Content must resonate with the target audience (${KnowledgeBaseData.targetAudience.primary.name})
+3. Address their pain points: ${KnowledgeBaseData.targetAudience.primary.painPoints.slice(0, 3).join(', ')}
+4. Use the visual identity colors and style when describing visuals
+5. Include relevant content pillars: ${Object.keys(KnowledgeBaseData.contentPillars).join(', ')}
+6. End with appropriate CTA aligned with brand philosophy
+`;
+            }
+            
+            const res = await fetch('https://text.pollinations.ai/', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: [{ role: 'user', content: fullPrompt }], model: 'openai' })
+            });
+            return res.text();
+        },
+        
+        // Generate image with brand-aligned prompt
+        imageUrl(prompt, options = {}) {
+            const { style = 'brand' } = options;
+            
+            // Enhance prompt with brand visual identity
+            let enhancedPrompt = prompt;
+            if (style === 'brand') {
+                const visualStyle = `${KnowledgeBaseData.visualIdentity.essence}, ${KnowledgeBaseData.visualIdentity.photography.mood}, professional, clean, modern, using colors ${KnowledgeBaseData.visualIdentity.colors.primary[0].hex} and ${KnowledgeBaseData.visualIdentity.colors.secondary[0].hex}`;
+                enhancedPrompt = `${prompt}, ${visualStyle}`;
+            }
+            
+            return `https://image.pollinations.ai/prompt/${encodeURIComponent(enhancedPrompt)}?width=1024&height=1024&nologo=true&seed=${Date.now()}`;
+        },
+        
+        // Generate content with full Knowledge Base integration
+        async generateWithKB(topic, contentType, additionalContext = '') {
+            const typeConfig = Config.getType(contentType);
+            const kbContext = KnowledgeBaseData.getContextForType(contentType);
+            
+            const prompt = `
+${kbContext}
+
+=== CONTENT REQUEST ===
+Topic: ${topic}
+Content Type: ${typeConfig.name}
+Platforms: ${typeConfig.platforms?.join(', ') || 'Multi-platform'}
+
+${additionalContext}
+
+=== GENERATE ===
+Create ${typeConfig.name} content about "${topic}" that:
+1. Follows Lumakara's brand voice (${KnowledgeBaseData.toneOfVoice.primary})
+2. Speaks to ${KnowledgeBaseData.targetAudience.primary.name}
+3. Addresses their pain points
+4. Uses appropriate content pillar
+5. Includes relevant hashtags
+6. Has strong hook and CTA
+7. Follows platform best practices
+
+Output in Bahasa Indonesia unless specified otherwise.
+`;
+            
+            return this.generateText(prompt, { useKnowledgeBase: false });
+        }
+    };
+
+    // ==================== UTILS ====================
+    function showToast(msg, type = 'info') {
+        const c = document.getElementById('toast-container');
+        const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+        const t = document.createElement('div');
+        t.className = `toast ${type}`;
+        t.innerHTML = `${icons[type] || ''} ${msg}`;
+        c.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+    function showLoading(text = 'Loading...') { document.getElementById('loading').style.display = 'flex'; document.getElementById('loading-text').textContent = text; }
+    function hideLoading() { document.getElementById('loading').style.display = 'none'; }
+    function formatDate(d) { return d ? new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : ''; }
+    function getStatusLabel(s) { return { idea: '💡 Idea', draft: '📝 Draft', review: '👀 Review', scheduled: '📅 Scheduled', published: '✅ Published' }[s] || s; }
+
+    // ==================== APP ====================
+    const App = {
+        init() {
+            ProjectManager.init(); // Initialize Project Manager first
+            this.loadKnowledgeBase(); // Load saved KB from localStorage
+            this.setupNav();
+            this.initSampleData();
+            this.updateStats();
+            this.loadDashboard();
+            KnowledgeBase.init();
+            if (typeof UltraStudio !== 'undefined') UltraStudio.init();
+            if (typeof MagicStudio !== 'undefined') MagicStudio.init();
+            console.log('🚀 Lumakara Ultra Smart Platform initialized');
+        },
+        
+        // Load Knowledge Base from localStorage
+        loadKnowledgeBase() {
+            const savedBrand = localStorage.getItem('lumakara-kb-brand');
+            const savedAudience = localStorage.getItem('lumakara-kb-audience');
+            const savedTone = localStorage.getItem('lumakara-kb-tone');
+            
+            if (savedBrand) {
+                try { Object.assign(KnowledgeBaseData.brandIdentity, JSON.parse(savedBrand)); } catch(e) {}
+            }
+            if (savedAudience) {
+                try { Object.assign(KnowledgeBaseData.targetAudience, JSON.parse(savedAudience)); } catch(e) {}
+            }
+            if (savedTone) {
+                try { Object.assign(KnowledgeBaseData.toneOfVoice, JSON.parse(savedTone)); } catch(e) {}
+            }
+        },
+        setupNav() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => navigateTo(item.dataset.section));
+            });
+        },
+        initSampleData() {
+            if (DB.content.getAll().length === 0) {
+                [
+                    { title: 'How to Build a Personal Brand', contentType: 'text_article', status: 'published', caption: 'Building a personal brand is essential...', scheduledDate: '2024-12-15', platforms: ['linkedin', 'blog'], hashtags: '#PersonalBrand #Marketing', pillar: 'Education' },
+                    { title: '10 Tips for Better Content', contentType: 'image_carousel', status: 'scheduled', caption: 'Slide 1: Start with your audience...', scheduledDate: '2024-12-20', platforms: ['instagram'], hashtags: '#ContentCreation #Tips', pillar: 'Tips & Tricks' },
+                    { title: 'Quick Productivity Hack', contentType: 'video_short', status: 'draft', caption: 'This 30-second tip will change how you work...', platforms: ['tiktok', 'instagram'], hashtags: '#Productivity', pillar: 'Education' },
+                    { title: 'Behind the Scenes: Our Process', contentType: 'video_story', status: 'idea', caption: 'Take a look at how we create content...', platforms: ['instagram'], pillar: 'Behind the Scenes' }
+                ].forEach(c => DB.content.add(c));
+            }
+        },
+        updateStats() {
+            const contents = DB.content.getAll();
+            document.getElementById('stat-total').textContent = contents.length;
+            document.getElementById('stat-draft').textContent = contents.filter(c => c.status === 'draft').length;
+            document.getElementById('stat-scheduled').textContent = contents.filter(c => c.status === 'scheduled').length;
+            document.getElementById('stat-published').textContent = contents.filter(c => c.status === 'published').length;
+            document.getElementById('content-count').textContent = contents.length;
+        },
+        loadDashboard() {
+            this.loadRecent();
+            this.loadUpcoming();
+        },
+        loadRecent() {
+            const c = document.getElementById('recent-content');
+            const contents = DB.content.getAll().sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)).slice(0, 5);
+            if (contents.length === 0) { c.innerHTML = '<div class="empty-state small"><p>No content yet</p></div>'; return; }
+            c.innerHTML = contents.map(item => {
+                const type = Config.getType(item.contentType);
+                return `<div class="recent-item" onclick="navigateTo('content-hub'); setTimeout(() => ContentHub.openExpanded('${item.id}'), 100);">
+                    <div class="recent-icon" style="background:${type.color}20;color:${type.color};">${type.icon}</div>
+                    <div class="recent-info"><div class="recent-title">${item.title || 'Untitled'}</div><div class="recent-meta">${type.name} • ${item.status}</div></div>
+                    <div class="recent-date">${formatDate(item.createdAt)}</div>
+                </div>`;
+            }).join('');
+        },
+        loadUpcoming() {
+            const c = document.getElementById('upcoming-content');
+            const contents = DB.content.getAll().filter(item => item.scheduledDate && item.status === 'scheduled').sort((a, b) => new Date(a.scheduledDate) - new Date(b.scheduledDate)).slice(0, 5);
+            if (contents.length === 0) { c.innerHTML = '<div class="empty-state small"><p>No scheduled content</p></div>'; return; }
+            c.innerHTML = contents.map(item => {
+                const type = Config.getType(item.contentType);
+                return `<div class="recent-item" onclick="navigateTo('content-hub'); setTimeout(() => ContentHub.openExpanded('${item.id}'), 100);">
+                    <div class="recent-icon" style="background:${type.color}20;color:${type.color};">${type.icon}</div>
+                    <div class="recent-info"><div class="recent-title">${item.title || 'Untitled'}</div><div class="recent-meta">${type.name}</div></div>
+                    <div class="recent-date">${formatDate(item.scheduledDate)}</div>
+                </div>`;
+            }).join('');
+        }
+    };
+
+    function navigateTo(section) {
+        console.log('Navigating to:', section);
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.section === section));
+        document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === section));
+        
+        // Initialize section-specific components
+        switch(section) {
+            case 'dashboard':
+                App.loadDashboard();
+                break;
+            case 'content-hub':
+                // Initialize immediately, DOM should be ready since section is now visible
+                console.log('Navigating to content-hub, calling ContentHub.init()');
+                ContentHub.init();
+                // Also initialize ContentHubUltra if available
+                if (typeof ContentHubUltra !== 'undefined') {
+                    ContentHubUltra.init();
+                }
+                App.updateStats();
+                break;
+            case 'knowledge-base':
+                KnowledgeBase.init();
+                break;
+            case 'magic-studio':
+                if (typeof MagicStudio !== 'undefined') MagicStudio.init();
+                break;
+            case 'generator':
+                Generator.init();
+                break;
+        }
+    }
+    // ==================== PROJECT MANAGEMENT ====================
+    const ProjectManager = {
+        projects: JSON.parse(localStorage.getItem('lumakara-projects') || '[]'),
+        activeProject: localStorage.getItem('lumakara-active-project') || null,
+        
+        init() {
+            // Create default project if none exists
+            if (this.projects.length === 0) {
+                this.createProject('Lumakara Default', 'Default workspace');
+            }
+            this.renderProjectSelector();
+            this.loadActiveProject();
+        },
+        
+        createProject(name, description = '') {
+            const project = {
+                id: Date.now().toString(),
+                name: name,
+                description: description,
+                createdAt: new Date().toISOString(),
+                knowledgeBase: JSON.parse(JSON.stringify(KnowledgeBaseData)) // Clone KB
+            };
+            this.projects.push(project);
+            this.save();
+            this.setActive(project.id);
+            return project;
+        },
+        
+        setActive(projectId) {
+            this.activeProject = projectId;
+            localStorage.setItem('lumakara-active-project', projectId);
+            this.loadActiveProject();
+            this.renderProjectSelector();
+        },
+        
+        loadActiveProject() {
+            const project = this.projects.find(p => p.id === this.activeProject);
+            if (project) {
+                document.getElementById('project-name-sidebar').textContent = project.name;
+                // Load project's Knowledge Base if exists
+                if (project.knowledgeBase) {
+                    Object.assign(KnowledgeBaseData.brandIdentity, project.knowledgeBase.brandIdentity || {});
+                    Object.assign(KnowledgeBaseData.targetAudience, project.knowledgeBase.targetAudience || {});
+                    Object.assign(KnowledgeBaseData.toneOfVoice, project.knowledgeBase.toneOfVoice || {});
+                }
+            }
+        },
+        
+        renderProjectSelector() {
+            const select = document.getElementById('project-select');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Pilih Project...</option>' + 
+                this.projects.map(p => `<option value="${p.id}" ${p.id === this.activeProject ? 'selected' : ''}>${p.name}</option>`).join('');
+        },
+        
+        save() {
+            localStorage.setItem('lumakara-projects', JSON.stringify(this.projects));
+        },
+        
+        saveCurrentKB() {
+            const project = this.projects.find(p => p.id === this.activeProject);
+            if (project) {
+                project.knowledgeBase = JSON.parse(JSON.stringify(KnowledgeBaseData));
+                this.save();
+            }
+        },
+        
+        deleteProject(projectId) {
+            this.projects = this.projects.filter(p => p.id !== projectId);
+            this.save();
+            if (this.activeProject === projectId) {
+                this.activeProject = this.projects[0]?.id || null;
+                localStorage.setItem('lumakara-active-project', this.activeProject);
+                this.loadActiveProject();
+            }
+            this.renderProjectSelector();
+        },
+        
+        getActive() {
+            return this.projects.find(p => p.id === this.activeProject);
+        }
+    };
+    
+    function switchProject(id) { 
+        if (!id) return;
+        ProjectManager.setActive(id);
+        showToast(`Switched to project: ${ProjectManager.getActive()?.name}`, 'success');
+        // Refresh Knowledge Base display
+        if (typeof KnowledgeBase !== 'undefined') KnowledgeBase.init();
+    }
+    
+    function openProjectModal() { 
+        const modal = document.getElementById('expanded-modal');
+        const content = document.getElementById('expanded-content');
+        
+        content.innerHTML = `
+            <div style="padding:24px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                    <h2 style="color:var(--text-primary);margin:0;">📁 Project Management</h2>
+                    <button onclick="ContentHub.closeExpanded()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-muted);">×</button>
+                </div>
+                
+                <!-- Create New Project -->
+                <div style="background:var(--bg-muted);padding:16px;border-radius:12px;margin-bottom:24px;">
+                    <h3 style="color:var(--text-primary);margin:0 0 12px 0;font-size:14px;">➕ Create New Project</h3>
+                    <div style="display:flex;gap:12px;">
+                        <input type="text" id="new-project-name" placeholder="Project name..." style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        <button class="btn-primary" onclick="createNewProject()">Create</button>
+                    </div>
+                </div>
+                
+                <!-- Project List -->
+                <div>
+                    <h3 style="color:var(--text-primary);margin:0 0 12px 0;font-size:14px;">📋 Your Projects</h3>
+                    <div id="project-list" style="display:flex;flex-direction:column;gap:8px;">
+                        ${ProjectManager.projects.map(p => `
+                            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:${p.id === ProjectManager.activeProject ? 'var(--primary)' : 'var(--bg-card)'};border-radius:8px;border:1px solid var(--border);">
+                                <div>
+                                    <div style="font-weight:600;color:${p.id === ProjectManager.activeProject ? 'white' : 'var(--text-primary)'};">${p.name}</div>
+                                    <div style="font-size:11px;color:${p.id === ProjectManager.activeProject ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)'};">Created: ${new Date(p.createdAt).toLocaleDateString()}</div>
+                                </div>
+                                <div style="display:flex;gap:8px;">
+                                    ${p.id !== ProjectManager.activeProject ? `<button class="btn-ghost" onclick="switchProject('${p.id}'); ContentHub.closeExpanded();">Select</button>` : '<span style="color:white;font-size:11px;">✓ Active</span>'}
+                                    ${ProjectManager.projects.length > 1 ? `<button class="btn-ghost" onclick="deleteProject('${p.id}')" style="color:var(--danger);">🗑️</button>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        modal.classList.add('show');
+    }
+    
+    function createNewProject() {
+        const name = document.getElementById('new-project-name')?.value;
+        if (!name) { showToast('Enter project name', 'warning'); return; }
+        
+        ProjectManager.createProject(name);
+        showToast(`Project "${name}" created!`, 'success');
+        ContentHub.closeExpanded();
+    }
+    
+    function deleteProject(projectId) {
+        if (confirm('Delete this project?')) {
+            ProjectManager.deleteProject(projectId);
+            showToast('Project deleted', 'success');
+            openProjectModal(); // Refresh modal
+        }
+    }
+    
+    function filterByStatus(status) { navigateTo('content-hub'); setTimeout(() => ContentHub.setFilter(status), 100); }
+
+    async function quickGenerate() {
+        const topic = document.getElementById('quick-gen-topic')?.value;
+        const type = document.getElementById('quick-gen-type')?.value;
+        if (!topic) { showToast('Please enter a topic', 'warning'); return; }
+        
+        showLoading('Generating with Knowledge Base...');
+        
+        try {
+            // Get platform defaults based on content type
+            const platformsByType = {
+                'text_article': ['blog', 'linkedin', 'medium'],
+                'text_thread': ['twitter', 'threads'],
+                'video_short': ['tiktok', 'instagram', 'youtube'],
+                'video_story': ['instagram', 'facebook', 'whatsapp'],
+                'video_long': ['youtube'],
+                'image_carousel': ['instagram', 'linkedin', 'facebook']
+            };
+            
+            const pillar = detectPillar(topic);
+            const platforms = platformsByType[type] || ['instagram'];
+            
+            // Create content entry first
+            const content = DB.content.add({ 
+                title: topic, 
+                contentType: type, 
+                status: 'draft', 
+                platforms: platforms,
+                pillar: pillar
+            });
+            
+            hideLoading();
+            showToast('Opening editor with AI generation...', 'success');
+            App.updateStats();
+            
+            // Navigate to content hub and open the full editor with ContentHubUltra
+            navigateTo('content-hub');
+            
+            // Use ContentHubUltra's full editor which has dynamic fields
+            setTimeout(() => {
+                if (typeof ContentHubUltra !== 'undefined') {
+                    ContentHubUltra.openFullEditor(content.id);
+                    // Auto-trigger AI generation after editor opens
+                    setTimeout(() => {
+                        ContentHubUltra.generateAIContent();
+                    }, 300);
+                } else {
+                    // Fallback to ContentHub if Ultra not available
+                    ContentHub.openExpanded(content.id);
+                }
+            }, 200);
+            
+        } catch (e) { 
+            hideLoading(); 
+            showToast('Generation failed', 'error'); 
+            console.error(e); 
+        }
+    }
+    
+    // Auto-detect content pillar based on topic
+    function detectPillar(topic) {
+        const topicLower = topic.toLowerCase();
+        if (topicLower.includes('tips') || topicLower.includes('cara') || topicLower.includes('how')) return 'Tips & Tricks';
+        if (topicLower.includes('belajar') || topicLower.includes('panduan') || topicLower.includes('guide')) return 'Education';
+        if (topicLower.includes('cerita') || topicLower.includes('story') || topicLower.includes('inspirasi')) return 'Inspiration';
+        if (topicLower.includes('promo') || topicLower.includes('diskon') || topicLower.includes('offer')) return 'Promotion';
+        if (topicLower.includes('behind') || topicLower.includes('proses') || topicLower.includes('tim')) return 'Behind the Scenes';
+        return 'Education'; // Default
+    }
+
+    // ==================== CONTENT HUB ====================
+    const ContentHub = {
+        view: 'simple', filter: 'all', calendarDate: new Date(),
+        init() { 
+            console.log('=== ContentHub.init() START ===');
+            
+            // Force fresh read from localStorage
+            const items = DB.content.getAll();
+            console.log('Items from DB:', items);
+            
+            // Reset ALL filters
+            this.filter = 'all';
+            this.view = 'simple';
+            
+            // Update filter chips UI
+            document.querySelectorAll('.filter-chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.filter === 'all');
+            });
+            
+            // Update view tabs UI
+            document.querySelectorAll('.hub-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.view === 'simple');
+            });
+            document.querySelectorAll('.hub-view').forEach(v => {
+                v.classList.toggle('active', v.id === 'simple-view');
+            });
+            
+            // Clear search
+            const searchInput = document.getElementById('hub-search');
+            if (searchInput) searchInput.value = '';
+            
+            // Reset type filter
+            const typeFilter = document.getElementById('filter-type');
+            if (typeFilter) typeFilter.value = 'all';
+            
+            // Now render
+            console.log('Calling render()...');
+            this.render();
+            console.log('=== ContentHub.init() END ===');
+        },
+        switchView(v) {
+            this.view = v;
+            document.querySelectorAll('.hub-tab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+            document.querySelectorAll('.hub-view').forEach(view => view.classList.toggle('active', view.id === `${v}-view`));
+            this.render();
+        },
+        setFilter(f) {
+            this.filter = f;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.filter === f));
+            this.render();
+        },
+        filter() { this.render(); },
+        getFiltered() {
+            let contents = DB.content.getAll();
+            console.log('getFiltered - raw contents:', contents.length);
+            
+            const search = document.getElementById('hub-search')?.value?.toLowerCase() || '';
+            const type = document.getElementById('filter-type')?.value || 'all';
+            
+            console.log('Filters - search:', search, 'type:', type, 'status:', this.filter);
+            
+            if (search) {
+                contents = contents.filter(c => 
+                    (c.title?.toLowerCase() || '').includes(search) || 
+                    (c.caption?.toLowerCase() || '').includes(search)
+                );
+            }
+            if (this.filter && this.filter !== 'all') {
+                contents = contents.filter(c => c.status === this.filter);
+            }
+            if (type && type !== 'all') {
+                contents = contents.filter(c => c.contentType === type);
+            }
+            
+            console.log('getFiltered - after filters:', contents.length);
+            return contents;
+        },
+        render() {
+            console.log('=== ContentHub.render() ===');
+            console.log('Current view:', this.view);
+            console.log('Current filter:', this.filter);
+            
+            const contents = this.getFiltered();
+            console.log('Filtered contents:', contents.length);
+            
+            if (this.view === 'simple') this.renderSimple(contents);
+            else if (this.view === 'full') this.renderFull(contents);
+            else if (this.view === 'kanban') this.renderKanban(contents);
+            else if (this.view === 'calendar') this.renderCalendar(contents);
+        },
+        renderSimple(contents) {
+            const tbody = document.getElementById('simple-table-body');
+            const rowCount = document.getElementById('simple-row-count');
+            
+            if (!tbody) {
+                console.error('simple-table-body not found');
+                return;
+            }
+            
+            if (rowCount) rowCount.textContent = `${contents.length} items`;
+            
+            console.log('renderSimple - contents:', contents.length);
+            
+            if (contents.length === 0) { 
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);"><p>No content yet. Click "+ New Content" to create your first content.</p></td></tr>'; 
+                return; 
+            }
+            tbody.innerHTML = contents.map(c => {
+                const type = Config.getType(c.contentType);
+                const platforms = (c.platforms || []).map(p => Config.platforms[p]?.icon || '').join(' ');
+                const kbBadge = c.generatedWithKB ? '<span style="background:var(--success);color:white;padding:1px 6px;border-radius:8px;font-size:9px;margin-left:6px;" title="Generated with Knowledge Base">KB</span>' : '';
+                return `<tr data-id="${c.id}">
+                    <td><input type="checkbox"></td>
+                    <td><span class="cell-title" onclick="ContentHub.openExpanded('${c.id}')">${c.title || 'Untitled'}${kbBadge}</span></td>
+                    <td><span class="cell-type" style="background:${type.color}20;color:${type.color};">${type.icon} ${type.name}</span></td>
+                    <td>${platforms}</td>
+                    <td><span class="cell-status ${c.status}">${getStatusLabel(c.status)}</span></td>
+                    <td>${c.scheduledDate || '-'}</td>
+                    <td><button class="action-btn" onclick="ContentHub.openExpanded('${c.id}')">✏️</button><button class="action-btn" onclick="ContentHub.delete('${c.id}')">🗑️</button></td>
+                </tr>`;
+            }).join('');
+        },
+        renderFull(contents) {
+            const tbody = document.getElementById('airtable-body');
+            document.getElementById('full-row-count').textContent = `${contents.length} items`;
+            if (contents.length === 0) { tbody.innerHTML = '<tr><td colspan="12" class="empty-state small"><p>No content</p></td></tr>'; return; }
+            tbody.innerHTML = contents.map(c => {
+                const type = Config.getType(c.contentType);
+                const platforms = (c.platforms || []).map(p => `<span class="platform-icon" title="${Config.platforms[p]?.name}">${Config.platforms[p]?.icon || ''}</span>`).join('');
+                const hashtags = c.hashtags?.split(' ').filter(h => h.startsWith('#')).slice(0, 3).map(h => `<span class="hashtag">${h}</span>`).join('') || '';
+                return `<tr data-id="${c.id}">
+                    <td><input type="checkbox"></td>
+                    <td><button class="expand-btn" onclick="ContentHub.openExpanded('${c.id}')">⤢</button></td>
+                    <td><span class="cell-title" onclick="ContentHub.openExpanded('${c.id}')">${c.title || 'Untitled'}</span></td>
+                    <td><span class="cell-type" style="background:${type.color}20;color:${type.color};">${type.icon} ${type.name}</span></td>
+                    <td><div class="cell-platforms">${platforms}</div></td>
+                    <td><select class="cell-status ${c.status}" onchange="ContentHub.updateField('${c.id}', 'status', this.value); this.className='cell-status '+this.value;">
+                        <option value="idea" ${c.status === 'idea' ? 'selected' : ''}>💡 Idea</option>
+                        <option value="draft" ${c.status === 'draft' ? 'selected' : ''}>📝 Draft</option>
+                        <option value="review" ${c.status === 'review' ? 'selected' : ''}>👀 Review</option>
+                        <option value="scheduled" ${c.status === 'scheduled' ? 'selected' : ''}>📅 Scheduled</option>
+                        <option value="published" ${c.status === 'published' ? 'selected' : ''}>✅ Published</option>
+                    </select></td>
+                    <td><input type="date" class="cell-date" value="${c.scheduledDate || ''}" onchange="ContentHub.updateField('${c.id}', 'scheduledDate', this.value)"></td>
+                    <td>${c.imageUrl ? `<img src="${c.imageUrl}" class="media-thumb" onclick="window.open('${c.imageUrl}')" onerror="this.style.display='none'">` : `<div class="media-placeholder" onclick="ContentHub.openExpanded('${c.id}')">+</div>`}</td>
+                    <td><div class="cell-caption" onclick="ContentHub.openExpanded('${c.id}')">${c.caption?.substring(0, 40) || 'Click to add...'}</div></td>
+                    <td><div class="cell-hashtags">${hashtags}</div></td>
+                    <td><span class="cell-pillar">${c.pillar || '-'}</span></td>
+                    <td><button class="action-btn" onclick="ContentHub.duplicate('${c.id}')">📋</button><button class="action-btn" onclick="ContentHub.delete('${c.id}')">🗑️</button></td>
+                </tr>`;
+            }).join('');
+        },
+        renderKanban(contents) {
+            ['idea', 'draft', 'review', 'scheduled', 'published'].forEach(status => {
+                const container = document.getElementById(`kanban-${status}`);
+                const countEl = document.getElementById(`kanban-count-${status}`);
+                const items = contents.filter(c => c.status === status);
+                if (countEl) countEl.textContent = items.length;
+                if (container) {
+                    container.innerHTML = items.map(c => {
+                        const type = Config.getType(c.contentType);
+                        return `<div class="kanban-card" draggable="true" data-id="${c.id}" onclick="ContentHub.openExpanded('${c.id}')">
+                            ${c.imageUrl ? `<img src="${c.imageUrl}" class="kanban-card-image" onerror="this.style.display='none'">` : ''}
+                            <div class="kanban-card-title">${c.title || 'Untitled'}</div>
+                            <div class="kanban-card-meta"><span style="color:${type.color};">${type.icon}</span><span>${c.scheduledDate || ''}</span></div>
+                        </div>`;
+                    }).join('') || '<p style="text-align:center;color:var(--text-muted);padding:20px;font-size:12px;">No items</p>';
+                }
+            });
+            this.setupKanbanDrag();
+        },
+        setupKanbanDrag() {
+            let draggedId = null;
+            document.querySelectorAll('.kanban-card').forEach(card => {
+                card.addEventListener('dragstart', () => { draggedId = card.dataset.id; card.classList.add('dragging'); });
+                card.addEventListener('dragend', () => card.classList.remove('dragging'));
+            });
+            document.querySelectorAll('.kanban-column').forEach(col => {
+                col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
+                col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+                col.addEventListener('drop', e => {
+                    e.preventDefault(); col.classList.remove('drag-over');
+                    if (draggedId) { this.updateField(draggedId, 'status', col.dataset.status); this.render(); showToast('Status updated!', 'success'); }
+                });
+            });
+        },
+        renderCalendar(contents) {
+            const grid = document.getElementById('hub-calendar-grid');
+            const label = document.getElementById('hub-calendar-month');
+            const now = this.calendarDate;
+            const month = now.getMonth(), year = now.getFullYear();
+            label.textContent = now.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const scheduled = contents.filter(c => c.scheduledDate);
+            let html = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => `<div style="text-align:center;font-weight:600;font-size:11px;padding:8px;color:var(--text-muted);">${d}</div>`).join('');
+            for (let i = 0; i < firstDay; i++) html += '<div></div>';
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayContents = scheduled.filter(c => c.scheduledDate === dateStr);
+                const isToday = new Date().toDateString() === new Date(year, month, day).toDateString();
+                html += `<div style="min-height:70px;padding:6px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;${isToday ? 'border-color:var(--primary);' : ''}">
+                    <div style="font-weight:600;font-size:12px;margin-bottom:4px;${isToday ? 'color:var(--primary);' : ''}">${day}</div>
+                    ${dayContents.slice(0, 2).map(c => `<div style="font-size:9px;padding:2px 4px;background:var(--primary);color:white;border-radius:3px;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;" onclick="ContentHub.openExpanded('${c.id}')">${c.title || 'Untitled'}</div>`).join('')}
+                    ${dayContents.length > 2 ? `<div style="font-size:9px;color:var(--text-muted);">+${dayContents.length - 2}</div>` : ''}
+                </div>`;
+            }
+            grid.innerHTML = html;
+        },
+        changeMonth(delta) { this.calendarDate.setMonth(this.calendarDate.getMonth() + delta); this.render(); },
+        openExpanded(id) {
+            // Use ContentHubUltra's full editor with dynamic fields
+            if (typeof ContentHubUltra !== 'undefined') {
+                ContentHubUltra.openFullEditor(id);
+                return;
+            }
+            
+            // Fallback to simple modal if ContentHubUltra not available
+            const c = DB.content.getById(id);
+            if (!c) return;
+            const type = Config.getType(c.contentType);
+            const modal = document.getElementById('expanded-modal');
+            const content = document.getElementById('expanded-content');
+            const platformOptions = Object.entries(Config.platforms).map(([k, v]) => 
+                `<label style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:${c.platforms?.includes(k) ? 'var(--primary)' : 'var(--bg-muted)'};color:${c.platforms?.includes(k) ? 'white' : 'var(--text-secondary)'};border-radius:6px;cursor:pointer;font-size:12px;margin:2px;">
+                    <input type="checkbox" ${c.platforms?.includes(k) ? 'checked' : ''} onchange="ContentHub.togglePlatform('${id}', '${k}')" style="display:none;">${v.icon} ${v.name}
+                </label>`
+            ).join('');
+            content.innerHTML = `
+                <div class="expanded-header">
+                    <div style="flex:1;">
+                        <input type="text" value="${c.title || ''}" placeholder="Untitled" onchange="ContentHub.updateField('${id}', 'title', this.value)" style="font-size:20px;font-weight:600;border:none;background:transparent;width:100%;color:var(--text-primary);">
+                        <div style="display:flex;gap:10px;margin-top:8px;">
+                            <span class="cell-type" style="background:${type.color}20;color:${type.color};">${type.icon} ${type.name}</span>
+                            <span class="cell-status ${c.status}">${getStatusLabel(c.status)}</span>
+                        </div>
+                    </div>
+                    <button onclick="ContentHub.closeExpanded()" style="padding:8px;border:none;background:var(--bg-muted);border-radius:8px;cursor:pointer;font-size:18px;color:var(--text-secondary);">✕</button>
+                </div>
+                <div class="expanded-body">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group"><label>Content Type</label>
+                            <select onchange="ContentHub.updateField('${id}', 'contentType', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);">
+                                ${Object.entries(Config.contentTypes).map(([k, v]) => `<option value="${k}" ${c.contentType === k ? 'selected' : ''}>${v.icon} ${v.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Status</label>
+                            <select onchange="ContentHub.updateField('${id}', 'status', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);">
+                                <option value="idea" ${c.status === 'idea' ? 'selected' : ''}>💡 Idea</option>
+                                <option value="draft" ${c.status === 'draft' ? 'selected' : ''}>📝 Draft</option>
+                                <option value="review" ${c.status === 'review' ? 'selected' : ''}>👀 Review</option>
+                                <option value="scheduled" ${c.status === 'scheduled' ? 'selected' : ''}>📅 Scheduled</option>
+                                <option value="published" ${c.status === 'published' ? 'selected' : ''}>✅ Published</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Scheduled Date</label><input type="date" value="${c.scheduledDate || ''}" onchange="ContentHub.updateField('${id}', 'scheduledDate', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);"></div>
+                        <div class="form-group"><label>Content Pillar</label>
+                            <select onchange="ContentHub.updateField('${id}', 'pillar', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);">
+                                <option value="">Select...</option>
+                                ${Config.pillars.map(p => `<option value="${p}" ${c.pillar === p ? 'selected' : ''}>${p}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;"><label>Platforms</label><div style="display:flex;flex-wrap:wrap;gap:4px;">${platformOptions}</div></div>
+                        <div class="form-group" style="grid-column:1/-1;"><label>Image URL</label><input type="text" value="${c.imageUrl || ''}" placeholder="https://..." onchange="ContentHub.updateField('${id}', 'imageUrl', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);">
+                            ${c.imageUrl ? `<img src="${c.imageUrl}" style="max-width:200px;margin-top:10px;border-radius:8px;" onerror="this.style.display='none'">` : ''}
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;"><label>Caption / Content</label><textarea rows="5" onchange="ContentHub.updateField('${id}', 'caption', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);">${c.caption || ''}</textarea></div>
+                        <div class="form-group" style="grid-column:1/-1;"><label>Hashtags</label><input type="text" value="${c.hashtags || ''}" placeholder="#hashtag1 #hashtag2" onchange="ContentHub.updateField('${id}', 'hashtags', this.value)" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-input);color:var(--text-primary);"></div>
+                    </div>
+                </div>
+                <div class="expanded-footer">
+                    <div style="display:flex;gap:10px;"><button class="btn-secondary" onclick="ContentHub.generateAI('${id}')">⚡ Generate AI</button><button class="btn-secondary" onclick="navigateTo('magic-studio')">🔮 Magic Studio</button></div>
+                    <div style="display:flex;gap:10px;"><button class="btn-secondary" onclick="ContentHub.duplicate('${id}')">📋 Duplicate</button><button class="btn-danger" onclick="ContentHub.delete('${id}'); ContentHub.closeExpanded();">🗑️ Delete</button></div>
+                </div>`;
+            modal.classList.add('show');
+        },
+        closeExpanded() { document.getElementById('expanded-modal').classList.remove('show'); this.render(); App.updateStats(); },
+        updateField(id, field, value) { DB.content.update(id, { [field]: value }); },
+        togglePlatform(id, platform) {
+            const c = DB.content.getById(id);
+            let platforms = c.platforms || [];
+            if (platforms.includes(platform)) platforms = platforms.filter(p => p !== platform);
+            else platforms.push(platform);
+            this.updateField(id, 'platforms', platforms);
+            this.openExpanded(id);
+        },
+        createNew() { const c = DB.content.add({ title: '', contentType: 'text_article', status: 'draft', platforms: [] }); this.openExpanded(c.id); },
+        createWithStatus(status) { const c = DB.content.add({ title: '', contentType: 'text_article', status: status, platforms: [] }); this.openExpanded(c.id); },
+        delete(id) { if (confirm('Delete?')) { DB.content.delete(id); this.render(); App.updateStats(); showToast('Deleted', 'success'); } },
+        duplicate(id) { const o = DB.content.getById(id); if (!o) return; const d = { ...o }; delete d.id; d.title = `${o.title || 'Untitled'} (Copy)`; d.status = 'draft'; DB.content.add(d); this.render(); showToast('Duplicated!', 'success'); },
+        selectAll(cb) { document.querySelectorAll('tbody input[type="checkbox"]').forEach(c => c.checked = cb.checked); },
+        async generateAI(id) {
+            const c = DB.content.getById(id);
+            if (!c?.title) { showToast('Add title first', 'warning'); return; }
+            showLoading('Generating with Knowledge Base...');
+            try {
+                // Use full Knowledge Base integration
+                const result = await AI.generateWithKB(c.title, c.contentType, `Pillar: ${c.pillar || 'Education'}`);
+                this.updateField(id, 'caption', result);
+                this.updateField(id, 'imageUrl', AI.imageUrl(c.title, { style: 'brand' }));
+                this.updateField(id, 'generatedWithKB', true);
+                if (!c.pillar) this.updateField(id, 'pillar', detectPillar(c.title));
+                hideLoading(); showToast('Generated with Knowledge Base!', 'success');
+                this.openExpanded(id);
+            } catch (e) { hideLoading(); showToast('Failed', 'error'); console.error(e); }
+        },
+        exportAll() {
+            const csv = Papa.unparse(DB.content.getAll());
+            saveAs(new Blob([csv], { type: 'text/csv' }), `content-${Date.now()}.csv`);
+            showToast('Exported!', 'success');
+        }
+    };
+
+    // ==================== GENERATOR (INTEGRATED WITH CONTENT HUB) ====================
+    const Generator = {
+        source: 'new',
+        loadedContent: null,
+        generatedResults: [],
+        
+        init() {
+            this.populateContentSelect();
+        },
+        
+        populateContentSelect() {
+            const select = document.getElementById('gen-content-select');
+            if (!select) return;
+            const contents = DB.content.getAll();
+            select.innerHTML = '<option value="">Select existing content...</option>' + 
+                contents.map(c => `<option value="${c.id}">${c.title || 'Untitled'} (${Config.getType(c.contentType).name})</option>`).join('');
+        },
+        
+        setSource(source) {
+            this.source = source;
+            document.querySelectorAll('.source-btn').forEach(btn => {
+                const isActive = btn.dataset.source === source;
+                btn.style.background = isActive ? 'var(--primary)' : 'var(--bg-muted)';
+                btn.style.borderColor = isActive ? 'var(--primary)' : 'var(--border)';
+                btn.style.color = isActive ? 'white' : 'var(--text-primary)';
+            });
+            
+            const contentSelect = document.getElementById('gen-content-select');
+            if (contentSelect) {
+                contentSelect.style.display = source === 'existing' ? 'block' : 'none';
+                if (source === 'existing') this.populateContentSelect();
+            }
+            
+            if (source === 'new') {
+                this.loadedContent = null;
+                document.getElementById('gen-topic').value = '';
+            }
+        },
+        
+        loadFromHub(contentId) {
+            if (!contentId) return;
+            const content = DB.content.getById(contentId);
+            if (!content) return;
+            
+            this.loadedContent = content;
+            document.getElementById('gen-topic').value = content.title || '';
+            if (content.pillar) document.getElementById('gen-pillar').value = content.pillar;
+            
+            // Check the content type checkbox
+            document.querySelectorAll('#gen-types-grid input[type="checkbox"]').forEach(cb => {
+                cb.checked = cb.value === content.contentType;
+            });
+            
+            showToast(`Loaded: ${content.title}`, 'success');
+        },
+        
+        getSelectedTypes() {
+            const types = [];
+            document.querySelectorAll('#gen-types-grid input[type="checkbox"]:checked').forEach(cb => {
+                types.push(cb.value);
+            });
+            return types;
+        },
+        
+        // Calculate ideal posting date based on content type and best practices
+        getIdealDate(contentType, index = 0) {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
+            
+            // Best posting days by content type (based on social media best practices)
+            const bestDays = {
+                'text_article': [2, 3, 4], // Tue, Wed, Thu - best for long-form content
+                'text_thread': [1, 2, 3, 4], // Mon-Thu - best for Twitter engagement
+                'video_short': [2, 4, 6], // Tue, Thu, Sat - best for TikTok/Reels
+                'video_long': [4, 5, 6], // Thu, Fri, Sat - best for YouTube
+                'video_story': [1, 3, 5], // Mon, Wed, Fri - spread throughout week
+                'image_carousel': [2, 3, 4, 5] // Tue-Fri - best for Instagram
+            };
+            
+            // Get best days for this content type, default to weekdays
+            const idealDays = bestDays[contentType] || [1, 2, 3, 4, 5];
+            
+            // Find next ideal day, starting from tomorrow + index offset
+            let targetDate = new Date(today);
+            targetDate.setDate(today.getDate() + 1 + (index * 2)); // Spread content 2 days apart
+            
+            // Adjust to next ideal day
+            let attempts = 0;
+            while (!idealDays.includes(targetDate.getDay()) && attempts < 7) {
+                targetDate.setDate(targetDate.getDate() + 1);
+                attempts++;
+            }
+            
+            // Format as YYYY-MM-DD
+            return targetDate.toISOString().split('T')[0];
+        },
+        
+        async generateAll() {
+            const topic = document.getElementById('gen-topic')?.value;
+            const types = this.getSelectedTypes();
+            const tone = document.getElementById('gen-tone')?.value;
+            const pillar = document.getElementById('gen-pillar')?.value || 'Education';
+            
+            if (!topic) { showToast('Enter a topic', 'warning'); return; }
+            if (types.length === 0) { showToast('Select at least one content type', 'warning'); return; }
+            
+            this.generatedResults = [];
+            const resultsContainer = document.getElementById('generator-results');
+            resultsContainer.innerHTML = '<div style="text-align:center;padding:40px;"><div class="loading-spinner"></div><p style="margin-top:16px;color:var(--text-muted);">Generating content...</p></div>';
+            
+            showLoading(`Generating ${types.length} content types...`);
+            
+            let index = 0;
+            for (const type of types) {
+                try {
+                    const typeConfig = Config.getType(type);
+                    document.getElementById('loading-text').textContent = `Generating ${typeConfig.name}...`;
+                    
+                    const result = await AI.generateWithKB(topic, type, `Tone: ${tone}, Pillar: ${pillar}`);
+                    
+                    // Calculate ideal scheduled date
+                    const scheduledDate = this.getIdealDate(type, index);
+                    
+                    const content = DB.content.add({
+                        title: `${topic} - ${typeConfig.name}`,
+                        contentType: type,
+                        caption: result,
+                        imageUrl: AI.imageUrl(topic, { style: 'brand' }),
+                        status: 'scheduled', // Auto-set to scheduled since we have a date
+                        scheduledDate: scheduledDate,
+                        tone,
+                        pillar,
+                        platforms: typeConfig.platforms || [],
+                        generatedWithKB: true,
+                        parentTopic: topic
+                    });
+                    
+                    this.generatedResults.push(content);
+                    index++;
+                } catch (e) {
+                    console.error(`Failed to generate ${type}:`, e);
+                }
+            }
+            
+            hideLoading();
+            this.showResults();
+            App.updateStats();
+            showToast(`Generated ${this.generatedResults.length} content items with optimal scheduling!`, 'success');
+        },
+        
+        showResults() {
+            const container = document.getElementById('generator-results');
+            if (this.generatedResults.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="text-align:center;padding:40px;"><p style="color:var(--text-muted);">No results generated</p></div>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);">
+                    <h3 style="color:var(--success);margin:0;">✅ Generated ${this.generatedResults.length} Items</h3>
+                    <button class="btn-primary" onclick="navigateTo('content-hub')">View in Content Hub →</button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px;max-height:500px;overflow-y:auto;">
+                    ${this.generatedResults.map(c => {
+                        const type = Config.getType(c.contentType);
+                        return `
+                            <div style="background:var(--bg-muted);padding:16px;border-radius:10px;border:1px solid var(--border);">
+                                <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+                                    <div>
+                                        <span style="background:${type.color}20;color:${type.color};padding:4px 8px;border-radius:6px;font-size:11px;font-weight:500;">${type.icon} ${type.name}</span>
+                                        <h4 style="margin:8px 0 4px;color:var(--text-primary);font-size:14px;">${c.title}</h4>
+                                    </div>
+                                    <div style="display:flex;gap:6px;">
+                                        <button class="btn-ghost" onclick="ContentHub.openExpanded('${c.id}')" style="padding:6px 10px;font-size:11px;">✏️ Edit</button>
+                                        <button class="btn-ghost" onclick="navigator.clipboard.writeText(DB.content.getById('${c.id}')?.caption || ''); showToast('Copied!', 'success');" style="padding:6px 10px;font-size:11px;">📋</button>
+                                    </div>
+                                </div>
+                                <p style="font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5;">${(c.caption || '').substring(0, 150)}...</p>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+    };
+
+    // ==================== OPAL HUB ====================
+    const OpalHub = {
+        selectedWorkflow: 'complete',
+        generatedPrompt: '',
+        workflows: [
+            { id: 'complete', name: 'Complete Package', icon: '📦', desc: 'All content types', outputs: 'Article + Thread + Carousel + Video' },
+            { id: 'article', name: 'SEO Article', icon: '📝', desc: '10 article variations', outputs: '10 articles + meta' },
+            { id: 'thread', name: 'Viral Thread', icon: '🐦', desc: '10 thread variations', outputs: '10 threads + hashtags' },
+            { id: 'carousel', name: 'Carousel', icon: '🎨', desc: '10 slides + 3 styles', outputs: '30 images + captions' },
+            { id: 'video', name: 'Video Script', icon: '📱', desc: '10 script variations', outputs: '10 scripts + music' },
+            { id: 'hashtag', name: 'Hashtag Research', icon: '#️⃣', desc: 'Comprehensive research', outputs: '30+ hashtags' }
+        ],
+        init() {
+            const container = document.getElementById('opal-workflows');
+            if (!container) return;
+            container.innerHTML = this.workflows.map(w => `
+                <label class="opal-workflow-option" style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg-muted);border-radius:8px;cursor:pointer;border:2px solid ${this.selectedWorkflow === w.id ? 'var(--primary)' : 'transparent'};" onclick="OpalHub.selectWorkflow('${w.id}')">
+                    <input type="radio" name="opal-workflow" value="${w.id}" ${this.selectedWorkflow === w.id ? 'checked' : ''} style="display:none;">
+                    <span style="font-size:20px;">${w.icon}</span>
+                    <div><strong style="color:var(--text-primary);font-size:12px;">${w.name}</strong><br><small style="color:var(--text-muted);font-size:10px;">${w.outputs}</small></div>
+                </label>
+            `).join('');
+        },
+        selectWorkflow(id) {
+            this.selectedWorkflow = id;
+            this.init();
+        },
+        generatePrompt() {
+            const topic = document.getElementById('opal-topic')?.value;
+            const audience = document.getElementById('opal-audience')?.value || KnowledgeBaseData.targetAudience.primary.name;
+            const brand = document.getElementById('opal-brand')?.value || KnowledgeBaseData.brandIdentity.name;
+            const tone = document.getElementById('opal-tone')?.value;
+            const language = document.getElementById('opal-language')?.value;
+            if (!topic) { showToast('Enter topic', 'warning'); return; }
+            
+            const toneMap = { professional: 'profesional dan berwibawa', casual: 'santai dan ramah', educational: 'edukatif dan informatif', inspirational: 'inspiratif dan memotivasi', humorous: 'lucu dan menghibur' };
+            const langMap = { indonesia: 'Bahasa Indonesia', english: 'English', both: 'Bilingual' };
+            
+            // Generate prompt WITH Knowledge Base context
+            this.generatedPrompt = this.getPrompt(this.selectedWorkflow, { 
+                topic, 
+                audience, 
+                brand, 
+                tone: toneMap[tone], 
+                language: langMap[language],
+                includeKB: true // Flag to include Knowledge Base
+            });
+            document.getElementById('opal-prompt-output').textContent = this.generatedPrompt;
+            document.getElementById('opal-output-card').style.display = 'block';
+            showToast('Prompt generated with Knowledge Base! Copy to Opal', 'success');
+        },
+        getPrompt(workflow, data) {
+            const { topic, audience, brand, tone, language, includeKB } = data;
+            
+            // Knowledge Base Context - ALWAYS included
+            const kbContext = `
+═══════════════════════════════════════════════════════════════
+📚 LUMAKARA KNOWLEDGE BASE CONTEXT
+═══════════════════════════════════════════════════════════════
+
+🏢 BRAND IDENTITY:
+• Name: ${KnowledgeBaseData.brandIdentity.name}
+• Meaning: ${KnowledgeBaseData.brandIdentity.meaning}
+• Tagline: "${KnowledgeBaseData.brandIdentity.tagline}"
+• Type: ${KnowledgeBaseData.brandIdentity.type}
+• Philosophy: ${KnowledgeBaseData.brandIdentity.philosophy}
+• Unique Value: ${KnowledgeBaseData.brandIdentity.uniqueValue}
+• Client Focus: ${KnowledgeBaseData.brandIdentity.clientFocus}
+
+🎯 TARGET AUDIENCE:
+• Primary: ${KnowledgeBaseData.targetAudience.primary.name} (${KnowledgeBaseData.targetAudience.primary.age})
+• Characteristics:
+${KnowledgeBaseData.targetAudience.primary.characteristics.map(c => `  - ${c}`).join('\n')}
+• Pain Points:
+${KnowledgeBaseData.targetAudience.primary.painPoints.map(p => `  - ${p}`).join('\n')}
+• Gen Z Appeal: ${KnowledgeBaseData.targetAudience.generational.genZ}
+• Gen X Appeal: ${KnowledgeBaseData.targetAudience.generational.genX}
+
+📚 CONTENT PILLARS:
+${Object.values(KnowledgeBaseData.contentPillars).map(p => `• ${p.name} (${p.ratio}): ${p.description}\n  Topics: ${p.topics.join(', ')}`).join('\n')}
+
+🎤 TONE OF VOICE:
+• Primary: ${KnowledgeBaseData.toneOfVoice.primary}
+• Characteristics: ${KnowledgeBaseData.toneOfVoice.characteristics.join(', ')}
+• DO: ${KnowledgeBaseData.toneOfVoice.doThis.join(', ')}
+• AVOID: ${KnowledgeBaseData.toneOfVoice.avoidThis.join(', ')}
+• Indonesian Style: ${KnowledgeBaseData.toneOfVoice.languageStyle.indonesian}
+
+🎨 VISUAL IDENTITY:
+• Essence: ${KnowledgeBaseData.visualIdentity.essence}
+• Primary Colors: ${KnowledgeBaseData.visualIdentity.colors.primary.map(c => `${c.name} (${c.hex})`).join(', ')}
+• Secondary Colors: ${KnowledgeBaseData.visualIdentity.colors.secondary.map(c => `${c.name} (${c.hex})`).join(', ')}
+• Photography: ${KnowledgeBaseData.visualIdentity.photography.mood}
+
+💼 SERVICES (The Lumakara Growth System™):
+${KnowledgeBaseData.services.growthSystem.steps.map((s, i) => `${i+1}. ${s.name}: "${s.tagline}" (${s.duration})`).join('\n')}
+
+═══════════════════════════════════════════════════════════════
+`;
+
+            const base = `${kbContext}
+🎯 CONTENT BRIEF:
+• Topic: ${topic}
+• Target Audience: ${audience}
+• Brand: ${brand}
+• Tone: ${tone}
+• Language: ${language}
+
+⚠️ IMPORTANT RULES:
+1. ALL content MUST follow the Knowledge Base above
+2. Use the brand's tone of voice consistently
+3. Address target audience pain points
+4. Include relevant content pillars
+5. Use visual identity colors when describing visuals
+6. End with CTA aligned with brand philosophy
+
+`;
+            
+            const prompts = {
+                complete: base + `📦 COMPLETE CONTENT PACKAGE GENERATOR
+
+Generate ALL content types for this topic, following Lumakara's brand guidelines:
+
+1️⃣ SEO ARTICLE (1500 words)
+• SEO title (60 chars) - use brand tone
+• Meta description (155 chars)
+• Full article with H2, H3 - address audience pain points
+• FAQ section (5 questions)
+• Include brand philosophy subtly
+
+2️⃣ INSTAGRAM CAROUSEL (10 slides)
+For each slide:
+• Headline (max 10 words) - brand voice
+• Body text (max 30 words)
+• Visual description using brand colors: ${KnowledgeBaseData.visualIdentity.colors.primary[0].hex}, ${KnowledgeBaseData.visualIdentity.colors.secondary[0].hex}
+• Style: ${KnowledgeBaseData.visualIdentity.essence}
+
+3️⃣ TWITTER THREAD (10 tweets)
+• Hook tweet (viral-worthy, brand voice)
+• Value tweets addressing pain points
+• CTA tweet with brand tagline
+• Hashtags relevant to content pillars
+
+4️⃣ VIDEO SCRIPT (60 seconds)
+• HOOK (0-3s): Grab attention with pain point
+• PROBLEM (3-10s): Relate to audience struggles
+• SOLUTION (10-45s): Present Lumakara approach
+• CTA (45-60s): "${KnowledgeBaseData.brandIdentity.tagline}"
+• Visual style: ${KnowledgeBaseData.visualIdentity.photography.mood}
+
+5️⃣ LINKEDIN POST
+• Opening hook (professional yet friendly)
+• Story/insight from brand philosophy
+• Key takeaways
+• Engagement question
+
+6️⃣ HASHTAG RESEARCH
+• High volume (10) - industry hashtags
+• Medium volume (10) - niche hashtags
+• Brand-specific (5)
+
+7️⃣ IMAGE PROMPTS for Imagen 4
+Use these visual guidelines:
+• Style: ${KnowledgeBaseData.visualIdentity.essence}
+• Colors: ${KnowledgeBaseData.visualIdentity.colors.primary.map(c => c.hex).join(', ')}
+• Mood: ${KnowledgeBaseData.visualIdentity.photography.mood}
+• Avoid: ${KnowledgeBaseData.visualIdentity.photography.avoid}`,
+                
+                article: base + `📝 SEO ARTICLE GENERATOR (10 VARIATIONS)
+
+Generate 10 COMPLETELY DIFFERENT article variations, ALL following Lumakara's brand voice:
+
+1. LISTICLE - "X Ways to..." format (Education pillar)
+2. HOW-TO GUIDE - Step-by-step tutorial (Tips & Tricks pillar)
+3. CASE STUDY - Real examples, data-driven (Inspiration pillar)
+4. STORYTELLING - Personal narrative (Behind the Scenes pillar)
+5. EXPERT ROUNDUP - Multiple perspectives (Education pillar)
+6. COMPARISON - Pros/cons, versus format (Tips & Tricks pillar)
+7. BEGINNER'S GUIDE - Simple language for Gen Z
+8. ADVANCED DEEP-DIVE - Technical for Gen X professionals
+9. NEWS ANGLE - Current events tie-in
+10. THOUGHT LEADERSHIP - Bold opinions, brand philosophy
+
+Each version must include:
+• Unique SEO title (60 chars) - brand voice
+• Meta description (155 chars)
+• Full article (1500+ words) addressing audience pain points
+• FAQ section (5 questions)
+• Hashtags from content pillars
+• Subtle brand CTA: "${KnowledgeBaseData.brandIdentity.tagline}"`,
+                
+                thread: base + `🐦 VIRAL THREAD GENERATOR (10 VARIATIONS)
+
+Create 10 COMPLETE Twitter threads with different hooks, ALL in Lumakara's voice:
+
+1. SHOCKING STATISTIC: "77% bisnis kehilangan audience karena..."
+2. BOLD CLAIM: "Branding tradisional sudah mati. Here's why..."
+3. PERSONAL STORY: "Kami sudah bantu 2 brand per kuartal..."
+4. QUESTION: "Kenapa banyak bisnis gagal connect sama market?"
+5. CONTRARIAN: "Unpopular opinion: Kamu nggak butuh agency..."
+6. CURIOSITY GAP: "Rahasia yang konsultan mahal nggak kasih tau..."
+7. SOCIAL PROOF: "Setelah transformasi brand, ini yang terjadi..."
+8. URGENCY: "Market berubah cepat. Ini yang harus kamu tau..."
+9. PROMISE: "Thread ini akan kasih clarity untuk brand kamu..."
+10. PATTERN INTERRUPT: "Stop scrolling. Ini penting untuk bisnis kamu."
+
+Each thread:
+• 10 tweets, under 280 chars each
+• Address audience pain points: ${KnowledgeBaseData.targetAudience.primary.painPoints.slice(0, 3).join(', ')}
+• End with CTA: "${KnowledgeBaseData.brandIdentity.tagline}"
+• Hashtags from content pillars`,
+                
+                carousel: base + `🎨 CAROUSEL GENERATOR (10 slides x 3 styles)
+
+Create carousel content for 10 slides following Lumakara's visual identity:
+
+VISUAL GUIDELINES:
+• Essence: ${KnowledgeBaseData.visualIdentity.essence}
+• Primary Colors: ${KnowledgeBaseData.visualIdentity.colors.primary.map(c => `${c.name} ${c.hex}`).join(', ')}
+• Secondary Colors: ${KnowledgeBaseData.visualIdentity.colors.secondary.map(c => `${c.name} ${c.hex}`).join(', ')}
+• Typography: ${KnowledgeBaseData.visualIdentity.typography.primary}
+• Photography: ${KnowledgeBaseData.visualIdentity.photography.mood}
+
+For EACH slide provide:
+• Headline (max 6 words) - brand voice
+• Body text (max 15 words)
+• Visual description using brand colors
+• Layout suggestion
+
+NARRATIVE ARC:
+• Slide 1: Hook with pain point
+• Slides 2-3: Context (audience struggles)
+• Slides 4-7: Solution (Lumakara approach)
+• Slides 8-9: Proof/Benefits
+• Slide 10: CTA "${KnowledgeBaseData.brandIdentity.tagline}"
+
+Generate 3 STYLE VARIATIONS:
+1. Photo-realistic (${KnowledgeBaseData.visualIdentity.photography.mood})
+2. Illustrated/Vector (brand colors)
+3. Abstract/Artistic (${KnowledgeBaseData.visualIdentity.essence})
+
+Also provide:
+• Caption (500 chars) - brand voice
+• 25 hashtags from content pillars
+• Best posting time for target audience`,
+                
+                video: base + `📱 VIDEO SCRIPT GENERATOR (10 VARIATIONS)
+
+Create 10 different 60-second video scripts following Lumakara's brand:
+
+VISUAL STYLE:
+• Mood: ${KnowledgeBaseData.visualIdentity.photography.mood}
+• Colors: ${KnowledgeBaseData.visualIdentity.colors.primary.map(c => c.hex).join(', ')}
+• Avoid: ${KnowledgeBaseData.visualIdentity.photography.avoid}
+
+For EACH script:
+
+[0-3s] HOOK:
+• Visual: ${KnowledgeBaseData.visualIdentity.essence}
+• Audio: Brand voice (${KnowledgeBaseData.toneOfVoice.primary})
+• Text overlay with pain point
+
+[3-10s] BUILD-UP:
+• Address audience struggle
+• B-roll: ${KnowledgeBaseData.visualIdentity.photography.style}
+
+[10-45s] MAIN CONTENT:
+• Present solution using Lumakara approach
+• Scene breakdown with brand colors
+• Transitions: smooth, calm, precise
+
+[45-60s] CTA:
+• Visual: Brand logo/tagline
+• Audio: "${KnowledgeBaseData.brandIdentity.tagline}"
+• End card with contact
+
+VARIATIONS:
+1. Talking head (professional yet friendly)
+2. B-roll montage (workspace aesthetic)
+3. Text on screen (brand typography)
+4. Service demo (Lumakara Growth System)
+5. Tutorial (Tips & Tricks pillar)
+6. Story/narrative (Behind the Scenes)
+7. Trend/challenge (Gen Z appeal)
+8. POV style (client perspective)
+9. Testimonial style (Inspiration pillar)
+10. Thought leadership (Education pillar)
+
+Include: Music suggestions (calm, modern), hashtags, captions`,
+                
+                hashtag: base + `#️⃣ COMPREHENSIVE HASHTAG RESEARCH
+
+Generate hashtag strategy aligned with Lumakara's content pillars:
+
+📚 CONTENT PILLARS TO COVER:
+${Object.values(KnowledgeBaseData.contentPillars).map(p => `• ${p.name}: ${p.topics.join(', ')}`).join('\n')}
+
+🔥 HIGH VOLUME (10 hashtags)
+• 1M+ posts
+• For awareness
+• Industry-wide reach
+
+📊 MEDIUM VOLUME (10 hashtags)
+• 100K-1M posts
+• For engagement
+• Niche-specific
+
+🎯 NICHE/LOW COMPETITION (10 hashtags)
+• <100K posts
+• For discoverability
+• Brand-specific
+
+📱 PLATFORM-SPECIFIC:
+• Instagram: 10 hashtags (visual content)
+• TikTok: 10 hashtags (trending + niche)
+• Twitter: 10 hashtags (conversation)
+• LinkedIn: 5 hashtags (professional)
+
+🏷️ BRAND HASHTAGS:
+• #Lumakara
+• #LumakaraGrowthSystem
+• #GrowWithClarity
+• #BrandTransformation
+• #StrategicPartner
+
+🚫 BANNED/SHADOWBAN RISK:
+• List hashtags to avoid
+
+💡 STRATEGY:
+• Optimal number per platform
+• Placement tips
+• Rotation strategy for content pillars`
+            };
+            return prompts[workflow] || prompts.complete;
+        },
+        copyPrompt() {
+            navigator.clipboard.writeText(this.generatedPrompt).then(() => showToast('Copied! Paste to Opal', 'success'));
+        },
+        saveToContent() {
+            const topic = document.getElementById('opal-topic')?.value;
+            if (!topic) return;
+            DB.content.add({ title: `[Opal] ${topic}`, contentType: 'text_article', status: 'draft', caption: this.generatedPrompt, pillar: 'Content Creation' });
+            showToast('Saved to Content Hub!', 'success'); App.updateStats();
+        }
+    };
+
+    // ==================== CALENDAR ====================
+    const Calendar = {
+        date: new Date(),
+        init() { this.render(); },
+        changeMonth(delta) { this.date.setMonth(this.date.getMonth() + delta); this.render(); },
+        render() {
+            const grid = document.getElementById('calendar-grid');
+            const label = document.getElementById('calendar-month-label');
+            if (!grid || !label) return;
+            const month = this.date.getMonth(), year = this.date.getFullYear();
+            label.textContent = this.date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const contents = DB.content.getAll().filter(c => c.scheduledDate);
+            let html = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => `<div style="text-align:center;font-weight:600;font-size:12px;padding:10px;color:var(--text-muted);">${d}</div>`).join('');
+            for (let i = 0; i < firstDay; i++) html += '<div></div>';
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayContents = contents.filter(c => c.scheduledDate === dateStr);
+                const isToday = new Date().toDateString() === new Date(year, month, day).toDateString();
+                html += `<div style="min-height:100px;padding:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;${isToday ? 'border-color:var(--primary);border-width:2px;' : ''}">
+                    <div style="font-weight:600;margin-bottom:6px;${isToday ? 'color:var(--primary);' : 'color:var(--text-primary);'}">${day}</div>
+                    ${dayContents.slice(0, 3).map(c => {
+                        const type = Config.getType(c.contentType);
+                        return `<div style="font-size:10px;padding:3px 6px;background:${type.color}20;color:${type.color};border-radius:4px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;" onclick="navigateTo('content-hub'); setTimeout(() => ContentHub.openExpanded('${c.id}'), 100);">${type.icon} ${c.title || 'Untitled'}</div>`;
+                    }).join('')}
+                    ${dayContents.length > 3 ? `<div style="font-size:10px;color:var(--text-muted);">+${dayContents.length - 3} more</div>` : ''}
+                </div>`;
+            }
+            grid.innerHTML = html;
+        }
+    };
+
+    // ==================== BULK CREATE ====================
+    const BulkCreate = {
+        async generate() {
+            const topics = document.getElementById('bulk-topics')?.value.split('\n').filter(t => t.trim());
+            if (!topics?.length) { showToast('Enter topics', 'warning'); return; }
+            showLoading(`Generating ${topics.length} contents with Knowledge Base...`);
+            let count = 0;
+            for (const topic of topics) {
+                try {
+                    // Use Knowledge Base for each content
+                    const result = await AI.generateWithKB(topic.trim(), 'text_article');
+                    DB.content.add({ 
+                        title: topic.trim(), 
+                        contentType: 'text_article', 
+                        caption: result, 
+                        status: 'draft',
+                        pillar: detectPillar(topic.trim()),
+                        generatedWithKB: true,
+                        imageUrl: AI.imageUrl(topic.trim(), { style: 'brand' })
+                    });
+                    count++;
+                    document.getElementById('loading-text').textContent = `Generating ${count}/${topics.length}...`;
+                } catch (e) { console.error(e); }
+            }
+            hideLoading(); showToast(`Generated ${count} contents with Knowledge Base!`, 'success'); App.updateStats();
+            navigateTo('content-hub');
+        },
+        importCSV() {
+            const input = document.getElementById('csv-import');
+            if (!input?.files?.[0]) { showToast('Select CSV', 'warning'); return; }
+            Papa.parse(input.files[0], {
+                header: true,
+                complete: (results) => {
+                    let count = 0;
+                    results.data.forEach(row => { if (row.title) { DB.content.add({ ...row, status: row.status || 'draft' }); count++; } });
+                    showToast(`Imported ${count} items!`, 'success'); App.updateStats();
+                    navigateTo('content-hub');
+                }
+            });
+        }
+    };
+
+    // ==================== KNOWLEDGE BASE ====================
+    const KnowledgeBase = {
+        init() {
+            this.renderBrandIdentity();
+            this.renderTargetAudience();
+            this.renderPillars();
+            this.renderToneOfVoice();
+            this.renderContentTypes();
+            this.renderPlatforms();
+            this.renderVisualIdentity();
+        },
+        
+        renderBrandIdentity() {
+            const container = document.getElementById('kb-brand');
+            if (!container) return;
+            const kb = KnowledgeBaseData.brandIdentity;
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div style="grid-column:1/-1;background:linear-gradient(135deg, ${KnowledgeBaseData.visualIdentity.colors.primary[0].hex}15, ${KnowledgeBaseData.visualIdentity.colors.secondary[0].hex}15);padding:20px;border-radius:12px;border-left:4px solid ${KnowledgeBaseData.visualIdentity.colors.secondary[0].hex};">
+                        <div style="font-size:24px;font-weight:700;color:var(--text-primary);margin-bottom:8px;">◈ ${kb.name}</div>
+                        <div style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;font-style:italic;">"${kb.tagline}"</div>
+                        <div style="font-size:12px;color:var(--text-muted);">${kb.meaning}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Type</div>
+                        <div style="font-size:13px;color:var(--text-primary);font-weight:500;">${kb.type}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Positioning</div>
+                        <div style="font-size:13px;color:var(--text-primary);font-weight:500;">${kb.positioning}</div>
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Philosophy</div>
+                        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">${kb.philosophy}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Unique Value</div>
+                        <div style="font-size:13px;color:var(--text-primary);">${kb.uniqueValue}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Client Focus</div>
+                        <div style="font-size:13px;color:var(--text-primary);">${kb.clientFocus}</div>
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Approach</div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            ${kb.approach.split(' → ').map((step, i) => `<span style="background:var(--primary);color:white;padding:4px 12px;border-radius:20px;font-size:12px;">${i+1}. ${step}</span>`).join('<span style="color:var(--text-muted);">→</span>')}
+                        </div>
+                    </div>
+                </div>`;
+        },
+        
+        renderTargetAudience() {
+            const container = document.getElementById('kb-audience');
+            if (!container) return;
+            const ta = KnowledgeBaseData.targetAudience;
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">🎯 Primary Audience</div>
+                        <div style="font-size:16px;font-weight:500;color:var(--primary);margin-bottom:4px;">${ta.primary.name}</div>
+                        <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">${ta.primary.age}</div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Characteristics:</div>
+                        <ul style="margin:0;padding-left:16px;font-size:12px;color:var(--text-secondary);">
+                            ${ta.primary.characteristics.map(c => `<li style="margin-bottom:4px;">${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">😰 Pain Points</div>
+                        <ul style="margin:0;padding-left:16px;font-size:12px;color:var(--text-secondary);">
+                            ${ta.primary.painPoints.map(p => `<li style="margin-bottom:6px;">${p}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">👶 Gen Z Appeal</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${ta.generational.genZ}</div>
+                    </div>
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">👔 Gen X Appeal</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${ta.generational.genX}</div>
+                    </div>
+                </div>`;
+        },
+        
+        renderPillars() {
+            const container = document.getElementById('kb-pillars');
+            if (!container) return;
+            const contents = DB.content.getAll();
+            const pillars = KnowledgeBaseData.contentPillars;
+            container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;">
+                ${Object.values(pillars).map(p => {
+                    const count = contents.filter(c => c.pillar === p.name).length;
+                    const icons = { Education: '📚', Inspiration: '✨', 'Behind the Scenes': '🎬', 'Tips & Tricks': '💡', Promotion: '📢' };
+                    return `<div style="background:var(--bg-muted);padding:20px;border-radius:12px;cursor:pointer;transition:all 0.2s;border:1px solid var(--border);position:relative;overflow:hidden;" onclick="filterByStatus('all'); showToast('Showing ${p.name}', 'info');" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <div style="position:absolute;top:8px;right:8px;background:var(--primary);color:white;padding:2px 8px;border-radius:10px;font-size:10px;">${p.ratio}</div>
+                        <div style="font-size:32px;margin-bottom:8px;">${icons[p.name] || '📌'}</div>
+                        <div style="font-weight:600;color:var(--text-primary);margin-bottom:4px;">${p.name}</div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">${p.description}</div>
+                        <div style="font-size:10px;color:var(--text-secondary);">Topics: ${p.topics.slice(0, 2).join(', ')}...</div>
+                        <div style="font-size:11px;color:var(--primary);margin-top:8px;">${count} contents</div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+        },
+        
+        renderToneOfVoice() {
+            const container = document.getElementById('kb-tone');
+            if (!container) return;
+            const tov = KnowledgeBaseData.toneOfVoice;
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div style="grid-column:1/-1;background:linear-gradient(135deg, var(--primary)10, var(--success)10);padding:16px;border-radius:12px;text-align:center;">
+                        <div style="font-size:18px;font-weight:600;color:var(--text-primary);">🎤 ${tov.primary}</div>
+                    </div>
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:12px;font-weight:600;color:var(--success);margin-bottom:8px;">✅ DO THIS</div>
+                        <ul style="margin:0;padding-left:16px;font-size:11px;color:var(--text-secondary);">
+                            ${tov.doThis.map(d => `<li style="margin-bottom:4px;">${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div style="background:var(--bg-muted);padding:16px;border-radius:12px;">
+                        <div style="font-size:12px;font-weight:600;color:var(--danger);margin-bottom:8px;">❌ AVOID THIS</div>
+                        <ul style="margin:0;padding-left:16px;font-size:11px;color:var(--text-secondary);">
+                            ${tov.avoidThis.map(a => `<li style="margin-bottom:4px;">${a}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Characteristics:</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                            ${tov.characteristics.map(c => `<span style="background:var(--bg-card);border:1px solid var(--border);padding:4px 10px;border-radius:16px;font-size:11px;color:var(--text-secondary);">${c}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>`;
+        },
+        
+        renderContentTypes() {
+            const container = document.getElementById('kb-content-types');
+            if (!container) return;
+            const contents = DB.content.getAll();
+            container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+                ${Object.entries(Config.contentTypes).map(([key, type]) => {
+                    const count = contents.filter(c => c.contentType === key).length;
+                    const platforms = type.platforms.map(p => Config.platforms[p]?.icon || '').join(' ');
+                    const strategy = KnowledgeBaseData.omnichannelStrategy[key.replace('_', '')] || {};
+                    return `<div style="background:var(--bg-muted);padding:20px;border-radius:12px;border-left:4px solid ${type.color};">
+                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                            <span style="font-size:28px;">${type.icon}</span>
+                            <div>
+                                <div style="font-weight:600;color:var(--text-primary);">${type.name}</div>
+                                <div style="font-size:11px;color:var(--text-muted);">${count} contents</div>
+                            </div>
+                        </div>
+                        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">${type.description}</p>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Platforms: ${platforms}</div>
+                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">
+                            ${type.specs ? Object.entries(type.specs).map(([k, v]) => `<span style="background:var(--bg-card);padding:2px 6px;border-radius:4px;margin-right:4px;">${k}: ${v}</span>`).join('') : ''}
+                        </div>
+                        ${strategy.bestPractices ? `<div style="font-size:10px;color:var(--text-muted);border-top:1px solid var(--border);padding-top:8px;margin-top:8px;">
+                            <strong>Best Practices:</strong><br>
+                            ${strategy.bestPractices.slice(0, 2).map(bp => `• ${bp}`).join('<br>')}
+                        </div>` : ''}
+                    </div>`;
+                }).join('')}
+            </div>`;
+        },
+        
+        renderPlatforms() {
+            const container = document.getElementById('kb-platforms');
+            if (!container) return;
+            const contents = DB.content.getAll();
+            container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">
+                ${Object.entries(Config.platforms).map(([key, platform]) => {
+                    const count = contents.filter(c => c.platforms?.includes(key)).length;
+                    return `<div style="background:var(--bg-muted);padding:16px;border-radius:10px;text-align:center;border:1px solid var(--border);">
+                        <div style="font-size:24px;margin-bottom:6px;">${platform.icon}</div>
+                        <div style="font-weight:500;color:var(--text-primary);font-size:13px;">${platform.name}</div>
+                        <div style="font-size:11px;color:var(--text-muted);">${count} contents</div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+        },
+        
+        renderVisualIdentity() {
+            const container = document.getElementById('kb-visual');
+            if (!container) return;
+            const vi = KnowledgeBaseData.visualIdentity;
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div style="grid-column:1/-1;background:var(--bg-muted);padding:16px;border-radius:12px;text-align:center;">
+                        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">Visual Essence</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${vi.essence}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;">Primary Colors</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                            ${vi.colors.primary.map(c => `<div style="text-align:center;">
+                                <div style="width:40px;height:40px;background:${c.hex};border-radius:8px;border:1px solid var(--border);margin-bottom:4px;"></div>
+                                <div style="font-size:9px;color:var(--text-muted);">${c.name}</div>
+                            </div>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;">Secondary Colors</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                            ${vi.colors.secondary.map(c => `<div style="text-align:center;">
+                                <div style="width:40px;height:40px;background:${c.hex};border-radius:8px;border:1px solid var(--border);margin-bottom:4px;"></div>
+                                <div style="font-size:9px;color:var(--text-muted);">${c.name}</div>
+                            </div>`).join('')}
+                        </div>
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Typography</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${vi.typography.primary}</div>
+                    </div>
+                    <div style="grid-column:1/-1;">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;">Photography Mood</div>
+                        <div style="font-size:12px;color:var(--text-secondary);">${vi.photography.mood}</div>
+                    </div>
+                </div>`;
+        },
+        
+        addPillar() {
+            const name = prompt('Enter new pillar name:');
+            if (name && !Config.pillars.includes(name)) {
+                Config.pillars.push(name);
+                Config.savePillars(Config.pillars);
+                this.renderPillars();
+                showToast('Pillar added!', 'success');
+            }
+        },
+        
+        // CRUD Editor for Brand Identity
+        editBrand() {
+            const modal = document.getElementById('expanded-modal');
+            const content = document.getElementById('expanded-content');
+            const kb = KnowledgeBaseData.brandIdentity;
+            
+            content.innerHTML = `
+                <div style="padding:24px;max-height:80vh;overflow-y:auto;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h2 style="color:var(--text-primary);margin:0;">✏️ Edit Brand Identity</h2>
+                        <button onclick="ContentHub.closeExpanded()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-muted);">×</button>
+                    </div>
+                    
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group">
+                            <label>Brand Name</label>
+                            <input type="text" id="edit-brand-name" value="${kb.name}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline</label>
+                            <input type="text" id="edit-brand-tagline" value="${kb.tagline}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label>Brand Meaning</label>
+                            <input type="text" id="edit-brand-meaning" value="${kb.meaning}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label>Philosophy</label>
+                            <textarea id="edit-brand-philosophy" rows="3" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${kb.philosophy}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <input type="text" id="edit-brand-type" value="${kb.type}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group">
+                            <label>Positioning</label>
+                            <input type="text" id="edit-brand-positioning" value="${kb.positioning}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group">
+                            <label>Unique Value</label>
+                            <input type="text" id="edit-brand-uniqueValue" value="${kb.uniqueValue}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group">
+                            <label>Client Focus</label>
+                            <input type="text" id="edit-brand-clientFocus" value="${kb.clientFocus}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label>Approach (use → to separate steps)</label>
+                            <input type="text" id="edit-brand-approach" value="${kb.approach}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end;">
+                        <button class="btn-secondary" onclick="ContentHub.closeExpanded()">Cancel</button>
+                        <button class="btn-primary" onclick="KnowledgeBase.saveBrandEdits()">💾 Save Changes</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        },
+        
+        saveBrandEdits() {
+            const updates = {
+                name: document.getElementById('edit-brand-name')?.value,
+                tagline: document.getElementById('edit-brand-tagline')?.value,
+                meaning: document.getElementById('edit-brand-meaning')?.value,
+                philosophy: document.getElementById('edit-brand-philosophy')?.value,
+                type: document.getElementById('edit-brand-type')?.value,
+                positioning: document.getElementById('edit-brand-positioning')?.value,
+                uniqueValue: document.getElementById('edit-brand-uniqueValue')?.value,
+                clientFocus: document.getElementById('edit-brand-clientFocus')?.value,
+                approach: document.getElementById('edit-brand-approach')?.value
+            };
+            
+            // Update KnowledgeBaseData
+            Object.assign(KnowledgeBaseData.brandIdentity, updates);
+            
+            // Save to localStorage
+            localStorage.setItem('lumakara-kb-brand', JSON.stringify(KnowledgeBaseData.brandIdentity));
+            
+            // Save to current project
+            if (typeof ProjectManager !== 'undefined') ProjectManager.saveCurrentKB();
+            
+            ContentHub.closeExpanded();
+            this.renderBrandIdentity();
+            showToast('Brand identity updated!', 'success');
+        },
+        
+        // Edit Target Audience
+        editAudience() {
+            const modal = document.getElementById('expanded-modal');
+            const content = document.getElementById('expanded-content');
+            const ta = KnowledgeBaseData.targetAudience.primary;
+            
+            content.innerHTML = `
+                <div style="padding:24px;max-height:80vh;overflow-y:auto;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h2 style="color:var(--text-primary);margin:0;">🎯 Edit Target Audience</h2>
+                        <button onclick="ContentHub.closeExpanded()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-muted);">×</button>
+                    </div>
+                    
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group">
+                            <label>Audience Name</label>
+                            <input type="text" id="edit-audience-name" value="${ta.name}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group">
+                            <label>Age Range</label>
+                            <input type="text" id="edit-audience-age" value="${ta.age}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label>Characteristics (one per line)</label>
+                            <textarea id="edit-audience-characteristics" rows="5" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${ta.characteristics.join('\n')}</textarea>
+                        </div>
+                        <div class="form-group" style="grid-column:1/-1;">
+                            <label>Pain Points (one per line)</label>
+                            <textarea id="edit-audience-painPoints" rows="5" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${ta.painPoints.join('\n')}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end;">
+                        <button class="btn-secondary" onclick="ContentHub.closeExpanded()">Cancel</button>
+                        <button class="btn-primary" onclick="KnowledgeBase.saveAudienceEdits()">💾 Save Changes</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        },
+        
+        saveAudienceEdits() {
+            const updates = {
+                name: document.getElementById('edit-audience-name')?.value,
+                age: document.getElementById('edit-audience-age')?.value,
+                characteristics: document.getElementById('edit-audience-characteristics')?.value.split('\n').filter(c => c.trim()),
+                painPoints: document.getElementById('edit-audience-painPoints')?.value.split('\n').filter(p => p.trim())
+            };
+            
+            Object.assign(KnowledgeBaseData.targetAudience.primary, updates);
+            localStorage.setItem('lumakara-kb-audience', JSON.stringify(KnowledgeBaseData.targetAudience));
+            
+            // Save to current project
+            if (typeof ProjectManager !== 'undefined') ProjectManager.saveCurrentKB();
+            
+            ContentHub.closeExpanded();
+            this.renderTargetAudience();
+            showToast('Target audience updated!', 'success');
+        },
+        
+        // Edit Tone of Voice
+        editTone() {
+            const modal = document.getElementById('expanded-modal');
+            const content = document.getElementById('expanded-content');
+            const tov = KnowledgeBaseData.toneOfVoice;
+            
+            content.innerHTML = `
+                <div style="padding:24px;max-height:80vh;overflow-y:auto;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h2 style="color:var(--text-primary);margin:0;">🎤 Edit Tone of Voice</h2>
+                        <button onclick="ContentHub.closeExpanded()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-muted);">×</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Primary Tone</label>
+                        <input type="text" id="edit-tone-primary" value="${tov.primary}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">
+                    </div>
+                    <div class="form-group">
+                        <label>Characteristics (one per line)</label>
+                        <textarea id="edit-tone-characteristics" rows="4" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${tov.characteristics.join('\n')}</textarea>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="form-group">
+                            <label>✅ DO This (one per line)</label>
+                            <textarea id="edit-tone-doThis" rows="5" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${tov.doThis.join('\n')}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>❌ AVOID This (one per line)</label>
+                            <textarea id="edit-tone-avoidThis" rows="5" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg-input);color:var(--text-primary);">${tov.avoidThis.join('\n')}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end;">
+                        <button class="btn-secondary" onclick="ContentHub.closeExpanded()">Cancel</button>
+                        <button class="btn-primary" onclick="KnowledgeBase.saveToneEdits()">💾 Save Changes</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        },
+        
+        saveToneEdits() {
+            const updates = {
+                primary: document.getElementById('edit-tone-primary')?.value,
+                characteristics: document.getElementById('edit-tone-characteristics')?.value.split('\n').filter(c => c.trim()),
+                doThis: document.getElementById('edit-tone-doThis')?.value.split('\n').filter(d => d.trim()),
+                avoidThis: document.getElementById('edit-tone-avoidThis')?.value.split('\n').filter(a => a.trim())
+            };
+            
+            Object.assign(KnowledgeBaseData.toneOfVoice, updates);
+            localStorage.setItem('lumakara-kb-tone', JSON.stringify(KnowledgeBaseData.toneOfVoice));
+            
+            // Save to current project
+            if (typeof ProjectManager !== 'undefined') ProjectManager.saveCurrentKB();
+            
+            ContentHub.closeExpanded();
+            this.renderToneOfVoice();
+            showToast('Tone of voice updated!', 'success');
+        }
+    };
+
+    // ==================== SETTINGS ====================
+    const Settings = {
+        exportAll() {
+            const data = { contents: DB.content.getAll(), brand: DB.brand, pillars: Config.pillars, exportedAt: new Date().toISOString() };
+            saveAs(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }), `lumakara-backup-${Date.now()}.json`);
+            showToast('Exported!', 'success');
+        },
+        importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (data.contents) { localStorage.setItem('lumakara-content', JSON.stringify(data.contents)); }
+                        if (data.brand) { DB.saveBrand(data.brand); }
+                        if (data.pillars) { Config.savePillars(data.pillars); }
+                        showToast('Imported! Refreshing...', 'success');
+                        setTimeout(() => location.reload(), 1000);
+                    } catch (err) { showToast('Invalid file', 'error'); }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        },
+        clearAll() {
+            if (confirm('Delete ALL data?')) {
+                localStorage.removeItem('lumakara-content');
+                localStorage.removeItem('lumakara-brand');
+                localStorage.removeItem('lumakara-pillars');
+                location.reload();
+            }
+        }
+    };
+
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded', () => App.init());
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') ContentHub.closeExpanded(); });
+    </script>
+    
+    <!-- Magic Studio Ultra - 100+ AI Workflows -->
+    <script src="js/magic-studio-ultra.js"></script>
+    
+    <!-- Content Hub Ultra - Enhanced CRUD & Drag-Drop -->
+    <script src="js/content-hub-ultra.js"></script>
+    
+    <!-- AI Generator Ultra - Multi-Type Generation -->
+    <script src="js/ai-generator-ultra.js"></script>
+    
+    <script src="js/ultra-studio.js"></script>
 </body>
 </html>

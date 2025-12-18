@@ -1,109 +1,183 @@
 /**
- * Content Generator Helper Module
- * Additional content generation utilities
+ * Content Generator Module
+ * Omnichannel content generation with AI
  */
 
-const ContentTemplates = {
-    // Platform-specific templates
-    templates: {
-        instagram: {
-            post: `Create an engaging Instagram post with:
-- Attention-grabbing hook (first line)
-- Value-packed content (3-5 key points)
-- Call to action
-- 10-15 relevant hashtags
-- Emoji usage for visual appeal`,
-            reel: `Create a TikTok/Reels script with:
-- Hook (0-3 seconds): Grab attention immediately
-- Problem/Setup (3-10 seconds)
-- Solution/Content (10-45 seconds)
-- CTA (last 5 seconds)
-- Trending audio suggestion`,
-            carousel: `Create a carousel post with:
-- Slide 1: Hook/Title
-- Slides 2-8: Key points (one per slide)
-- Last slide: CTA and summary
-- Caption with hashtags`
-        },
-        tiktok: {
-            video: `Create a TikTok video script:
-- Hook (first 1-2 seconds)
-- Main content (15-45 seconds)
-- Trend integration
-- CTA
-- Caption with hashtags`
-        },
-        linkedin: {
-            post: `Create a LinkedIn post:
-- Professional hook
-- Story or insight
-- Key takeaways
-- Engagement question
-- 3-5 relevant hashtags`
-        },
-        twitter: {
-            thread: `Create a Twitter thread:
-- Tweet 1: Hook + promise
-- Tweets 2-8: Key points
-- Last tweet: Summary + CTA
-- Each tweet under 280 characters`
+const ContentGenerator = {
+    // Generate content based on type
+    async generateContent(topic, options = {}) {
+        const context = DB.knowledgeBase.getContextString();
+        const contentType = OmnichannelConfig.getContentType(options.contentType || 'video_short');
+        
+        const prompt = OmnichannelConfig.generatePrompt(options.contentType, topic, context);
+        
+        const response = await PollinationsAI.generateText(prompt);
+        
+        return {
+            raw: response,
+            hook: this.extractHook(response),
+            caption: response,
+            cta: this.extractCTA(response),
+            hashtags: this.extractHashtags(response)
+        };
+    },
+    
+    // Generate monthly content plan
+    async generateMonthlyPlan(year, month) {
+        const project = DB.projects.getActive();
+        if (!project) return [];
+        
+        const pillars = DB.knowledgeBase.getPillars();
+        if (pillars.length === 0) return [];
+        
+        const context = DB.knowledgeBase.getContextString();
+        const contentTypes = OmnichannelConfig.getAllContentTypes();
+        
+        // Get posting days (default: Mon, Wed, Fri)
+        const postingDays = [1, 3, 5]; // 0=Sun, 1=Mon, etc.
+        const postsPerDay = 2;
+        
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const posts = [];
+        
+        // Generate content ideas
+        const prompt = `Generate ${pillars.length * 4} content ideas for a ${project.niche} brand.
+
+Brand Context:
+${context}
+
+Content Pillars: ${pillars.join(', ')}
+
+For each pillar, generate 4 unique content ideas.
+Format each idea as:
+PILLAR: [pillar name]
+TITLE: [catchy title]
+TYPE: [one of: video_short, image_carousel, text_thread, image_single]
+HOOK: [attention-grabbing first line]
+
+Generate diverse content types across all pillars.`;
+
+        try {
+            const response = await PollinationsAI.generateText(prompt);
+            const ideas = this.parseContentIdeas(response, pillars);
+            
+            // Distribute ideas across the month
+            let ideaIndex = 0;
+            for (let day = 1; day <= daysInMonth && ideaIndex < ideas.length; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+                
+                if (postingDays.includes(dayOfWeek)) {
+                    for (let i = 0; i < postsPerDay && ideaIndex < ideas.length; i++) {
+                        const idea = ideas[ideaIndex];
+                        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                        
+                        posts.push({
+                            title: idea.title,
+                            contentType: idea.type,
+                            platforms: OmnichannelConfig.getContentType(idea.type)?.platforms || [],
+                            pillar: idea.pillar,
+                            caption: idea.hook,
+                            status: 'idea',
+                            scheduledDate: dateStr
+                        });
+                        
+                        ideaIndex++;
+                    }
+                }
+            }
+            
+            return posts;
+        } catch (error) {
+            console.error('Monthly plan generation error:', error);
+            return [];
         }
     },
-
-    async generateCaption(topic, options = {}) {
-        const context = DB.knowledgeBase.getContextString();
-        const template = this.templates[options.platform]?.[options.type] || this.templates.instagram.post;
+    
+    // Parse content ideas from AI response
+    parseContentIdeas(response, pillars) {
+        const ideas = [];
+        const lines = response.split('\n');
         
-        const prompt = `${context}
-
-Topic: ${topic}
-Platform: ${options.platform || 'Instagram'}
-Type: ${options.type || 'post'}
-Tone: ${options.tone || 'casual'}
-
-${template}
-
-Write in Indonesian unless specified otherwise.`;
-
-        return await PollinationsAI.generateText(prompt);
-    },
-
-    async generateHashtags(topic, platform = 'instagram', count = 15) {
-        const prompt = `Generate ${count} relevant hashtags for ${platform} about: ${topic}
-Mix of:
-- Popular hashtags (high reach)
-- Niche hashtags (targeted)
-- Branded hashtags if applicable
-
-Format: #hashtag1 #hashtag2 ...`;
-
-        return await PollinationsAI.generateText(prompt);
-    },
-
-    async generateVideoScript(topic, options = {}) {
-        const context = DB.knowledgeBase.getContextString();
-        const duration = options.duration || 30;
+        let currentIdea = {};
         
-        const prompt = `${context}
+        for (const line of lines) {
+            if (line.startsWith('PILLAR:')) {
+                if (currentIdea.title) ideas.push(currentIdea);
+                currentIdea = { pillar: line.replace('PILLAR:', '').trim() };
+            } else if (line.startsWith('TITLE:')) {
+                currentIdea.title = line.replace('TITLE:', '').trim();
+            } else if (line.startsWith('TYPE:')) {
+                const type = line.replace('TYPE:', '').trim().toLowerCase().replace(/[^a-z_]/g, '');
+                currentIdea.type = ['video_short', 'image_carousel', 'text_thread', 'image_single', 'text_article', 'video_long', 'video_story'].includes(type) ? type : 'video_short';
+            } else if (line.startsWith('HOOK:')) {
+                currentIdea.hook = line.replace('HOOK:', '').trim();
+            }
+        }
+        
+        if (currentIdea.title) ideas.push(currentIdea);
+        
+        // Fill in missing pillars
+        return ideas.map(idea => ({
+            ...idea,
+            pillar: idea.pillar || pillars[Math.floor(Math.random() * pillars.length)],
+            type: idea.type || 'video_short',
+            hook: idea.hook || idea.title
+        }));
+    },
+    
+    // Extract hook from content
+    extractHook(text) {
+        const lines = text.split('\n').filter(l => l.trim());
+        if (lines.length > 0) {
+            // Look for hook markers
+            for (const line of lines) {
+                if (line.toLowerCase().includes('hook') || line.startsWith('[HOOK')) {
+                    return line.replace(/\[?HOOK[:\]]/gi, '').trim();
+                }
+            }
+            return lines[0].substring(0, 150);
+        }
+        return '';
+    },
+    
+    // Extract CTA from content
+    extractCTA(text) {
+        const ctaPatterns = [
+            /CTA[:\s]+(.+)/i,
+            /call to action[:\s]+(.+)/i,
+            /follow|subscribe|like|comment|share|click|swipe/i
+        ];
+        
+        for (const pattern of ctaPatterns) {
+            const match = text.match(pattern);
+            if (match) return match[1] || match[0];
+        }
+        return '';
+    },
+    
+    // Extract hashtags from content
+    extractHashtags(text) {
+        const matches = text.match(/#\w+/g);
+        return matches ? [...new Set(matches)].slice(0, 15) : [];
+    },
+    
+    // Generate image prompt
+    async generateImagePrompt(topic, contentType) {
+        const type = OmnichannelConfig.getContentType(contentType);
+        const prompt = `Generate a detailed image prompt for a ${type?.name || 'social media'} post about: ${topic}
 
-Create a ${duration}-second video script for ${options.type || 'reels'}
+The image should be:
+- Professional and modern
+- Suitable for ${type?.platforms?.join(', ') || 'social media'}
+- Eye-catching and scroll-stopping
+- Clean composition
 
-Topic: ${topic}
-
-Format:
-[0-3s] HOOK: (attention grabber)
-[3-${Math.floor(duration * 0.3)}s] SETUP: (problem/context)
-[${Math.floor(duration * 0.3)}-${Math.floor(duration * 0.8)}s] CONTENT: (main points)
-[${Math.floor(duration * 0.8)}-${duration}s] CTA: (call to action)
-
-VISUAL SUGGESTIONS:
-(describe what should be shown)
-
-AUDIO/MUSIC:
-(suggest trending sounds or music style)
-
-Write in Indonesian.`;
+Provide only the image generation prompt, no explanations.`;
 
         return await PollinationsAI.generateText(prompt);
     }
 };
+
+// Export
+window.ContentGenerator = ContentGenerator;

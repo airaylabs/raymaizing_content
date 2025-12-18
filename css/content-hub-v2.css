@@ -1,0 +1,791 @@
+/* ==========================================
+   CONTENT HUB - DARK MODE
+   ========================================== */
+
+/* Hub Tabs */
+.hub-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-muted);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.hub-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.hub-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.hub-tab.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+/* Filters Bar */
+.filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    min-width: 250px;
+}
+
+.search-box .search-icon {
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+    color: var(--text-primary);
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.filter-chips {
+    display: flex;
+    gap: 6px;
+}
+
+.filter-chip {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--text-secondary);
+}
+
+.filter-chip:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.filter-chip.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.filters-bar select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* Hub Views */
+.hub-view {
+    display: none;
+}
+
+.hub-view.active {
+    display: block;
+}
+
+/* ==================== SIMPLE TABLE ==================== */
+.simple-table-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.simple-table th,
+.simple-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.simple-table th {
+    background: var(--bg-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+.simple-table tr:hover {
+    background: var(--bg-hover);
+}
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-muted);
+    border-top: 1px solid var(--border);
+}
+
+.row-count {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ==================== AIRTABLE FULL VIEW ==================== */
+.airtable-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.airtable-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--bg-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    gap: 8px;
+}
+
+.toolbar-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: var(--radius-xs);
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.toolbar-btn:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.airtable-grid {
+    overflow-x: auto;
+    max-height: calc(100vh - 350px);
+}
+
+.airtable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1200px;
+}
+
+.airtable th,
+.airtable td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.airtable th {
+    background: var(--bg-muted);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.airtable tr:hover {
+    background: var(--bg-hover);
+}
+
+.airtable-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-muted);
+    border-top: 1px solid var(--border);
+}
+
+.add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.add-row-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Cell Types */
+.cell-title {
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.cell-title:hover {
+    color: var(--primary);
+}
+
+.cell-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+}
+
+.cell-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.cell-status.idea { background: #374151; color: #9CA3AF; }
+.cell-status.draft { background: #78350F; color: #FCD34D; }
+.cell-status.review { background: #7F1D1D; color: #FCA5A5; }
+.cell-status.scheduled { background: #1E3A8A; color: #93C5FD; }
+.cell-status.published { background: #064E3B; color: #6EE7B7; }
+
+.cell-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 4px;
+    border-radius: var(--radius-xs);
+}
+
+.cell-date:hover {
+    border-color: var(--border);
+}
+
+.cell-platforms {
+    display: flex;
+    gap: 4px;
+}
+
+.platform-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-muted);
+    border-radius: var(--radius-xs);
+    font-size: 12px;
+}
+
+.cell-caption {
+    font-size: 12px;
+    color: var(--text-secondary);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.cell-hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.hashtag {
+    font-size: 10px;
+    color: var(--primary);
+    background: rgba(91, 154, 148, 0.15);
+    padding: 2px 6px;
+    border-radius: var(--radius-xs);
+}
+
+.cell-pillar {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.media-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-xs);
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.media-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-xs);
+    background: var(--bg-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.action-btn {
+    padding: 6px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius-xs);
+    font-size: 14px;
+}
+
+.action-btn:hover {
+    background: var(--bg-muted);
+}
+
+.expand-btn {
+    padding: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.expand-btn:hover {
+    opacity: 1;
+}
+
+/* ==================== KANBAN ==================== */
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+}
+
+.kanban-column {
+    min-width: 280px;
+    max-width: 280px;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.kanban-column.drag-over {
+    border-color: var(--primary);
+    background: rgba(91, 154, 148, 0.05);
+}
+
+.kanban-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.kanban-status {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.kanban-count {
+    font-size: 12px;
+    padding: 2px 8px;
+    background: var(--bg-muted);
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+}
+
+.kanban-cards {
+    flex: 1;
+    padding: 12px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kanban-card {
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.kanban-card:hover {
+    border-color: var(--primary);
+}
+
+.kanban-card.dragging {
+    opacity: 0.5;
+}
+
+.kanban-card-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+}
+
+.kanban-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.kanban-card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.kanban-add {
+    margin: 12px;
+    padding: 10px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.kanban-add:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* ==================== CALENDAR ==================== */
+.calendar-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 24px;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav h2 {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.cal-nav-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.cal-nav-btn:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+/* Airtable select styling */
+.airtable select {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+}
+
+.airtable select:focus {
+    outline: none;
+}
+
+
+/* ==========================================
+   CONTENT HUB ULTRA - ENHANCED STYLES
+   ========================================== */
+
+/* Calendar Drag & Drop */
+.calendar-day {
+    transition: all 0.2s ease;
+}
+
+.calendar-day:hover {
+    border-color: var(--primary) !important;
+    transform: scale(1.02);
+}
+
+.calendar-day.drag-over {
+    background: var(--primary) !important;
+    opacity: 0.7;
+}
+
+.calendar-content-item {
+    transition: all 0.2s ease;
+}
+
+.calendar-content-item:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.calendar-content-item:active {
+    cursor: grabbing;
+}
+
+/* Full View Table Enhancements */
+.airtable-row {
+    transition: background 0.2s ease;
+}
+
+.airtable-row:hover {
+    background: var(--bg-muted);
+}
+
+.editable-cell {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.editable-cell:hover {
+    background: var(--bg-hover);
+}
+
+.drag-handle {
+    cursor: grab;
+    opacity: 0.3;
+    transition: opacity 0.2s;
+}
+
+.drag-handle:hover {
+    opacity: 1;
+}
+
+/* Kanban Drag & Drop */
+.kanban-card {
+    transition: all 0.2s ease;
+}
+
+.kanban-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.kanban-card:active {
+    cursor: grabbing;
+}
+
+.kanban-cards.drag-over {
+    background: var(--primary);
+    opacity: 0.3;
+}
+
+/* Full Editor Modal */
+#full-editor-modal {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#full-editor-modal > div {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Gallery */
+#editor-media-gallery > div {
+    transition: all 0.2s ease;
+}
+
+#editor-media-gallery > div:hover {
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+/* Type Checkbox Styling */
+.type-checkbox {
+    transition: all 0.2s ease;
+}
+
+.type-checkbox:hover {
+    border-color: var(--primary) !important;
+}
+
+.type-checkbox input:checked + span {
+    font-weight: 600;
+}
+
+/* Generator Results */
+.result-card {
+    transition: all 0.2s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Platform Buttons */
+#editor-platforms button {
+    transition: all 0.2s ease;
+}
+
+#editor-platforms button:hover {
+    transform: scale(1.05);
+}
+
+/* Scrollbar Styling */
+.airtable-grid::-webkit-scrollbar,
+#editor-media-gallery::-webkit-scrollbar,
+.calendar-grid::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.airtable-grid::-webkit-scrollbar-track,
+#editor-media-gallery::-webkit-scrollbar-track,
+.calendar-grid::-webkit-scrollbar-track {
+    background: var(--bg-muted);
+    border-radius: 4px;
+}
+
+.airtable-grid::-webkit-scrollbar-thumb,
+#editor-media-gallery::-webkit-scrollbar-thumb,
+.calendar-grid::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.airtable-grid::-webkit-scrollbar-thumb:hover,
+#editor-media-gallery::-webkit-scrollbar-thumb:hover,
+.calendar-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Status Badge Colors */
+.status-idea { background: #a855f7; }
+.status-draft { background: #f59e0b; }
+.status-review { background: #3b82f6; }
+.status-scheduled { background: #10b981; }
+.status-published { background: #22c55e; }
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .generator-layout {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .airtable-grid {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-grid {
+        font-size: 12px;
+    }
+    
+    .calendar-day {
+        min-height: 80px !important;
+    }
+    
+    #full-editor-modal > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        max-height: 100vh !important;
+    }
+}

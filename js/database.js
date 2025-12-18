@@ -166,6 +166,10 @@ const DB = {
             return this.get().pillars || [];
         },
 
+        getNotes() {
+            return this.get().notes || [];
+        },
+
         // Get context string for AI prompts
         getContextString() {
             const projectId = DB.projects.getActiveId();
@@ -332,6 +336,30 @@ Content Pillars: ${kb.pillars?.join(', ') || 'Not set'}
         update(updates) { DB.set(DB.KEYS.SETTINGS, { ...this.get(), ...updates }); },
         getViewMode() { return this.get().viewMode || 'table'; },
         setViewMode(mode) { this.update({ viewMode: mode }); }
+    },
+
+    // ==================== EXPORT/IMPORT ====================
+    exportAll() {
+        const projectId = this.projects.getActiveId();
+        return {
+            projects: this.projects.getAll(),
+            activeProject: projectId,
+            knowledgeBase: this.knowledgeBase.get(projectId),
+            content: this.content.getAll(projectId),
+            settings: this.settings.get()
+        };
+    },
+
+    importAll(data) {
+        if (data.projects) this.set(this.KEYS.PROJECTS, data.projects);
+        if (data.activeProject) this.set(this.KEYS.ACTIVE_PROJECT, data.activeProject);
+        if (data.knowledgeBase && data.activeProject) {
+            this.knowledgeBase.save(data.activeProject, data.knowledgeBase);
+        }
+        if (data.content && data.activeProject) {
+            this.set(`lc_content_${data.activeProject}`, data.content);
+        }
+        if (data.settings) this.set(this.KEYS.SETTINGS, data.settings);
     }
 };
 
