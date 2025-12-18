@@ -124,6 +124,26 @@
                     </div>
                 </div>
 
+                <!-- Quick Generate Card -->
+                <div class="dashboard-card full-width">
+                    <div class="card-header">
+                        <h3>⚡ Quick Generate</h3>
+                        <span style="color:var(--text-muted);font-size:13px;">Generate single content with AI</span>
+                    </div>
+                    <div style="display:flex;gap:12px;align-items:flex-end;">
+                        <div style="flex:1;">
+                            <input type="text" id="quick-gen-topic" placeholder="Enter topic or idea..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);">
+                        </div>
+                        <select id="quick-gen-platform" style="padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);">
+                            <option value="instagram">Instagram</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="linkedin">LinkedIn</option>
+                        </select>
+                        <button class="btn-primary" onclick="quickGenerateFromDashboard()">Generate →</button>
+                    </div>
+                </div>
+
                 <!-- Quick Content Preview -->
                 <div class="dashboard-card full-width">
                     <div class="card-header">

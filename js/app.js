@@ -383,13 +383,18 @@ function renderTableView() {
     const tbody = document.getElementById('content-table-body');
     
     if (contents.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No content found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No content found. <a href="#" onclick="navigateTo(\'generator\');return false;" style="color:var(--primary)">Generate with AI</a> or <a href="#" onclick="openContentEditor();return false;" style="color:var(--primary)">create manually</a>.</td></tr>';
         return;
     }
     
-    tbody.innerHTML = contents.map(c => `
+    tbody.innerHTML = contents.map(c => {
+        const needsAI = !c.caption || c.status === 'idea';
+        return `
         <tr>
-            <td><strong>${c.title || 'Untitled'}</strong><br><small style="color:var(--text-muted)">${(c.caption || '').substring(0, 50)}...</small></td>
+            <td>
+                <strong>${c.title || 'Untitled'}</strong><br>
+                <small style="color:var(--text-muted)">${c.caption ? (c.caption.substring(0, 50) + '...') : '<em>No caption</em>'}</small>
+            </td>
             <td><span class="platform-badge ${c.platform}">${c.platform}</span></td>
             <td>${c.type}</td>
             <td><span class="status-badge ${c.status}">${c.status}</span></td>
@@ -397,10 +402,11 @@ function renderTableView() {
             <td class="table-actions">
                 <button onclick="openContentDetail('${c.id}')" title="View">👁</button>
                 <button onclick="openContentEditor('${c.id}')" title="Edit">✏️</button>
+                ${needsAI ? `<button onclick="triggerAIForContent('${c.id}')" title="Generate with AI" style="background:var(--primary);color:white;">⚡</button>` : ''}
                 <button onclick="deleteContent('${c.id}')" title="Delete">🗑️</button>
             </td>
         </tr>
-    `).join('');
+    `}).join('');
 }
 
 // Kanban View
@@ -412,15 +418,18 @@ function renderKanbanView() {
         const container = document.getElementById(`kanban-${status}`);
         const items = contents.filter(c => c.status === status);
         
-        container.innerHTML = items.map(c => `
-            <div class="kanban-card" onclick="openContentDetail('${c.id}')" draggable="true" data-id="${c.id}">
-                <div class="kanban-card-title">${c.title || 'Untitled'}</div>
+        container.innerHTML = items.map(c => {
+            const needsAI = !c.caption || c.status === 'idea';
+            return `
+            <div class="kanban-card" draggable="true" data-id="${c.id}">
+                <div class="kanban-card-title" onclick="openContentDetail('${c.id}')">${c.title || 'Untitled'}</div>
                 <div class="kanban-card-meta">
                     <span class="platform-badge ${c.platform}">${c.platform}</span>
                     <span class="kanban-card-date">${c.scheduledDate || ''}</span>
                 </div>
+                ${needsAI ? `<button onclick="event.stopPropagation(); triggerAIForContent('${c.id}')" style="width:100%;margin-top:8px;padding:6px;background:var(--primary);color:white;border:none;border-radius:4px;cursor:pointer;font-size:12px;">⚡ Generate AI</button>` : ''}
             </div>
-        `).join('') || '<p style="text-align:center;color:var(--text-muted);padding:20px;font-size:13px;">No items</p>';
+        `}).join('') || '<p style="text-align:center;color:var(--text-muted);padding:20px;font-size:13px;">No items</p>';
     });
     
     // Setup drag and drop
@@ -712,30 +721,105 @@ function openContentDetail(contentId) {
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');
     
+    // Check if content needs AI generation (empty caption or status is idea)
+    const needsAI = !content.caption || content.status === 'idea';
+    
     modalContent.innerHTML = `
         <div class="modal-header">
             <h2>${content.title || 'Untitled'}</h2>
             <button class="modal-close" onclick="closeModal()">&times;</button>
         </div>
-        <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
             <span class="platform-badge ${content.platform}">${content.platform}</span>
             <span class="status-badge ${content.status}">${content.status}</span>
             <span style="color:var(--text-secondary)">${content.type}</span>
+            ${content.pillar ? `<span style="background:var(--secondary);color:white;padding:2px 8px;border-radius:4px;font-size:12px;">🎯 ${content.pillar}</span>` : ''}
         </div>
         ${content.imageUrl ? `<img src="${content.imageUrl}" style="width:100%;border-radius:8px;margin-bottom:16px;">` : ''}
-        <div style="background:var(--bg-main);padding:16px;border-radius:8px;margin-bottom:16px;white-space:pre-wrap;">${content.caption || 'No caption'}</div>
+        <div style="background:var(--bg-main);padding:16px;border-radius:8px;margin-bottom:16px;white-space:pre-wrap;">${content.caption || '<span style="color:var(--text-muted)">No caption yet - Generate with AI!</span>'}</div>
         ${content.hashtags?.length ? `<div style="margin-bottom:16px;">${content.hashtags.map(h => `<span style="background:var(--primary);color:white;padding:2px 8px;border-radius:4px;margin-right:4px;font-size:12px;">${h}</span>`).join('')}</div>` : ''}
         <div style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;">
             ${content.scheduledDate ? `📅 ${content.scheduledDate} ${content.scheduledTime || ''}` : 'Not scheduled'}
-            ${content.pillar ? ` • 🎯 ${content.pillar}` : ''}
         </div>
         ${content.notes ? `<div style="background:#FEF3C7;padding:12px;border-radius:8px;font-size:13px;margin-bottom:16px;">📝 ${content.notes}</div>` : ''}
-        <div style="display:flex;gap:12px;">
-            <button class="btn-secondary" onclick="copyToClipboard(\`${(content.caption || '').replace(/`/g, '\\`')}\`)">📋 Copy Caption</button>
-            <button class="btn-primary" onclick="closeModal(); openContentEditor('${contentId}')">✏️ Edit</button>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            ${content.caption ? `<button class="btn-secondary" onclick="copyToClipboard(\`${(content.caption || '').replace(/`/g, '\\`')}\`)">📋 Copy</button>` : ''}
+            <button class="btn-secondary" onclick="closeModal(); openContentEditor('${contentId}')">✏️ Edit</button>
+            ${needsAI ? `<button class="btn-primary" onclick="closeModal(); triggerAIForContent('${contentId}')">⚡ Generate with AI</button>` : `<button class="btn-secondary" onclick="closeModal(); triggerAIForContent('${contentId}')">🔄 Regenerate</button>`}
+            <button class="btn-secondary" onclick="updateContentStatus('${contentId}')">📊 Change Status</button>
         </div>
     `;
     modal.classList.add('show');
+}
+
+// Trigger AI Generator with content data pre-filled
+function triggerAIForContent(contentId) {
+    const content = DB.content.getById(contentId);
+    if (!content) return;
+    
+    // Store content ID for later update
+    window.pendingContentUpdate = contentId;
+    
+    // Navigate to generator
+    navigateTo('generator');
+    
+    // Pre-fill form with content data
+    setTimeout(() => {
+        document.getElementById('gen-topic').value = content.title || '';
+        document.getElementById('gen-platform').value = content.platform || 'instagram';
+        document.getElementById('gen-type').value = content.type || 'post';
+        
+        const pillarSelect = document.getElementById('gen-pillar');
+        if (pillarSelect && content.pillar) {
+            pillarSelect.value = content.pillar;
+        }
+        
+        showToast('Form pre-filled from content. Click Generate!', 'info');
+    }, 100);
+}
+
+// Update content status via modal
+function updateContentStatus(contentId) {
+    const content = DB.content.getById(contentId);
+    if (!content) return;
+    
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    
+    modalContent.innerHTML = `
+        <div class="modal-header">
+            <h2>Update Status</h2>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <p style="margin-bottom:16px;color:var(--text-secondary);">${content.title || 'Untitled'}</p>
+        <div class="status-options" style="display:flex;flex-direction:column;gap:8px;">
+            ${['idea', 'draft', 'review', 'scheduled', 'published'].map(s => `
+                <button class="btn-secondary ${content.status === s ? 'active' : ''}" 
+                    style="${content.status === s ? 'border-color:var(--primary);background:rgba(91,154,148,0.1);' : ''}"
+                    onclick="setContentStatus('${contentId}', '${s}')">
+                    ${getStatusEmoji(s)} ${s.charAt(0).toUpperCase() + s.slice(1)}
+                </button>
+            `).join('')}
+        </div>
+    `;
+    modal.classList.add('show');
+}
+
+function getStatusEmoji(status) {
+    const emojis = { idea: '💡', draft: '📝', review: '👀', scheduled: '📅', published: '✅' };
+    return emojis[status] || '📄';
+}
+
+function setContentStatus(contentId, status) {
+    DB.content.update(contentId, { status });
+    closeModal();
+    showToast(`Status updated to ${status}!`, 'success');
+    
+    // Refresh current view
+    const currentSection = document.querySelector('.section.active')?.id;
+    if (currentSection === 'content-hub') loadContentHub();
+    else if (currentSection === 'dashboard') loadDashboard();
+    else if (currentSection === 'calendar') loadFullCalendar();
 }
 
 // ==================== KNOWLEDGE BASE ====================
@@ -881,6 +965,38 @@ function removePillar(pillar) {
 // ==================== AI GENERATOR ====================
 function loadGenerator() {
     renderPillars();
+    
+    // Clear pending content update if navigating fresh
+    if (!window.pendingContentUpdate) {
+        document.getElementById('gen-topic').value = '';
+        document.getElementById('gen-result').innerHTML = '<p class="placeholder-text">Result will appear here...</p>';
+        document.getElementById('gen-result-actions').style.display = 'none';
+    }
+}
+
+// Quick Generate from Dashboard
+async function quickGenerateFromDashboard() {
+    const topic = document.getElementById('quick-gen-topic')?.value;
+    const platform = document.getElementById('quick-gen-platform')?.value || 'instagram';
+    
+    if (!topic?.trim()) {
+        showToast('Please enter a topic', 'warning');
+        return;
+    }
+    
+    // Navigate to generator with pre-filled data
+    navigateTo('generator');
+    
+    setTimeout(() => {
+        document.getElementById('gen-topic').value = topic;
+        document.getElementById('gen-platform').value = platform;
+        
+        // Auto-trigger generation
+        generateSingleContent();
+    }, 100);
+    
+    // Clear dashboard input
+    document.getElementById('quick-gen-topic').value = '';
 }
 
 async function generateSingleContent() {
@@ -960,22 +1076,46 @@ async function regenerateContent() {
 function saveGeneratedContent() {
     if (!lastGeneratedContent) return;
     
-    const content = DB.content.add({
-        title: lastGeneratedContent.topic.substring(0, 50),
-        caption: `${lastGeneratedContent.hook}\n\n${lastGeneratedContent.caption}\n\n${lastGeneratedContent.cta || ''}`,
-        hashtags: lastGeneratedContent.hashtags || [],
-        platform: lastGeneratedContent.options.platform,
-        type: lastGeneratedContent.options.type,
-        pillar: lastGeneratedContent.options.pillar,
-        imageUrl: lastGeneratedContent.imageUrl || '',
-        imagePrompt: lastGeneratedContent.imagePrompt || '',
-        status: 'draft'
-    });
+    const fullCaption = `${lastGeneratedContent.hook}\n\n${lastGeneratedContent.caption}\n\n${lastGeneratedContent.cta || ''}`.trim();
     
-    showToast('Content saved to hub!', 'success');
+    // Check if we're updating existing content or creating new
+    if (window.pendingContentUpdate) {
+        // Update existing content
+        DB.content.update(window.pendingContentUpdate, {
+            caption: fullCaption,
+            hashtags: lastGeneratedContent.hashtags || [],
+            imageUrl: lastGeneratedContent.imageUrl || '',
+            imagePrompt: lastGeneratedContent.imagePrompt || '',
+            hook: lastGeneratedContent.hook || '',
+            cta: lastGeneratedContent.cta || '',
+            status: 'draft' // Move from idea to draft after generation
+        });
+        showToast('Content updated with AI generation!', 'success');
+        window.pendingContentUpdate = null;
+    } else {
+        // Create new content
+        DB.content.add({
+            title: lastGeneratedContent.topic.substring(0, 50),
+            caption: fullCaption,
+            hashtags: lastGeneratedContent.hashtags || [],
+            platform: lastGeneratedContent.options.platform,
+            type: lastGeneratedContent.options.type,
+            pillar: lastGeneratedContent.options.pillar,
+            imageUrl: lastGeneratedContent.imageUrl || '',
+            imagePrompt: lastGeneratedContent.imagePrompt || '',
+            hook: lastGeneratedContent.hook || '',
+            cta: lastGeneratedContent.cta || '',
+            status: 'draft'
+        });
+        showToast('Content saved to hub!', 'success');
+    }
+    
     lastGeneratedContent = null;
     document.getElementById('gen-result').innerHTML = '<p class="placeholder-text">Result will appear here...</p>';
     document.getElementById('gen-result-actions').style.display = 'none';
+    
+    // Refresh dashboard stats
+    loadDashboard();
 }
 
 // ==================== SETTINGS ====================
