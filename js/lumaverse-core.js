@@ -257,21 +257,56 @@ const ContentHub = {
             tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">No content found. Create your first content!</td></tr>';
         } else {
             tbody.innerHTML = content.map(c => `
-                <tr>
+                <tr data-id="${c.id}">
                     <td><input type="checkbox" data-id="${c.id}"></td>
-                    <td style="font-weight:500;">${c.title || 'Untitled'}</td>
-                    <td>${getTypeIcon(c.type)} ${getTypeName(c.type)}</td>
+                    <td><div class="editable-cell" contenteditable="true" data-field="title" data-id="${c.id}" onblur="ContentHub.inlineUpdate(this)">${c.title || 'Untitled'}</div></td>
+                    <td><select class="inline-select" data-field="type" data-id="${c.id}" onchange="ContentHub.inlineUpdate(this)" style="background:transparent;border:none;color:var(--text-primary);">
+                        <option value="text_article" ${c.type==='text_article'?'selected':''}>📝 Article</option>
+                        <option value="text_thread" ${c.type==='text_thread'?'selected':''}>🐦 Thread</option>
+                        <option value="video_short" ${c.type==='video_short'?'selected':''}>📱 Short</option>
+                        <option value="image_carousel" ${c.type==='image_carousel'?'selected':''}>🎨 Carousel</option>
+                    </select></td>
                     <td>${(c.platforms || []).map(p => getPlatformIcon(p)).join(' ') || '-'}</td>
-                    <td><span class="status-badge ${c.status}" style="padding:4px 10px;border-radius:20px;font-size:11px;background:var(--bg-glass);">${c.status}</span></td>
+                    <td><select class="inline-select status-badge ${c.status}" data-field="status" data-id="${c.id}" onchange="ContentHub.inlineUpdate(this)">
+                        <option value="idea" ${c.status==='idea'?'selected':''}>💡 Idea</option>
+                        <option value="draft" ${c.status==='draft'?'selected':''}>📝 Draft</option>
+                        <option value="scheduled" ${c.status==='scheduled'?'selected':''}>📅 Scheduled</option>
+                        <option value="published" ${c.status==='published'?'selected':''}>✅ Published</option>
+                    </select></td>
                     <td>${formatDate(c.createdAt)}</td>
                     <td>
                         <button class="btn-ghost" onclick="ContentHub.edit('${c.id}')" style="padding:6px;">✏️</button>
+                        <button class="btn-ghost" onclick="ContentHub.duplicate('${c.id}')" style="padding:6px;">📋</button>
                         <button class="btn-ghost" onclick="ContentHub.delete('${c.id}')" style="padding:6px;">🗑️</button>
                     </td>
                 </tr>
             `).join('');
         }
         document.getElementById('simple-row-count').textContent = `${content.length} items`;
+    },
+
+    inlineUpdate(el) {
+        const id = el.dataset.id;
+        const field = el.dataset.field;
+        const value = el.tagName === 'SELECT' ? el.value : el.textContent.trim();
+        const idx = AppState.content.findIndex(c => c.id === id);
+        if (idx !== -1) {
+            AppState.content[idx][field] = value;
+            AppState.content[idx].updatedAt = new Date().toISOString();
+            saveAppData();
+            if (field === 'status') { el.className = `inline-select status-badge ${value}`; }
+        }
+    },
+
+    duplicate(id) {
+        const c = AppState.content.find(x => x.id === id);
+        if (c) {
+            const newContent = { ...c, id: 'content_' + Date.now(), title: c.title + ' (Copy)', createdAt: new Date().toISOString() };
+            AppState.content.push(newContent);
+            saveAppData();
+            this.refresh();
+            showToast('Content duplicated!', 'success');
+        }
     },
 
     renderKanbanView() {
@@ -283,10 +318,27 @@ const ContentHub = {
             if (!container) return;
             const items = content.filter(c => c.status === status);
             countEl.textContent = items.length;
-            container.innerHTML = items.length === 0 ? '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">No items</div>' :
+            
+            // Setup drop zone
+            container.ondragover = (e) => { e.preventDefault(); container.parentElement.classList.add('drag-over'); };
+            container.ondragleave = () => container.parentElement.classList.remove('drag-over');
+            container.ondrop = (e) => {
+                e.preventDefault();
+                container.parentElement.classList.remove('drag-over');
+                const id = e.dataTransfer.getData('text/plain');
+                this.updateStatus(id, status);
+            };
+            
+            container.innerHTML = items.length === 0 ? '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">Drop here</div>' :
                 items.map(c => `
-                    <div class="kanban-card" onclick="ContentHub.edit('${c.id}')" style="padding:14px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-md);cursor:pointer;margin-bottom:8px;">
-                        <div style="font-size:14px;font-weight:500;margin-bottom:8px;">${c.title || 'Untitled'}</div>
+                    <div class="kanban-card" draggable="true" data-id="${c.id}" 
+                        ondragstart="event.dataTransfer.setData('text/plain','${c.id}');this.classList.add('dragging')"
+                        ondragend="this.classList.remove('dragging')"
+                        style="padding:14px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-md);cursor:grab;margin-bottom:8px;">
+                        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+                            <div style="font-size:14px;font-weight:500;">${c.title || 'Untitled'}</div>
+                            <button onclick="event.stopPropagation();ContentHub.edit('${c.id}')" style="background:none;border:none;cursor:pointer;padding:4px;">✏️</button>
+                        </div>
                         <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-muted);">
                             <span>${getTypeIcon(c.type)} ${getTypeName(c.type)}</span>
                             <span>${formatDate(c.createdAt)}</span>
@@ -294,6 +346,17 @@ const ContentHub = {
                     </div>
                 `).join('');
         });
+    },
+
+    updateStatus(id, newStatus) {
+        const idx = AppState.content.findIndex(c => c.id === id);
+        if (idx !== -1) {
+            AppState.content[idx].status = newStatus;
+            AppState.content[idx].updatedAt = new Date().toISOString();
+            saveAppData();
+            this.refresh();
+            showToast(`Moved to ${newStatus}!`, 'success');
+        }
     },
 
     renderCalendarView() {
@@ -883,9 +946,68 @@ function getPlatformIcon(p) { return { instagram: '📸', tiktok: '🎵', youtub
 function formatDate(d) { if (!d) return '-'; return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }); }
 function filterByStatus(s) { navigateTo('content-hub'); ContentHub.setFilter(s); }
 function refreshInsights() { showToast('Insights refreshed!', 'success'); }
-function toggleNotifications() { showToast('Notifications coming soon!', 'info'); }
-function toggleUserMenu() { showToast('User menu coming soon!', 'info'); }
-function startVoiceInput() { showToast('Voice input coming soon!', 'info'); }
+
+// Notifications Panel
+function toggleNotifications() {
+    const existing = document.getElementById('notifications-panel');
+    if (existing) { existing.remove(); return; }
+    const panel = document.createElement('div');
+    panel.id = 'notifications-panel';
+    panel.style.cssText = 'position:fixed;top:70px;right:100px;width:320px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:1000;padding:16px;';
+    panel.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3 style="font-size:16px;font-weight:600;">Notifications</h3>
+            <button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;">×</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--cyan);">🎉</span> Welcome to Lumaverse!</div>
+            <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--purple);">✨</span> 133 workflows ready to use</div>
+            <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--green);">🤖</span> AI Assistant is online</div>
+        </div>
+    `;
+    document.body.appendChild(panel);
+}
+
+// User Menu
+function toggleUserMenu() {
+    const existing = document.getElementById('user-menu-panel');
+    if (existing) { existing.remove(); return; }
+    const panel = document.createElement('div');
+    panel.id = 'user-menu-panel';
+    panel.style.cssText = 'position:fixed;top:70px;right:20px;width:200px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:1000;padding:8px;';
+    panel.innerHTML = `
+        <div style="padding:12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);margin-bottom:8px;">
+            <div style="width:40px;height:40px;background:var(--gradient-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;">L</div>
+            <div><div style="font-weight:600;">Lumaverse User</div><div style="font-size:12px;color:var(--text-muted);">Pro Plan</div></div>
+        </div>
+        <button onclick="navigateTo('settings');this.parentElement.remove()" style="width:100%;padding:10px 12px;background:none;border:none;color:var(--text-primary);text-align:left;cursor:pointer;border-radius:6px;">⚙️ Settings</button>
+        <button onclick="exportAllData();this.parentElement.remove()" style="width:100%;padding:10px 12px;background:none;border:none;color:var(--text-primary);text-align:left;cursor:pointer;border-radius:6px;">📤 Export Data</button>
+        <button onclick="this.parentElement.remove()" style="width:100%;padding:10px 12px;background:none;border:none;color:var(--red);text-align:left;cursor:pointer;border-radius:6px;">🚪 Logout</button>
+    `;
+    document.body.appendChild(panel);
+}
+
+// Voice Input
+function startVoiceInput() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        showToast('Voice input not supported in this browser', 'error');
+        return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'id-ID';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    showToast('🎤 Listening... Speak now!', 'info');
+    recognition.onresult = (e) => {
+        const text = e.results[0][0].transcript;
+        const input = document.getElementById('quick-gen-topic');
+        if (input) input.value = text;
+        showToast('Voice captured!', 'success');
+    };
+    recognition.onerror = () => showToast('Voice input failed', 'error');
+    recognition.start();
+}
 async function aiSuggestTopic() {
     showToast('Getting AI suggestions...', 'info');
     const result = await PollinationsAI.suggestTopics('general', 3);
