@@ -1,4 +1,4 @@
-// ==================== ULTRA CORE ====================
+﻿// ==================== ULTRA CORE ====================
 // Main Application Controller - Perfect Integration
 // Version 5.0 - December 2025
 
@@ -13,7 +13,7 @@ const UltraCore = {
 
     // Initialize Application
     async init() {
-        console.log('🚀 Initializing Lumakara Ultra...');
+        console.log('🚀 Initializing raycorp Ultra...');
         
         try {
             // Show loading
@@ -38,11 +38,11 @@ const UltraCore = {
             this.hideGlobalLoading();
             
             this.state.initialized = true;
-            console.log('✅ Lumakara Ultra initialized successfully!');
+            console.log('✅ raycorp Ultra initialized successfully!');
             
             // Show welcome toast
             setTimeout(() => {
-                this.showToast('Welcome to Lumakara Ultra! 🚀', 'success');
+                this.showToast('Welcome to raycorp Ultra! 🚀', 'success');
             }, 500);
             
         } catch (error) {
@@ -207,7 +207,7 @@ const UltraCore = {
         window.navigateTo = (section) => this.navigateTo(section);
         
         // Load last section
-        const lastSection = localStorage.getItem('lumakara-last-section') || 'dashboard';
+        const lastSection = localStorage.getItem('raycorp-last-section') || 'dashboard';
         this.navigateTo(lastSection);
     },
 
@@ -217,7 +217,7 @@ const UltraCore = {
         this.loadProjects();
         
         // Load settings
-        const settings = JSON.parse(localStorage.getItem('lumakara-settings') || '{}');
+        const settings = JSON.parse(localStorage.getItem('raycorp-settings') || '{}');
         if (settings.brand?.name) {
             document.getElementById('project-name-sidebar').textContent = settings.brand.name;
         }
@@ -225,7 +225,7 @@ const UltraCore = {
 
     // Load Projects
     loadProjects() {
-        const projects = JSON.parse(localStorage.getItem('lumakara-projects') || '[]');
+        const projects = JSON.parse(localStorage.getItem('raycorp-projects') || '[]');
         const select = document.getElementById('project-select');
         
         if (select) {
@@ -244,7 +244,7 @@ const UltraCore = {
 
     // Update Dashboard Stats
     updateDashboardStats() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         
         const stats = {
             total: contents.length,
@@ -303,7 +303,7 @@ const UltraCore = {
         const container = document.getElementById('recent-content');
         if (!container) return;
         
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         const recent = contents.slice(-5).reverse();
         
         if (recent.length === 0) {
@@ -333,7 +333,7 @@ const UltraCore = {
         const container = document.getElementById('upcoming-content');
         if (!container) return;
         
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         const scheduled = contents.filter(c => c.status === 'scheduled').slice(0, 4);
         
         if (scheduled.length === 0) {
@@ -391,8 +391,8 @@ const UltraCore = {
 
     // Save State
     saveState() {
-        localStorage.setItem('lumakara-last-section', this.state.currentSection);
-        localStorage.setItem('lumakara-app-state', JSON.stringify({
+        localStorage.setItem('raycorp-last-section', this.state.currentSection);
+        localStorage.setItem('raycorp-app-state', JSON.stringify({
             currentProject: this.state.currentProject,
             lastVisit: Date.now()
         }));
@@ -422,7 +422,7 @@ const UltraCore = {
         loading.innerHTML = `
             <div class="global-loading-content">
                 <div class="loading-logo">◈</div>
-                <div class="loading-text">Loading Lumakara...</div>
+                <div class="loading-text">Loading raycorp...</div>
                 <div class="loading-bar">
                     <div class="loading-bar-fill"></div>
                 </div>
@@ -568,7 +568,7 @@ const UltraCore = {
             return;
         }
         
-        const projects = JSON.parse(localStorage.getItem('lumakara-projects') || '[]');
+        const projects = JSON.parse(localStorage.getItem('raycorp-projects') || '[]');
         const newProject = {
             id: Date.now().toString(),
             name,
@@ -577,7 +577,7 @@ const UltraCore = {
         };
         
         projects.push(newProject);
-        localStorage.setItem('lumakara-projects', JSON.stringify(projects));
+        localStorage.setItem('raycorp-projects', JSON.stringify(projects));
         
         // Set as current project
         this.state.currentProject = newProject.id;
@@ -598,7 +598,7 @@ const UltraCore = {
     switchProject(projectId) {
         if (!projectId) return;
         
-        const projects = JSON.parse(localStorage.getItem('lumakara-projects') || '[]');
+        const projects = JSON.parse(localStorage.getItem('raycorp-projects') || '[]');
         const project = projects.find(p => p.id === projectId);
         
         if (project) {

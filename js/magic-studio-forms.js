@@ -1,9 +1,9 @@
-/**
+﻿/**
  * MAGIC STUDIO FORMS - Complete Workflow Form System
  */
 
 const WorkflowForms = {
-    history: JSON.parse(localStorage.getItem('lumaverse_workflow_history') || '{}'),
+    history: JSON.parse(localStorage.getItem('raymAIzing_workflow_history') || '{}'),
     currentWorkflow: null,
     generatedPrompt: '',
 
@@ -262,7 +262,7 @@ const WorkflowForms = {
         if (!this.history[id]) this.history[id] = [];
         this.history[id].unshift({ prompt, formData: data, timestamp: new Date().toISOString() });
         this.history[id] = this.history[id].slice(0, 10);
-        localStorage.setItem('lumaverse_workflow_history', JSON.stringify(this.history));
+        localStorage.setItem('raymAIzing_workflow_history', JSON.stringify(this.history));
     },
 
     loadHistory(id, idx) {
@@ -279,7 +279,7 @@ const WorkflowForms = {
 
     clearHistory(id) {
         delete this.history[id];
-        localStorage.setItem('lumaverse_workflow_history', JSON.stringify(this.history));
+        localStorage.setItem('raymAIzing_workflow_history', JSON.stringify(this.history));
         showToast('History cleared', 'success');
         if (this.currentWorkflow) MagicStudio.openWorkflow(this.currentWorkflow.id);
     }

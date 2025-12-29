@@ -1,13 +1,13 @@
-/**
- * Lumakara Project Auto-Setup
+﻿/**
+ * raycorp Project Auto-Setup
  * Pre-configured project with complete knowledge base
  */
 
-const LumakaraSetup = {
+const raycorpSetup = {
     // Project Data
     project: {
-        name: 'Lumakara',
-        brandName: 'Lumakara',
+        name: 'raycorp',
+        brandName: 'raycorp',
         niche: 'business',
         targetAudience: `Target Market by Generation:
 - Baby Boomers (60-78): Premium, trust-based, legacy & succession focus, Rp 25-50M+
@@ -25,7 +25,7 @@ Secondary: Influencers wanting to build sustainable brands, community leaders`,
 
     // Knowledge Base - Guidelines
     guidelines: {
-        brandVoice: `Lumakara Brand Voice & Personality:
+        brandVoice: `raycorp Brand Voice & Personality:
 - Type: Projector - "The Seer" (Advisor, bukan executor)
 - Profile: 1/4 - The Omniscient Teacher (Investigator + Opportunist)
 - Tone: Calm Premium, Modern Urban Intelligence
@@ -39,7 +39,7 @@ Key Traits:
 - Bekerja optimal dengan klien yang benar-benar butuh clarity
 - Quality over quantity (hanya 2 brand per kuartal)`,
 
-        keyMessages: `Key Messages (USP) Lumakara:
+        keyMessages: `Key Messages (USP) raycorp:
 1. "Let's grow your brand with clarity, step by step"
 2. "From Idea to Impact" - Solusi Brand & Bisnis yang Tumbuh Bareng Kamu
 3. "Kejelasan yang Menghasilkan Karya Nyata" (Luma = Cahaya, Kara = Tindakan)
@@ -67,7 +67,7 @@ What We ARE:
         'Business Transformation',
         'Entrepreneurship Journey',
         'Marketing & Growth Insights',
-        'Behind The Scenes Lumakara',
+        'Behind The Scenes raycorp',
         'Client Success Stories',
         'Industry Trends & Analysis'
     ],
@@ -77,9 +77,9 @@ What We ARE:
         {
             name: 'Company Identity',
             category: 'brand',
-            content: `LUMAKARA - Company Identity
+            content: `raycorp - Company Identity
 
-Nama: Lumakara
+Nama: raycorp
 Tagline: "Let's grow your brand with clarity, step by step"
 Type: Strategic Brand & Business Transformation Advisor
 Founded: 2024
@@ -88,7 +88,7 @@ Location: Bandung, Indonesia (remote-first)
 Makna Nama:
 - Luma = Cahaya, kejelasan, pencerahan
 - Kara = Tindakan, karya, eksekusi
-- Lumakara = Kejelasan yang Menghasilkan Karya Nyata
+- raycorp = Kejelasan yang Menghasilkan Karya Nyata
 
 Visi: Mengarahkan pertumbuhan bisnis dengan tujuan dan kejelasan arah.
 Misi: Listen deeply → Craft thoughtfully → Activate intentionally
@@ -111,7 +111,7 @@ Unique Model:
         {
             name: 'The Team - Perfect Triangle',
             category: 'brand',
-            content: `THE LUMAKARA TEAM - The Perfect Triangle
+            content: `THE raycorp TEAM - The Perfect Triangle
 
 1. Dodi Rahadian - Chief Narrative Architect
    - Vision + Narrative (The Why & What)
@@ -134,9 +134,9 @@ Unique Model:
         {
             name: 'Service Portfolio',
             category: 'product',
-            content: `LUMAKARA SERVICE PORTFOLIO
+            content: `raycorp SERVICE PORTFOLIO
 
-The Lumakara Growth System™:
+The raycorp Growth System™:
 Step 1: DISCOVER YOUR ESSENCE (2-4 weeks)
 Step 2: BUILD YOUR NARRATIVE (3-6 weeks)
 Step 3: ACTIVATE FOR GROWTH (3-12 months)
@@ -165,7 +165,7 @@ Step 3: ACTIVATE FOR GROWTH (3-12 months)
         {
             name: 'Visual Identity Guidelines',
             category: 'brand',
-            content: `LUMAKARA VISUAL IDENTITY
+            content: `raycorp VISUAL IDENTITY
 
 Visual Essence: Calm Premium Meets Modern Urban Intelligence
 
@@ -207,7 +207,7 @@ Photography:
 
     // Knowledge Base - Notes
     notes: [
-        { category: 'brand', content: 'Lumakara adalah Projector dalam Human Design - advisor bukan executor, bekerja optimal ketika mendapat undangan yang tepat' },
+        { category: 'brand', content: 'raycorp adalah Projector dalam Human Design - advisor bukan executor, bekerja optimal ketika mendapat undangan yang tepat' },
         { category: 'brand', content: 'Profile 1/4: Investigator (riset kuat) + Opportunist (pertumbuhan dari jaringan inti, reputasi, trust circle)' },
         { category: 'brand', content: 'Strategy: Being Invited - menarik klien yang tepat, bukan mengejar semua. Magnet, bukan hunter.' },
         { category: 'brand', content: 'Digestion: Consecutive - satu klien dalam satu fase, bukan paralel. Quality over quantity.' },
@@ -219,17 +219,17 @@ Photography:
         { category: 'audience', content: 'Millennials: Purpose-driven, Instagram-worthy, story-driven, flexible' },
         { category: 'audience', content: 'Gen Z: Authentic, affordable, TikTok-native, BNPL, casual, fast' },
         { category: 'competitor', content: 'Bukan konsultan tradisional (mahal, kaku), bukan freelancer (inconsistent), bukan digital agency (tactical), bukan vendor desain (volume)' },
-        { category: 'general', content: 'Contact: lumakara.id@gmail.com | lumakara.web.id | @lumakara.id' }
+        { category: 'general', content: 'Contact: raycorp.id@gmail.com | raycorp.web.id | @raycorp.id' }
     ],
 
-    // Initialize Lumakara Project
+    // Initialize raycorp Project
     async init() {
-        // Check if Lumakara project already exists
+        // Check if raycorp project already exists
         const projects = DB.projects.getAll();
-        const existing = projects.find(p => p.name === 'Lumakara');
+        const existing = projects.find(p => p.name === 'raycorp');
         
         if (existing) {
-            console.log('Lumakara project already exists');
+            console.log('raycorp project already exists');
             DB.projects.setActive(existing.id);
             return existing;
         }
@@ -259,7 +259,7 @@ Photography:
             DB.knowledgeBase.addNote(note.content, note.category);
         });
 
-        console.log('✅ Lumakara project initialized with complete knowledge base!');
+        console.log('✅ raycorp project initialized with complete knowledge base!');
         return project;
     }
 };
@@ -269,21 +269,21 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         const projects = DB.projects.getAll();
         if (projects.length === 0) {
-            LumakaraSetup.init().then(() => {
+            raycorpSetup.init().then(() => {
                 loadProjects();
                 loadActiveProject();
-                showToast('Lumakara project created with complete knowledge base!', 'success');
+                showToast('raycorp project created with complete knowledge base!', 'success');
             });
         }
     }, 500);
 });
 
 // Manual setup function
-function setupLumakaraProject() {
-    LumakaraSetup.init().then(() => {
+function setupraycorpProject() {
+    raycorpSetup.init().then(() => {
         loadProjects();
         loadActiveProject();
         loadKnowledgeBase();
-        showToast('Lumakara project setup complete!', 'success');
+        showToast('raycorp project setup complete!', 'success');
     });
 }

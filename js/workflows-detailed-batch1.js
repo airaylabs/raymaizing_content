@@ -1,4 +1,4 @@
-// ==================== WORKFLOWS DETAILED - BATCH 1 (WF-001 to WF-030) ====================
+﻿// ==================== WORKFLOWS DETAILED - BATCH 1 (WF-001 to WF-030) ====================
 // Complete form fields for comprehensive Google Opal output
 // Version 3.0 - December 2025
 
@@ -27,7 +27,7 @@ const WorkflowsDetailedBatch1 = {
             { id: 'tone', type: 'select', label: 'Tone/Gaya Penulisan', options: ['Professional - Formal dan kredibel', 'Casual - Santai dan friendly', 'Educational - Informatif dan mengajar', 'Inspirational - Memotivasi dan menginspirasi', 'Authoritative - Expert dan berwibawa', 'Conversational - Seperti ngobrol'], required: true },
             { id: 'article_length', type: 'select', label: 'Panjang Artikel', options: ['Short (800 kata) - Quick read', 'Medium (1500 kata) - Standard blog', 'Long (2500 kata) - Comprehensive', 'Pillar (4000+ kata) - Ultimate guide'], required: true },
             { id: 'language', type: 'select', label: 'Bahasa', options: ['Indonesian', 'English', 'Both (ID + EN)'], required: true },
-            { id: 'brand_name', type: 'text', label: 'Nama Brand/Perusahaan', placeholder: 'e.g., Lumakara', required: false, helpText: 'Untuk personalisasi konten' },
+            { id: 'brand_name', type: 'text', label: 'Nama Brand/Perusahaan', placeholder: 'e.g., raycorp', required: false, helpText: 'Untuk personalisasi konten' },
             { id: 'brand_description', type: 'textarea', label: 'Deskripsi Brand', placeholder: 'Jelaskan bisnis/brand Anda secara singkat...', required: false },
             { id: 'target_audience', type: 'text', label: 'Target Audience', placeholder: 'e.g., Entrepreneur muda usia 25-35 tahun', required: true },
             { id: 'content_goal', type: 'select', label: 'Tujuan Konten', options: ['Awareness - Memperkenalkan brand/topik', 'Traffic - Mendatangkan pengunjung', 'Conversion - Menghasilkan leads/sales', 'Education - Mengedukasi audience', 'Authority - Membangun kredibilitas'], required: true },
@@ -176,7 +176,7 @@ OUTPUT: 15 complete threads ready to post.`
             { id: 'visual_style', type: 'select', label: 'Gaya Visual Utama', options: ['Minimalist Modern - Clean dan simple', 'Bold & Colorful - Vibrant dan eye-catching', 'Professional Corporate - Formal dan kredibel', 'Aesthetic Soft - Pastel dan lembut', 'Dark Mode - Gelap dan premium', 'Neon Futuristic - Glow dan modern', 'Vintage Retro - Klasik dan nostalgic', 'Gradient Mesh - Gradasi modern'], required: true },
             { id: 'primary_color', type: 'color', label: 'Warna Utama Brand', placeholder: '#6366F1', required: true, helpText: 'Pilih warna utama brand Anda' },
             { id: 'secondary_color', type: 'color', label: 'Warna Sekunder', placeholder: '#EC4899', required: true },
-            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., Lumakara', required: false },
+            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., raycorp', required: false },
             { id: 'aspect_ratio', type: 'select', label: 'Aspect Ratio', options: ['1:1 (Instagram Square) - 1080×1080', '4:5 (Instagram Portrait) - 1080×1350', '9:16 (Stories/Reels) - 1080×1920', '16:9 (LinkedIn/Twitter) - 1200×675'], required: true },
             { id: 'content_goal', type: 'select', label: 'Tujuan Konten', options: ['Educate - Mengajarkan sesuatu', 'Inspire - Memotivasi audience', 'Sell - Mempromosikan produk/jasa', 'Entertain - Menghibur', 'Inform - Memberikan informasi'], required: true },
             { id: 'target_audience', type: 'text', label: 'Target Audience', placeholder: 'e.g., Profesional muda 25-35 tahun', required: true },
@@ -483,7 +483,7 @@ OUTPUT: Complete YouTube video production package.`
         opalLink: 'https://opal.google/?flow=drive:/12ke0c7sqsi48D0O6u-bx10XH6Bhv8A3_&shared&mode=app',
         fields: [
             { id: 'content_topic', type: 'text', label: 'Topik Konten', placeholder: 'e.g., Panduan Lengkap Digital Marketing untuk UMKM', required: true },
-            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., Lumakara', required: true },
+            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., raycorp', required: true },
             { id: 'brand_description', type: 'textarea', label: 'Deskripsi Brand', placeholder: 'Jelaskan bisnis/brand Anda...', required: true },
             { id: 'target_audience', type: 'text', label: 'Target Audience', placeholder: 'e.g., Pemilik UMKM usia 30-50 tahun', required: true },
             { id: 'content_goal', type: 'select', label: 'Tujuan Utama', options: ['Brand Awareness', 'Lead Generation', 'Sales/Conversion', 'Education', 'Community Building'], required: true },
@@ -661,7 +661,7 @@ OUTPUT: Complete podcast production package.`
         popular: true,
         opalLink: 'https://opal.google/?flow=drive:/166NBLB_fdhJ5Q3XzVg4gKT5sm3EmAjNR&shared&mode=app',
         fields: [
-            { id: 'product_name', type: 'text', label: 'Nama Produk', placeholder: 'e.g., Lumakara Premium Face Serum', required: true },
+            { id: 'product_name', type: 'text', label: 'Nama Produk', placeholder: 'e.g., raycorp Premium Face Serum', required: true },
             { id: 'product_description', type: 'textarea', label: 'Deskripsi Produk', placeholder: 'Deskripsikan produk secara detail: ukuran, warna, material, fitur unik...', required: true },
             { id: 'product_category', type: 'select', label: 'Kategori Produk', options: ['Fashion/Clothing', 'Beauty/Skincare', 'Electronics/Gadget', 'Food/Beverage', 'Jewelry/Accessories', 'Home/Furniture', 'Sports/Fitness', 'Toys/Kids', 'Health/Wellness', 'Art/Craft'], required: true },
             { id: 'background_style', type: 'select', label: 'Gaya Background', options: ['White Studio - Clean e-commerce', 'Lifestyle - In-context usage', 'Natural - Outdoor/nature', 'Gradient - Modern gradient', 'Textured - Marble, wood, fabric', 'Colored - Solid color', 'Transparent - PNG cutout'], required: true },
@@ -883,7 +883,7 @@ OUTPUT: {output_variations} face swap images.`
         popular: true,
         opalLink: 'https://opal.google/?flow=drive:/134_LdKrqDb9Fsg1jVRFxMoNghLkzlmKt&shared&mode=app',
         fields: [
-            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., Lumakara', required: true },
+            { id: 'brand_name', type: 'text', label: 'Nama Brand', placeholder: 'e.g., raycorp', required: true },
             { id: 'tagline', type: 'text', label: 'Tagline (Opsional)', placeholder: 'e.g., Empowering Your Digital Journey', required: false },
             { id: 'industry', type: 'select', label: 'Industri', options: ['Technology/SaaS', 'Fashion/Apparel', 'Food & Beverage', 'Health/Wellness', 'Finance/Fintech', 'Education', 'Creative/Agency', 'E-commerce/Retail', 'Real Estate', 'Travel/Hospitality', 'Beauty/Cosmetics', 'Sports/Fitness'], required: true },
             { id: 'brand_personality', type: 'select', label: 'Kepribadian Brand', options: ['Professional & Trustworthy', 'Creative & Innovative', 'Friendly & Approachable', 'Luxurious & Premium', 'Fun & Playful', 'Bold & Confident', 'Calm & Peaceful', 'Energetic & Dynamic'], required: true },

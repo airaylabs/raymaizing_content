@@ -1,4 +1,4 @@
-# 🔧 Fixes & Improvements - Lumakara Content Platform
+﻿# 🔧 Fixes & Improvements - raycorp Content Platform
 
 ## Masalah yang Ditemukan & Solusi
 

@@ -1,4 +1,4 @@
-# 📋 LUMAKARA CONTENT - OMNICHANNEL SYSTEM
+﻿# 📋 raycorp CONTENT - OMNICHANNEL SYSTEM
 
 > **Versi 3.0 | Desember 2024**
 > **Sistem Omnichannel Content Management dengan AI**

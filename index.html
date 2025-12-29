@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumaverse — Ultra AI Content Universe</title>
+    <title>raymAIzing — Ultra AI Content Universe</title>
     <link rel="stylesheet" href="css/nexus-ui.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="img/lumaverse-logo.svg">
+    <link rel="icon" type="image/svg+xml" href="img/raymaizing-logo.svg">
 </head>
 <body>
     <!-- Animated Background -->
@@ -25,7 +25,7 @@
         <!-- Left Sidebar - Icon Navigation -->
         <nav class="nexus-sidebar">
             <div class="sidebar-logo">
-                <img src="img/lumaverse-logo.svg" alt="Lumaverse" class="logo-mark-svg">
+                <img src="img/raymaizing-logo.svg" alt="raymAIzing" class="logo-mark-svg">
             </div>
             
             <div class="sidebar-nav">
@@ -114,7 +114,7 @@
                         <div class="hero-content">
                             <div class="hero-greeting">
                                 <span class="greeting-time" id="greeting-time">Good Morning</span>
-                                <h1>Welcome back to <span class="gradient-text">Lumaverse</span></h1>
+                                <h1>Welcome back to <span class="gradient-text">raymAIzing</span></h1>
                                 <p>Your AI-powered content creation universe • 133 Workflows • Unlimited Possibilities</p>
                             </div>
                             <div class="hero-actions">
@@ -134,7 +134,7 @@
                         </div>
                         <div class="hero-visual">
                             <div class="ai-brain">
-                                <img src="img/lumaverse-logo.svg" alt="Lumaverse" class="brain-logo">
+                                <img src="img/raymaizing-logo.svg" alt="raymAIzing" class="brain-logo">
                                 <div class="brain-ring ring-1"></div>
                                 <div class="brain-ring ring-2"></div>
                                 <div class="brain-ring ring-3"></div>
@@ -418,7 +418,7 @@
                 <!-- AI CHAT SECTION -->
                 <section id="ai-chat" class="section">
                     <div class="section-header">
-                        <div class="header-info"><h1>AI Chat Assistant</h1><p>Chat with AI to brainstorm ideas, get suggestions, and more</p></div>
+                        <div class="header-info"><h1>AI Chat Assistant</h1><p>Chat dengan AI untuk ide konten, rekomendasi workflow, dan panduan website</p></div>
                         <div class="header-actions"><button class="btn-glass" onclick="clearChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Clear Chat</button></div>
                     </div>
                     <div class="chat-container glass">
@@ -426,26 +426,27 @@
                             <div class="chat-message ai">
                                 <div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
                                 <div class="message-content">
-                                    <p>Hi! I'm your Lumaverse AI assistant. I can help you with:</p>
+                                    <p>👋 <strong>Hai! Selamat datang di raymAIzing!</strong></p>
+                                    <p>Saya AI assistant yang siap membantu kamu:</p>
                                     <ul>
-                                        <li>🎯 Content ideas and brainstorming</li>
-                                        <li>📝 Writing and editing assistance</li>
-                                        <li>🎨 Creative suggestions</li>
-                                        <li>📊 Marketing strategy tips</li>
-                                        <li>🔍 Finding the right workflow</li>
+                                        <li>🎯 <strong>Rekomendasi workflow</strong> - dari 133 tools yang tersedia</li>
+                                        <li>💡 <strong>Ide konten viral</strong> - untuk semua platform</li>
+                                        <li>🗺️ <strong>Panduan website</strong> - cara pakai fitur-fitur</li>
+                                        <li>📝 <strong>Buat konten</strong> - artikel, caption, script, dll</li>
                                     </ul>
-                                    <p>What would you like to create today?</p>
+                                    <p>Mau mulai dari mana? Atau ceritakan aja kebutuhan kamu! 😊</p>
                                 </div>
                             </div>
                         </div>
                         <div class="chat-input-area">
                             <div class="chat-suggestions">
-                                <button class="suggestion-chip" onclick="sendChatMessage('Give me 5 viral content ideas for Instagram')">💡 Content Ideas</button>
-                                <button class="suggestion-chip" onclick="sendChatMessage('Help me write a compelling hook for my video')">🎣 Write a Hook</button>
-                                <button class="suggestion-chip" onclick="sendChatMessage('What workflow should I use for product photos?')">🔍 Find Workflow</button>
+                                <button class="suggestion-chip" onclick="sendChatMessage('ide konten viral untuk Instagram')">💡 Ide Konten</button>
+                                <button class="suggestion-chip" onclick="sendChatMessage('workflow apa untuk foto produk?')">🔍 Cari Workflow</button>
+                                <button class="suggestion-chip" onclick="sendChatMessage('bantuan cara pakai website ini')">❓ Bantuan</button>
+                                <button class="suggestion-chip" onclick="sendChatMessage('buatkan caption untuk produk skincare')">📝 Buat Caption</button>
                             </div>
                             <div class="chat-input-wrap">
-                                <textarea id="chat-input" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendChatFromInput()}"></textarea>
+                                <textarea id="chat-input" placeholder="Tanya apa aja... (contoh: workflow untuk bikin logo)" onkeypress="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendChatFromInput()}"></textarea>
                                 <button class="chat-send-btn" onclick="sendChatFromInput()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
                             </div>
                         </div>
@@ -506,12 +507,12 @@
         <div class="assistant-header">
             <div class="assistant-title">
                 <div class="assistant-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-                <div><span class="title">Lumaverse AI</span><span class="status">Ready to help</span></div>
+                <div><span class="title">raymAIzing AI</span><span class="status">Ready to help</span></div>
             </div>
             <button class="assistant-close" onclick="toggleAIAssistant()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
         <div class="assistant-messages" id="assistant-messages">
-            <div class="message ai"><p>Hi! I'm your Lumaverse AI assistant. How can I help you today?</p></div>
+            <div class="message ai"><p>Hi! I'm your raymAIzing AI assistant. How can I help you today?</p></div>
         </div>
         <div class="assistant-input">
             <input type="text" placeholder="Ask me anything..." id="assistant-input" onkeypress="if(event.key==='Enter')sendAssistantMessage()">
@@ -575,7 +576,8 @@
     <!-- Scripts -->
     <script src="js/workflows-database.js"></script>
     <script src="js/pollinations-ai.js"></script>
+    <script src="js/smart-ai-assistant.js"></script>
     <script src="js/magic-studio-forms.js"></script>
-    <script src="js/lumaverse-core.js"></script>
+    <script src="js/raymaizing-core.js"></script>
 </body>
 </html>

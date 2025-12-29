@@ -1,6 +1,6 @@
-/**
+﻿/**
  * ═══════════════════════════════════════════════════════════════════════════
- * LUMAVERSE CORE - Ultra AI Content Universe Engine
+ * raymAIzing CORE - Ultra AI Content Universe Engine
  * Complete application with 133 workflows, Pollinations AI, and more
  * ═══════════════════════════════════════════════════════════════════════════
  */
@@ -25,7 +25,7 @@ const AppState = {
 document.addEventListener('DOMContentLoaded', initApp);
 
 function initApp() {
-    console.log('🚀 Initializing Lumaverse...');
+    console.log('🚀 Initializing raymAIzing...');
     loadAppData();
     setupNavigation();
     setupProjectSelector();
@@ -37,8 +37,8 @@ function initApp() {
     initSettings();
     setupKeyboardShortcuts();
     setupTypeCheckboxes();
-    console.log('✅ Lumaverse Ready! 133 Workflows loaded.');
-    showToast('Welcome to Lumaverse!', 'success');
+    console.log('✅ raymAIzing Ready! 133 Workflows loaded.');
+    showToast('Welcome to raymAIzing!', 'success');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -46,21 +46,21 @@ function initApp() {
 // ─────────────────────────────────────────────────────────────────────────────
 function loadAppData() {
     try {
-        AppState.projects = JSON.parse(localStorage.getItem('lumaverse_projects') || '[]');
-        AppState.content = JSON.parse(localStorage.getItem('lumaverse_content') || '[]');
-        AppState.knowledgeBase = JSON.parse(localStorage.getItem('lumaverse_kb') || '[]');
-        AppState.currentProject = localStorage.getItem('lumaverse_current_project');
-        AppState.settings = { ...AppState.settings, ...JSON.parse(localStorage.getItem('lumaverse_settings') || '{}') };
+        AppState.projects = JSON.parse(localStorage.getItem('raymAIzing_projects') || '[]');
+        AppState.content = JSON.parse(localStorage.getItem('raymAIzing_content') || '[]');
+        AppState.knowledgeBase = JSON.parse(localStorage.getItem('raymAIzing_kb') || '[]');
+        AppState.currentProject = localStorage.getItem('raymAIzing_current_project');
+        AppState.settings = { ...AppState.settings, ...JSON.parse(localStorage.getItem('raymAIzing_settings') || '{}') };
     } catch (e) { console.error('Load error:', e); }
 }
 
 function saveAppData() {
     try {
-        localStorage.setItem('lumaverse_projects', JSON.stringify(AppState.projects));
-        localStorage.setItem('lumaverse_content', JSON.stringify(AppState.content));
-        localStorage.setItem('lumaverse_kb', JSON.stringify(AppState.knowledgeBase));
-        localStorage.setItem('lumaverse_settings', JSON.stringify(AppState.settings));
-        if (AppState.currentProject) localStorage.setItem('lumaverse_current_project', AppState.currentProject);
+        localStorage.setItem('raymAIzing_projects', JSON.stringify(AppState.projects));
+        localStorage.setItem('raymAIzing_content', JSON.stringify(AppState.content));
+        localStorage.setItem('raymAIzing_kb', JSON.stringify(AppState.knowledgeBase));
+        localStorage.setItem('raymAIzing_settings', JSON.stringify(AppState.settings));
+        if (AppState.currentProject) localStorage.setItem('raymAIzing_current_project', AppState.currentProject);
     } catch (e) { console.error('Save error:', e); }
 }
 
@@ -400,7 +400,7 @@ const ContentHub = {
         const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `lumaverse-content-${Date.now()}.json`;
+        a.download = `raymAIzing-content-${Date.now()}.json`;
         a.click();
         showToast('Content exported!', 'success');
     }
@@ -671,7 +671,7 @@ function generateImages() {
                 <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-glass);border:1px solid var(--border);">
                     <img src="${img.url}" alt="Generated ${i+1}" style="width:100%;display:block;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a24%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23666%22>Loading...</text></svg>'">
                     <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(0,0,0,0.8));display:flex;gap:8px;">
-                        <button onclick="downloadImage('${img.url}', 'lumaverse-${i+1}.png')" style="flex:1;padding:8px;background:var(--gradient-primary);border:none;border-radius:8px;color:white;cursor:pointer;font-size:12px;">Download</button>
+                        <button onclick="downloadImage('${img.url}', 'raymAIzing-${i+1}.png')" style="flex:1;padding:8px;background:var(--gradient-primary);border:none;border-radius:8px;color:white;cursor:pointer;font-size:12px;">Download</button>
                         <button onclick="navigator.clipboard.writeText('${img.url}');showToast('URL copied!','success')" style="padding:8px 12px;background:var(--bg-glass);border:1px solid var(--border);border-radius:8px;color:white;cursor:pointer;font-size:12px;">📋</button>
                     </div>
                 </div>
@@ -692,39 +692,101 @@ function downloadImage(url, filename) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AI Chat
+// AI Chat - Using Smart Assistant
 // ─────────────────────────────────────────────────────────────────────────────
 async function sendChatMessage(message) {
     const container = document.getElementById('chat-messages');
-    container.innerHTML += `<div class="chat-message user"><div class="message-content"><p>${message}</p></div></div>`;
+    
+    // Add user message
+    container.innerHTML += `<div class="chat-message user"><div class="message-content"><p>${escapeHtml(message)}</p></div></div>`;
     container.scrollTop = container.scrollHeight;
     
-    container.innerHTML += `<div class="chat-message ai loading"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>Thinking...</p></div></div>`;
+    // Show loading
+    container.innerHTML += `<div class="chat-message ai loading"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>🤔 Sedang berpikir...</p></div></div>`;
     
-    const result = await PollinationsAI.chat(message, AppState.chatHistory);
+    // Use Smart Assistant if available, fallback to PollinationsAI
+    let responseText = '';
+    try {
+        if (typeof SmartAssistant !== 'undefined') {
+            responseText = await SmartAssistant.generateResponse(message);
+        } else {
+            const result = await PollinationsAI.chat(message, AppState.chatHistory);
+            responseText = result.success ? result.text : 'Maaf, terjadi error. Coba lagi ya!';
+        }
+    } catch (error) {
+        console.error('Chat error:', error);
+        responseText = '😅 Maaf, ada kendala teknis. Coba refresh halaman atau tanya lagi dalam beberapa saat!';
+    }
+    
+    // Store in history
     AppState.chatHistory.push({ role: 'user', content: message });
+    AppState.chatHistory.push({ role: 'assistant', content: responseText });
     
+    // Remove loading
     const loadingMsg = container.querySelector('.loading');
     if (loadingMsg) loadingMsg.remove();
     
-    if (result.success) {
-        AppState.chatHistory.push({ role: 'assistant', content: result.text });
-        container.innerHTML += `<div class="chat-message ai"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>${result.text.replace(/\n/g, '<br>')}</p></div></div>`;
-    } else {
-        container.innerHTML += `<div class="chat-message ai"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>Sorry, I encountered an error. Please try again.</p></div></div>`;
-    }
+    // Format response with markdown-like styling
+    const formattedResponse = formatChatResponse(responseText);
+    
+    // Add AI response
+    container.innerHTML += `<div class="chat-message ai"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content">${formattedResponse}</div></div>`;
     container.scrollTop = container.scrollHeight;
+}
+
+// Format chat response with basic markdown
+function formatChatResponse(text) {
+    if (!text) return '<p>...</p>';
+    
+    // Escape HTML first
+    let formatted = escapeHtml(text);
+    
+    // Convert **bold** to <strong>
+    formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    
+    // Convert *italic* to <em>
+    formatted = formatted.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    
+    // Convert numbered lists (1. 2. 3.)
+    formatted = formatted.replace(/^(\d+)\.\s+(.+)$/gm, '<div class="chat-list-item"><span class="list-num">$1.</span> $2</div>');
+    
+    // Convert bullet points (• or -)
+    formatted = formatted.replace(/^[•\-]\s+(.+)$/gm, '<div class="chat-list-item"><span class="list-bullet">•</span> $1</div>');
+    
+    // Convert line breaks
+    formatted = formatted.replace(/\n\n/g, '</p><p>');
+    formatted = formatted.replace(/\n/g, '<br>');
+    
+    // Wrap in paragraph if not already
+    if (!formatted.startsWith('<')) {
+        formatted = '<p>' + formatted + '</p>';
+    }
+    
+    return formatted;
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function sendChatFromInput() {
     const input = document.getElementById('chat-input');
     const message = input.value.trim();
-    if (message) { sendChatMessage(message); input.value = ''; }
+    if (message) { 
+        sendChatMessage(message); 
+        input.value = ''; 
+    }
 }
 
 function clearChat() {
     AppState.chatHistory = [];
-    document.getElementById('chat-messages').innerHTML = `<div class="chat-message ai"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>Chat cleared! How can I help you?</p></div></div>`;
+    if (typeof SmartAssistant !== 'undefined') {
+        SmartAssistant.clearConversation();
+    }
+    document.getElementById('chat-messages').innerHTML = `<div class="chat-message ai"><div class="message-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="message-content"><p>✨ Chat direset! Ada yang bisa saya bantu?</p><p>Saya bisa membantu dengan:<br>• Rekomendasi workflow dari 133 pilihan<br>• Ide konten viral<br>• Panduan website<br>• Membuat konten langsung</p></div></div>`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -836,7 +898,7 @@ function exportAllData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `lumaverse-backup-${Date.now()}.json`;
+    a.download = `raymAIzing-backup-${Date.now()}.json`;
     a.click();
     showToast('Data exported!', 'success');
 }
@@ -863,40 +925,303 @@ function importData(input) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Content Modal
 // ─────────────────────────────────────────────────────────────────────────────
+// Content Modal with V8 Features
+// ─────────────────────────────────────────────────────────────────────────────
 let editingContent = null;
+let contentMediaUrls = [];
+
+// Platform mapping by content type (from v8)
+const platformsByType = {
+    'text_article': ['blog', 'linkedin', 'medium'],
+    'text_thread': ['twitter', 'threads'],
+    'video_short': ['tiktok', 'instagram', 'youtube'],
+    'video_story': ['instagram', 'facebook', 'whatsapp'],
+    'video_long': ['youtube'],
+    'image_carousel': ['instagram', 'linkedin', 'facebook']
+};
+
+const allPlatformsList = [
+    { id: 'instagram', icon: '📷', label: 'Instagram' },
+    { id: 'tiktok', icon: '🎵', label: 'TikTok' },
+    { id: 'youtube', icon: '▶️', label: 'YouTube' },
+    { id: 'twitter', icon: '🐦', label: 'Twitter/X' },
+    { id: 'linkedin', icon: '💼', label: 'LinkedIn' },
+    { id: 'facebook', icon: '👤', label: 'Facebook' },
+    { id: 'medium', icon: '📝', label: 'Medium' },
+    { id: 'blog', icon: '🌐', label: 'Blog' },
+    { id: 'whatsapp', icon: '💬', label: 'WhatsApp' },
+    { id: 'threads', icon: '🧵', label: 'Threads' }
+];
+
+const pillarsList = ['Education', 'Inspiration', 'Entertainment', 'Promotion', 'Behind the Scenes', 'Tips & Tricks', 'News', 'Product'];
+
+function getDefaultPlatforms(contentType) {
+    return platformsByType[contentType] || ['instagram'];
+}
 
 function openContentModal(content = null, defaultStatus = 'draft') {
     editingContent = content;
+    contentMediaUrls = content?.media || [];
+    const currentType = content?.type || 'text_article';
+    const currentPlatforms = content?.platforms || getDefaultPlatforms(currentType);
+    
     document.getElementById('content-modal-title').textContent = content ? 'Edit Content' : 'New Content';
     document.getElementById('content-modal-body').innerHTML = `
         <div style="display:grid;gap:20px;">
+            <!-- Title -->
             <div class="form-section"><label class="form-label">Title</label><input type="text" id="content-title" value="${content?.title || ''}" placeholder="Content title..."></div>
+            
+            <!-- Type & Status -->
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                <div class="form-section"><label class="form-label">Type</label><select id="content-type" class="select-glass"><option value="text_article" ${content?.type === 'text_article' ? 'selected' : ''}>📝 Article</option><option value="text_thread" ${content?.type === 'text_thread' ? 'selected' : ''}>🐦 Thread</option><option value="video_short" ${content?.type === 'video_short' ? 'selected' : ''}>📱 Short Video</option><option value="video_story" ${content?.type === 'video_story' ? 'selected' : ''}>⏱️ Story</option><option value="image_carousel" ${content?.type === 'image_carousel' ? 'selected' : ''}>🎨 Carousel</option><option value="video_long" ${content?.type === 'video_long' ? 'selected' : ''}>🎬 Long Video</option></select></div>
-                <div class="form-section"><label class="form-label">Status</label><select id="content-status" class="select-glass"><option value="idea" ${(content?.status || defaultStatus) === 'idea' ? 'selected' : ''}>💡 Idea</option><option value="draft" ${(content?.status || defaultStatus) === 'draft' ? 'selected' : ''}>📝 Draft</option><option value="scheduled" ${(content?.status || defaultStatus) === 'scheduled' ? 'selected' : ''}>📅 Scheduled</option><option value="published" ${(content?.status || defaultStatus) === 'published' ? 'selected' : ''}>✅ Published</option></select></div>
+                <div class="form-section"><label class="form-label">Type</label><select id="content-type" class="select-glass" onchange="onContentTypeChange(this.value)"><option value="text_article" ${currentType === 'text_article' ? 'selected' : ''}>📄 Article</option><option value="text_thread" ${currentType === 'text_thread' ? 'selected' : ''}>🐦 Thread</option><option value="video_short" ${currentType === 'video_short' ? 'selected' : ''}>📱 Short Video</option><option value="video_story" ${currentType === 'video_story' ? 'selected' : ''}>⏱️ Story</option><option value="image_carousel" ${currentType === 'image_carousel' ? 'selected' : ''}>🎨 Carousel</option><option value="video_long" ${currentType === 'video_long' ? 'selected' : ''}>🎬 Long Video</option></select></div>
+                <div class="form-section"><label class="form-label">Status</label><select id="content-status" class="select-glass"><option value="idea" ${(content?.status || defaultStatus) === 'idea' ? 'selected' : ''}>💡 Idea</option><option value="draft" ${(content?.status || defaultStatus) === 'draft' ? 'selected' : ''}>📄 Draft</option><option value="review" ${(content?.status || defaultStatus) === 'review' ? 'selected' : ''}>👀 Review</option><option value="scheduled" ${(content?.status || defaultStatus) === 'scheduled' ? 'selected' : ''}>📅 Scheduled</option><option value="published" ${(content?.status || defaultStatus) === 'published' ? 'selected' : ''}>✅ Published</option></select></div>
             </div>
+            
+            <!-- Scheduled Date & Pillar -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-section"><label class="form-label">Scheduled Date</label><input type="datetime-local" id="content-scheduled" value="${content?.scheduledDate || ''}"></div>
+                <div class="form-section"><label class="form-label">Content Pillar</label><select id="content-pillar" class="select-glass"><option value="">Select pillar...</option>${pillarsList.map(p => `<option value="${p}" ${content?.pillar === p ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
+            </div>
+            
+            <!-- Platforms -->
+            <div class="form-section"><label class="form-label">Platforms</label><div id="platforms-container" style="display:flex;flex-wrap:wrap;gap:8px;">${allPlatformsList.map(p => `<label class="platform-chip" data-platform="${p.id}" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg-glass);border-radius:20px;cursor:pointer;border:1px solid ${currentPlatforms.includes(p.id) ? 'var(--primary)' : 'transparent'};"><input type="checkbox" value="${p.id}" ${currentPlatforms.includes(p.id) ? 'checked' : ''} style="display:none;"><span>${p.icon}</span><span>${p.label}</span></label>`).join('')}</div></div>
+            
+            <!-- Dynamic Fields Container -->
+            <div id="dynamic-fields-container"></div>
+            
+            <!-- Caption / Content -->
             <div class="form-section"><label class="form-label">Caption / Content</label><textarea id="content-caption" placeholder="Write your content..." style="min-height:150px;">${content?.caption || ''}</textarea></div>
-            <div class="form-section"><label class="form-label">Platforms</label><div style="display:flex;flex-wrap:wrap;gap:8px;">${['instagram', 'tiktok', 'youtube', 'twitter', 'linkedin'].map(p => `<label style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg-glass);border-radius:20px;cursor:pointer;"><input type="checkbox" value="${p}" ${(content?.platforms || []).includes(p) ? 'checked' : ''}><span>${getPlatformIcon(p)} ${p}</span></label>`).join('')}</div></div>
+            
+            <!-- Hashtags -->
+            <div class="form-section"><label class="form-label">Hashtags</label><input type="text" id="content-hashtags" value="${(content?.hashtags || []).join(' ')}" placeholder="#hashtag1 #hashtag2..."></div>
+            
+            <!-- Media Gallery -->
+            <div class="form-section">
+                <label class="form-label">Media Gallery</label>
+                <div id="media-gallery" style="display:flex;flex-wrap:wrap;gap:8px;min-height:60px;padding:12px;background:var(--bg-glass);border-radius:8px;">
+                    ${contentMediaUrls.map((url, i) => `<div style="position:relative;width:60px;height:60px;border-radius:8px;overflow:hidden;"><img src="${url}" style="width:100%;height:100%;object-fit:cover;"><button onclick="removeMedia(${i})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);border:none;color:white;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:12px;">×</button></div>`).join('')}
+                    <div onclick="document.getElementById('media-upload').click()" style="width:60px;height:60px;border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:20px;">+</div>
+                </div>
+                <input type="file" id="media-upload" accept="image/*" multiple style="display:none;" onchange="handleMediaUpload(this)">
+                <div style="display:flex;gap:8px;margin-top:8px;"><input type="text" id="media-url" placeholder="Or paste image URL..." style="flex:1;"><button class="btn-glass" onclick="addMediaUrl()" style="padding:8px 16px;">Add</button></div>
+            </div>
+            
+            <!-- AI Actions -->
+            <div style="display:flex;gap:8px;">
+                <button class="btn-glow" onclick="generateContentAI()" id="generate-ai-btn" style="flex:1;">✨ Generate AI</button>
+                <button class="btn-glass" onclick="generateHashtagsAI()" style="flex:1;">🏷️ Generate Hashtags</button>
+            </div>
         </div>
     `;
+    
+    // Platform chip click handler
+    document.querySelectorAll('.platform-chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+            const cb = this.querySelector('input[type="checkbox"]');
+            cb.checked = !cb.checked;
+            this.style.borderColor = cb.checked ? 'var(--primary)' : 'transparent';
+        });
+    });
+    
+    // Initialize dynamic fields
+    updateDynamicFields(currentType, content?.dynamicFields || {});
+    
     document.getElementById('content-modal').classList.add('open');
 }
 
-function closeContentModal() { document.getElementById('content-modal').classList.remove('open'); editingContent = null; }
+// Update platforms when content type changes
+function onContentTypeChange(contentType) {
+    const defaultPlatforms = getDefaultPlatforms(contentType);
+    document.querySelectorAll('.platform-chip').forEach(chip => {
+        const platformId = chip.dataset.platform;
+        const cb = chip.querySelector('input[type="checkbox"]');
+        const isSelected = defaultPlatforms.includes(platformId);
+        cb.checked = isSelected;
+        chip.style.borderColor = isSelected ? 'var(--primary)' : 'transparent';
+    });
+    updateDynamicFields(contentType, {});
+}
+
+// Dynamic fields based on content type
+function updateDynamicFields(contentType, existingData = {}) {
+    const container = document.getElementById('dynamic-fields-container');
+    if (!container) return;
+    let fieldsHTML = '';
+    switch(contentType) {
+        case 'text_article':
+            fieldsHTML = `<div class="form-section"><label class="form-label">Meta Description</label><textarea id="field-meta-desc" placeholder="SEO meta description (155 chars max)..." style="min-height:60px;">${existingData['meta-desc'] || ''}</textarea></div><div class="form-section"><label class="form-label">Keywords</label><input type="text" id="field-keywords" value="${existingData['keywords'] || ''}" placeholder="keyword1, keyword2, keyword3..."></div>`;
+            break;
+        case 'text_thread':
+            fieldsHTML = `<div class="form-section"><label class="form-label">Hook Tweet</label><textarea id="field-hook" placeholder="First tweet to grab attention..." style="min-height:60px;" maxlength="280" oninput="document.getElementById('hook-count').textContent = this.value.length">${existingData['hook'] || ''}</textarea><div style="text-align:right;font-size:11px;color:var(--text-muted);"><span id="hook-count">0</span>/280</div></div><div class="form-section"><label class="form-label">Thread Count</label><select id="field-thread-count" class="select-glass"><option value="5">5 tweets</option><option value="7">7 tweets</option><option value="10" selected>10 tweets</option><option value="15">15 tweets</option></select></div>`;
+            break;
+        case 'video_short': case 'video_story':
+            fieldsHTML = `<div class="form-section"><label class="form-label">Duration</label><select id="field-duration" class="select-glass"><option value="15">15 seconds</option><option value="30" selected>30 seconds</option><option value="60">60 seconds</option><option value="90">90 seconds</option></select></div><div class="form-section"><label class="form-label">Hook (First 3 sec)</label><textarea id="field-hook" placeholder="Opening hook to stop the scroll..." style="min-height:60px;">${existingData['hook'] || ''}</textarea></div><div class="form-section"><label class="form-label">Script</label><textarea id="field-script" placeholder="Full video script with timing..." style="min-height:100px;">${existingData['script'] || ''}</textarea></div><div class="form-section"><label class="form-label">B-Roll / Visual Notes</label><textarea id="field-broll" placeholder="Visual directions, B-roll suggestions..." style="min-height:60px;">${existingData['broll'] || ''}</textarea></div><div class="form-section"><label class="form-label">Music/Sound</label><input type="text" id="field-music" value="${existingData['music'] || ''}" placeholder="Trending sound or music suggestion..."></div>`;
+            break;
+        case 'video_long':
+            fieldsHTML = `<div class="form-section"><label class="form-label">Duration</label><select id="field-duration" class="select-glass"><option value="5">5 minutes</option><option value="10" selected>10 minutes</option><option value="15">15 minutes</option><option value="20">20+ minutes</option></select></div><div class="form-section"><label class="form-label">Hook (First 30 sec)</label><textarea id="field-hook" placeholder="Opening hook to retain viewers..." style="min-height:60px;">${existingData['hook'] || ''}</textarea></div><div class="form-section"><label class="form-label">Full Script</label><textarea id="field-script" placeholder="Complete video script with timestamps..." style="min-height:120px;">${existingData['script'] || ''}</textarea></div><div class="form-section"><label class="form-label">Chapters/Timestamps</label><textarea id="field-chapters" placeholder="0:00 Intro&#10;1:30 Main Topic&#10;5:00 Tips..." style="min-height:80px;">${existingData['chapters'] || ''}</textarea></div><div class="form-section"><label class="form-label">Thumbnail Text</label><input type="text" id="field-thumbnail" value="${existingData['thumbnail'] || ''}" placeholder="Text for thumbnail (3-5 words)..."></div><div class="form-section"><label class="form-label">YouTube Tags</label><input type="text" id="field-tags" value="${existingData['tags'] || ''}" placeholder="tag1, tag2, tag3..."></div>`;
+            break;
+        case 'image_carousel':
+            fieldsHTML = `<div class="form-section"><label class="form-label">Number of Slides</label><select id="field-slides" class="select-glass"><option value="5">5 slides</option><option value="7">7 slides</option><option value="10" selected>10 slides</option></select></div><div class="form-section"><label class="form-label">Slide Contents</label><textarea id="field-slides-content" placeholder="Slide 1: Cover - Title&#10;Slide 2: Problem&#10;Slide 3: Solution&#10;..." style="min-height:120px;">${existingData['slides-content'] || ''}</textarea></div><div class="form-section"><label class="form-label">Image Prompts (for AI generation)</label><textarea id="field-image-prompts" placeholder="Slide 1: Modern minimalist cover with bold typography..." style="min-height:100px;">${existingData['image-prompts'] || ''}</textarea></div><div class="form-section"><label class="form-label">Color Scheme</label><input type="text" id="field-colors" value="${existingData['colors'] || ''}" placeholder="#FF5733, #3498DB, #2ECC71"></div>`;
+            break;
+    }
+    container.innerHTML = fieldsHTML;
+}
+
+// Generate AI Content
+async function generateContentAI() {
+    const title = document.getElementById('content-title')?.value.trim();
+    const contentType = document.getElementById('content-type')?.value;
+    const pillar = document.getElementById('content-pillar')?.value || 'content creation';
+    if (!title) { showToast('Please enter a title first', 'warning'); return; }
+    const btn = document.getElementById('generate-ai-btn');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ Generating...'; }
+    showToast('Generating content with AI...', 'info');
+    const captionField = document.getElementById('content-caption');
+    if (captionField) captionField.value = generateCaption(contentType, title, pillar);
+    const hashtagsField = document.getElementById('content-hashtags');
+    if (hashtagsField) hashtagsField.value = generateHashtagsForType(contentType, title);
+    setTimeout(() => {
+        fillDynamicFields(contentType, title, pillar);
+        if (btn) { btn.disabled = false; btn.textContent = '✨ Generate AI'; }
+        showToast('Content generated! Review and edit as needed.', 'success');
+    }, 500);
+}
+
+function generateCaption(contentType, title, pillar) {
+    const captions = {
+        'text_article': `📝 ${title}\n\nDalam artikel ini, kamu akan belajar:\n✅ Poin penting #1\n✅ Poin penting #2\n✅ Poin penting #3\n\nBaca selengkapnya di link bio!\n\n`,
+        'text_thread': `🧵 THREAD: ${title}\n\nIni yang perlu kamu tahu tentang ${pillar.toLowerCase()}:\n\n1/ Pertama...\n\n2/ Kedua...\n\n3/ Ketiga...\n\nRetweet kalau bermanfaat! 🔄`,
+        'video_short': `${title} 🔥\n\nSave video ini biar gak lupa!\n\nFollow @username untuk tips ${pillar.toLowerCase()} lainnya ✨\n\n`,
+        'video_story': `Swipe untuk lihat ${title.toLowerCase()} 👆\n\nTap ❤️ kalau relate!\n\n`,
+        'video_long': `🎬 NEW VIDEO: ${title}\n\nDi video ini aku bahas:\n📌 Poin 1\n📌 Poin 2\n📌 Poin 3\n\nTonton full video di YouTube (link di bio)\n\nJangan lupa SUBSCRIBE! 🔔\n\n`,
+        'image_carousel': `📚 ${title}\n\nSwipe untuk baca sampai habis! 👉\n\nSave post ini biar bisa dibaca lagi nanti 🔖\n\nShare ke teman yang butuh info ini!\n\n`
+    };
+    return captions[contentType] || `${title}\n\n`;
+}
+
+function generateHashtagsForType(contentType, title) {
+    const words = title.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(' ').filter(w => w.length > 3);
+    const baseHashtags = words.slice(0, 5).map(w => '#' + w);
+    const typeHashtags = {
+        'text_article': ['#artikel', '#tips', '#edukasi', '#belajar', '#indonesia'],
+        'text_thread': ['#thread', '#threadtwitter', '#tipstwitter', '#viral'],
+        'video_short': ['#reels', '#tiktok', '#fyp', '#viral', '#trending'],
+        'video_story': ['#instastory', '#story', '#behindthescenes'],
+        'video_long': ['#youtube', '#youtuber', '#tutorial', '#vlog'],
+        'image_carousel': ['#carousel', '#infographic', '#tips', '#edukasi', '#swipe']
+    };
+    return [...baseHashtags, ...(typeHashtags[contentType] || [])].join(' ');
+}
+
+function fillDynamicFields(contentType, title, pillar) {
+    const setField = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+    switch(contentType) {
+        case 'text_article':
+            setField('field-meta-desc', `Pelajari ${title.toLowerCase()} dengan panduan lengkap ini. Tips praktis untuk ${pillar.toLowerCase()} yang bisa langsung diterapkan.`);
+            setField('field-keywords', title.toLowerCase().split(' ').slice(0, 5).join(', '));
+            break;
+        case 'text_thread':
+            setField('field-hook', `🧵 ${title}\n\nIni yang perlu kamu tahu:\n\n(Thread)`);
+            break;
+        case 'video_short': case 'video_story':
+            setField('field-hook', `"Tahukah kamu tentang ${title.toLowerCase()}?"\n\n[Pause 1 detik untuk hook]`);
+            setField('field-script', `[0:00-0:03] HOOK: "${title}"\n[0:03-0:10] PROBLEM: Banyak orang struggle dengan...\n[0:10-0:25] SOLUTION: Ini caranya...\n[0:25-0:30] CTA: Follow untuk tips lainnya!`);
+            setField('field-broll', `- Close up hands/product\n- Text overlay animations\n- Before/after comparison`);
+            setField('field-music', `Trending sound - upbeat, motivational`);
+            break;
+        case 'video_long':
+            setField('field-hook', `Dalam video ini, saya akan share ${title.toLowerCase()} yang sudah terbukti berhasil.\n\nTapi sebelum itu, pastikan subscribe dan nyalakan notifikasi!`);
+            setField('field-script', `[INTRO - 0:00]\nHai semuanya! Selamat datang di channel...\n\n[HOOK - 0:30]\n${title}\n\n[MAIN CONTENT - 2:00]\nPoin 1: ...\nPoin 2: ...\nPoin 3: ...\n\n[RECAP - 8:00]\nJadi kesimpulannya...\n\n[CTA - 9:30]\nJangan lupa like, subscribe, dan share!`);
+            setField('field-chapters', `0:00 Intro\n0:30 ${title}\n2:00 Poin Pertama\n4:00 Poin Kedua\n6:00 Poin Ketiga\n8:00 Kesimpulan\n9:30 Outro`);
+            setField('field-thumbnail', title.split(' ').slice(0, 4).join(' ').toUpperCase());
+            setField('field-tags', title.toLowerCase().split(' ').join(', ') + ', tips, tutorial, indonesia');
+            break;
+        case 'image_carousel':
+            setField('field-slides-content', `Slide 1 (Cover): ${title}\nSlide 2: Masalah yang sering terjadi\nSlide 3: Kenapa ini penting\nSlide 4: Solusi #1\nSlide 5: Solusi #2\nSlide 6: Solusi #3\nSlide 7: Tips tambahan\nSlide 8: Common mistakes\nSlide 9: Quick recap\nSlide 10: CTA - Save & Share!`);
+            setField('field-image-prompts', `Slide 1: Modern minimalist design, bold typography "${title}", gradient background blue to purple\nSlide 2: Illustration of frustrated person, muted colors\nSlide 3: Lightbulb moment illustration, bright colors\nSlide 4-6: Clean infographic style, icons, bullet points\nSlide 7: Tips checklist design\nSlide 8: Red X marks on common mistakes\nSlide 9: Summary icons grid\nSlide 10: Call to action design with save icon`);
+            setField('field-colors', '#6366f1, #8b5cf6, #ec4899');
+            break;
+    }
+}
+
+async function generateHashtagsAI() {
+    const title = document.getElementById('content-title')?.value.trim();
+    const caption = document.getElementById('content-caption')?.value.trim();
+    const contentType = document.getElementById('content-type')?.value;
+    if (!title && !caption) { showToast('Please add title or content first', 'warning'); return; }
+    showToast('Generating hashtags...', 'info');
+    document.getElementById('content-hashtags').value = generateHashtagsForType(contentType, title || caption);
+    showToast('Hashtags generated!', 'success');
+}
+
+function closeContentModal() { 
+    document.getElementById('content-modal').classList.remove('open'); 
+    editingContent = null; 
+    contentMediaUrls = [];
+}
+
+function handleMediaUpload(input) {
+    for (let file of input.files) {
+        const reader = new FileReader();
+        reader.onload = (e) => { contentMediaUrls.push(e.target.result); refreshMediaGallery(); };
+        reader.readAsDataURL(file);
+    }
+}
+
+function addMediaUrl() {
+    const url = document.getElementById('media-url')?.value.trim();
+    if (url) { contentMediaUrls.push(url); document.getElementById('media-url').value = ''; refreshMediaGallery(); }
+}
+
+function removeMedia(index) { contentMediaUrls.splice(index, 1); refreshMediaGallery(); }
+
+function refreshMediaGallery() {
+    const gallery = document.getElementById('media-gallery');
+    if (!gallery) return;
+    gallery.innerHTML = `
+        ${contentMediaUrls.map((url, i) => `<div style="position:relative;width:60px;height:60px;border-radius:8px;overflow:hidden;"><img src="${url}" style="width:100%;height:100%;object-fit:cover;"><button onclick="removeMedia(${i})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);border:none;color:white;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:12px;">×</button></div>`).join('')}
+        <div onclick="document.getElementById('media-upload').click()" style="width:60px;height:60px;border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:20px;">+</div>
+    `;
+}
 
 function saveContent() {
     const title = document.getElementById('content-title')?.value.trim();
     const type = document.getElementById('content-type')?.value;
     const status = document.getElementById('content-status')?.value;
     const caption = document.getElementById('content-caption')?.value.trim();
+    const scheduledDate = document.getElementById('content-scheduled')?.value;
+    const pillar = document.getElementById('content-pillar')?.value;
+    const hashtagsStr = document.getElementById('content-hashtags')?.value;
+    const hashtags = hashtagsStr ? hashtagsStr.match(/#?\w+/g)?.map(h => h.startsWith('#') ? h : `#${h}`) || [] : [];
     const platforms = Array.from(document.querySelectorAll('#content-modal-body input[type="checkbox"]:checked')).map(cb => cb.value);
+    
+    // Get dynamic fields
+    const dynamicFields = {};
+    document.querySelectorAll('#dynamic-fields-container input, #dynamic-fields-container textarea, #dynamic-fields-container select').forEach(field => {
+        if (field.id && field.id.startsWith('field-')) {
+            dynamicFields[field.id.replace('field-', '')] = field.value;
+        }
+    });
+    
     if (!title) { showToast('Please enter a title', 'error'); return; }
+    
+    const contentData = {
+        id: editingContent?.id || 'content_' + Date.now(),
+        projectId: AppState.currentProject,
+        title, type, status, caption, platforms, hashtags,
+        scheduledDate, pillar, dynamicFields,
+        media: contentMediaUrls,
+        createdAt: editingContent?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+    
     if (editingContent) {
         const idx = AppState.content.findIndex(c => c.id === editingContent.id);
-        if (idx !== -1) AppState.content[idx] = { ...AppState.content[idx], title, type, status, caption, platforms, updatedAt: new Date().toISOString() };
+        if (idx !== -1) AppState.content[idx] = contentData;
     } else {
-        AppState.content.push({ id: 'content_' + Date.now(), projectId: AppState.currentProject, title, type, status, caption, platforms, hashtags: [], createdAt: new Date().toISOString() });
+        AppState.content.push(contentData);
     }
+    
     saveAppData();
     closeContentModal();
     ContentHub.refresh();
@@ -905,21 +1230,54 @@ function saveContent() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AI Assistant
+// AI Assistant (Floating Panel)
 // ─────────────────────────────────────────────────────────────────────────────
-function toggleAIAssistant() { document.getElementById('ai-assistant-panel').classList.toggle('open'); }
+function toggleAIAssistant() { 
+    const panel = document.getElementById('ai-assistant-panel');
+    panel.classList.toggle('open'); 
+    
+    // Show welcome message if first time
+    const messages = document.getElementById('assistant-messages');
+    if (panel.classList.contains('open') && messages.children.length <= 1) {
+        messages.innerHTML = `<div class="message ai"><p>👋 <strong>Hai! Saya raymAIzing AI</strong></p><p>Saya bisa bantu kamu dengan:</p><p>🎯 Rekomendasi workflow dari 133 pilihan<br>💡 Ide konten viral<br>🗺️ Panduan website<br>📝 Membuat konten</p><p>Tanya apa aja! 😊</p></div>`;
+    }
+}
 
 async function sendAssistantMessage() {
     const input = document.getElementById('assistant-input');
     const messages = document.getElementById('assistant-messages');
     const text = input?.value.trim();
     if (!text) return;
-    messages.innerHTML += `<div class="message user"><p>${text}</p></div>`;
+    
+    // Add user message
+    messages.innerHTML += `<div class="message user"><p>${escapeHtml(text)}</p></div>`;
     input.value = '';
     messages.scrollTop = messages.scrollHeight;
     
-    const result = await PollinationsAI.chat(text);
-    messages.innerHTML += `<div class="message ai"><p>${result.success ? result.text.replace(/\n/g, '<br>') : 'Sorry, please try again.'}</p></div>`;
+    // Show loading
+    messages.innerHTML += `<div class="message ai loading"><p>🤔 Sedang berpikir...</p></div>`;
+    
+    // Get response from Smart Assistant
+    let responseText = '';
+    try {
+        if (typeof SmartAssistant !== 'undefined') {
+            responseText = await SmartAssistant.generateResponse(text);
+        } else {
+            const result = await PollinationsAI.chat(text);
+            responseText = result.success ? result.text : 'Maaf, coba lagi ya!';
+        }
+    } catch (error) {
+        console.error('Assistant error:', error);
+        responseText = '😅 Maaf ada kendala. Coba lagi!';
+    }
+    
+    // Remove loading
+    const loadingMsg = messages.querySelector('.loading');
+    if (loadingMsg) loadingMsg.remove();
+    
+    // Format and add response
+    const formattedResponse = formatChatResponse(responseText);
+    messages.innerHTML += `<div class="message ai">${formattedResponse}</div>`;
     messages.scrollTop = messages.scrollHeight;
 }
 
@@ -942,7 +1300,7 @@ function globalSearch(query) {
 
 function getTypeIcon(type) { return { text_article: '📝', text_thread: '🐦', video_short: '📱', video_story: '⏱️', video_long: '🎬', image_carousel: '🎨' }[type] || '📄'; }
 function getTypeName(type) { return { text_article: 'Article', text_thread: 'Thread', video_short: 'Short Video', video_story: 'Story', video_long: 'Long Video', image_carousel: 'Carousel' }[type] || type; }
-function getPlatformIcon(p) { return { instagram: '📸', tiktok: '🎵', youtube: '▶️', twitter: '🐦', linkedin: '💼', facebook: '👤' }[p] || '🌐'; }
+function getPlatformIcon(p) { return { instagram: '📷', tiktok: '🎵', youtube: '▶️', twitter: '🐦', linkedin: '💼', facebook: '👤', medium: '📝', blog: '🌐', whatsapp: '💬', threads: '🧵' }[p] || '🌐'; }
 function formatDate(d) { if (!d) return '-'; return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }); }
 function filterByStatus(s) { navigateTo('content-hub'); ContentHub.setFilter(s); }
 function refreshInsights() { showToast('Insights refreshed!', 'success'); }
@@ -960,7 +1318,7 @@ function toggleNotifications() {
             <button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;">×</button>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--cyan);">🎉</span> Welcome to Lumaverse!</div>
+            <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--cyan);">🎉</span> Welcome to raymAIzing!</div>
             <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--purple);">✨</span> 133 workflows ready to use</div>
             <div style="padding:12px;background:var(--bg-glass);border-radius:8px;"><span style="color:var(--green);">🤖</span> AI Assistant is online</div>
         </div>
@@ -978,7 +1336,7 @@ function toggleUserMenu() {
     panel.innerHTML = `
         <div style="padding:12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);margin-bottom:8px;">
             <div style="width:40px;height:40px;background:var(--gradient-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:600;">L</div>
-            <div><div style="font-weight:600;">Lumaverse User</div><div style="font-size:12px;color:var(--text-muted);">Pro Plan</div></div>
+            <div><div style="font-weight:600;">raymAIzing User</div><div style="font-size:12px;color:var(--text-muted);">Pro Plan</div></div>
         </div>
         <button onclick="navigateTo('settings');this.parentElement.remove()" style="width:100%;padding:10px 12px;background:none;border:none;color:var(--text-primary);text-align:left;cursor:pointer;border-radius:6px;">⚙️ Settings</button>
         <button onclick="exportAllData();this.parentElement.remove()" style="width:100%;padding:10px 12px;background:none;border:none;color:var(--text-primary);text-align:left;cursor:pointer;border-radius:6px;">📤 Export Data</button>
@@ -1032,4 +1390,4 @@ const style = document.createElement('style');
 style.textContent = `@keyframes toastIn{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}@keyframes toastOut{to{opacity:0;transform:translateX(100px)}}`;
 document.head.appendChild(style);
 
-console.log('🎨 Lumaverse Core loaded! 133 workflows ready.');
+console.log('🎨 raymAIzing Core loaded! 133 workflows ready.');

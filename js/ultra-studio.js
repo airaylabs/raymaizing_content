@@ -1,4 +1,4 @@
-// ==================== ULTRA SMART CONTENT STUDIO ====================
+﻿// ==================== ULTRA SMART CONTENT STUDIO ====================
 // One Input → Complete Multi-Format Output via Google Opal
 // All AI Models: Gemini Pro, Deep Research, Imagen 4, Veo, AudioLM, Lyria 2
 
@@ -1179,7 +1179,7 @@ Format clearly with headers.`;
         const data = JSON.stringify(this.results, null, 2);
         const blob = new Blob([data], { type: 'application/json' });
         if (typeof saveAs !== 'undefined') {
-            saveAs(blob, `lumakara-content-${Date.now()}.json`);
+            saveAs(blob, `raycorp-content-${Date.now()}.json`);
         } else {
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');

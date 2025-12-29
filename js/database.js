@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Database Module - Multi-Project & Knowledge Base System
- * Local Storage Management for LumakaraContent
+ * Local Storage Management for raycorpContent
  */
 
 const DB = {

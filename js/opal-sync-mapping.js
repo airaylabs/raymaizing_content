@@ -1,8 +1,8 @@
-/**
+﻿/**
  * Google Opal Sync Mapping
  * Maps Magic Studio workflows to Google Opal workflow files
  * 
- * Workflow files location: T:\Second Brain\business space\Lumakara\creative lumakara\google opal\workflows\
+ * Workflow files location: T:\Second Brain\business space\raycorp\creative raycorp\google opal\workflows\
  * Total workflows: 133
  */
 

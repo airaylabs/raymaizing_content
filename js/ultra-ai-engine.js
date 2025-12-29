@@ -1,4 +1,4 @@
-// ==================== ULTRA AI ENGINE ====================
+﻿// ==================== ULTRA AI ENGINE ====================
 // Unlimited AI Technology System - Version 4.0
 // December 2025 - Maximum Power Edition
 
@@ -188,7 +188,7 @@ Based on this context, ${prompt}`;
     },
 
     getKnowledgeBase() {
-        const saved = localStorage.getItem('lumakara-knowledge-base');
+        const saved = localStorage.getItem('raycorp-knowledge-base');
         return saved ? JSON.parse(saved) : null;
     },
 

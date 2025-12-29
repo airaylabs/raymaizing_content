@@ -1,6 +1,6 @@
-/**
+﻿/**
  * ═══════════════════════════════════════════════════════════════════════════
- * LUMAVERSE - Complete 133 Workflows Database
+ * raymAIzing - Complete 133 Workflows Database
  * All workflows with Google Opal integration
  * ═══════════════════════════════════════════════════════════════════════════
  */

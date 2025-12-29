@@ -1,4 +1,4 @@
-// ==================== AI SMART RECEPTIONIST v2.0 ====================
+﻿// ==================== AI SMART RECEPTIONIST v2.0 ====================
 // Super intelligent assistant powered by Pollinations AI
 // Can understand context, give smart recommendations, and guide users
 // Version 2.0 - December 2025
@@ -12,7 +12,7 @@ const AIReceptionist = {
     pollinationsAPI: 'https://text.pollinations.ai/',
     
     // System prompt for the AI
-    systemPrompt: `Kamu adalah AI Assistant bernama "Kira" untuk platform Magic Studio Lumakara - platform pembuatan konten AI dengan 133+ workflow tools.
+    systemPrompt: `Kamu adalah AI Assistant bernama "Kira" untuk platform Magic Studio raycorp - platform pembuatan konten AI dengan 133+ workflow tools.
 
 PERAN KAMU:
 - Membantu user menemukan workflow yang tepat untuk kebutuhan mereka

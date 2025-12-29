@@ -1,4 +1,4 @@
-// ==================== ULTRA SETTINGS ====================
+﻿// ==================== ULTRA SETTINGS ====================
 // Complete Settings System with AI Integration
 // Version 3.0 - December 2025
 
@@ -112,7 +112,7 @@ const UltraSettings = {
 
     // Load settings from localStorage
     load() {
-        const saved = localStorage.getItem('lumakara-settings');
+        const saved = localStorage.getItem('raycorp-settings');
         if (saved) {
             this.current = { ...this.defaults, ...JSON.parse(saved) };
         } else {
@@ -123,7 +123,7 @@ const UltraSettings = {
 
     // Save settings
     save() {
-        localStorage.setItem('lumakara-settings', JSON.stringify(this.current));
+        localStorage.setItem('raycorp-settings', JSON.stringify(this.current));
         this.showToast('Settings saved! ✅', 'success');
     },
 
@@ -251,7 +251,7 @@ const UltraSettings = {
                     <div class="settings-grid">
                         <div class="form-group">
                             <label>Brand/Company Name</label>
-                            <input type="text" id="brand-name" placeholder="e.g., Lumakara" onchange="UltraSettings.set('brand.name', this.value)">
+                            <input type="text" id="brand-name" placeholder="e.g., raycorp" onchange="UltraSettings.set('brand.name', this.value)">
                         </div>
                         <div class="form-group">
                             <label>Tagline</label>
@@ -1119,8 +1119,8 @@ const UltraSettings = {
     exportAllData() {
         const data = {
             settings: this.current,
-            contents: JSON.parse(localStorage.getItem('lumakara-contents') || '[]'),
-            knowledgeBase: JSON.parse(localStorage.getItem('lumakara-knowledge-base') || '{}'),
+            contents: JSON.parse(localStorage.getItem('raycorp-contents') || '[]'),
+            knowledgeBase: JSON.parse(localStorage.getItem('raycorp-knowledge-base') || '{}'),
             exportedAt: new Date().toISOString()
         };
         
@@ -1128,7 +1128,7 @@ const UltraSettings = {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `lumakara-backup-${Date.now()}.json`;
+        a.download = `raycorp-backup-${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
         
@@ -1145,9 +1145,9 @@ const UltraSettings = {
             reader.onload = (ev) => {
                 try {
                     const data = JSON.parse(ev.target.result);
-                    if (data.settings) localStorage.setItem('lumakara-settings', JSON.stringify(data.settings));
-                    if (data.contents) localStorage.setItem('lumakara-contents', JSON.stringify(data.contents));
-                    if (data.knowledgeBase) localStorage.setItem('lumakara-knowledge-base', JSON.stringify(data.knowledgeBase));
+                    if (data.settings) localStorage.setItem('raycorp-settings', JSON.stringify(data.settings));
+                    if (data.contents) localStorage.setItem('raycorp-contents', JSON.stringify(data.contents));
+                    if (data.knowledgeBase) localStorage.setItem('raycorp-knowledge-base', JSON.stringify(data.knowledgeBase));
                     this.showToast('Data imported! Refreshing...', 'success');
                     setTimeout(() => location.reload(), 1000);
                 } catch (err) {

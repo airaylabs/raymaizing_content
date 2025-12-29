@@ -1,4 +1,4 @@
-// ==================== ULTRA BULK CREATE ====================
+﻿// ==================== ULTRA BULK CREATE ====================
 // Mass Content Generation System with AI
 // Version 4.0 - December 2025
 
@@ -570,7 +570,7 @@ Make it engaging and ready to post.`;
 
     // Save All to Hub
     saveAllToHub() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         
         this.state.results.forEach(item => {
             contents.push({
@@ -579,7 +579,7 @@ Make it engaging and ready to post.`;
             });
         });
 
-        localStorage.setItem('lumakara-contents', JSON.stringify(contents));
+        localStorage.setItem('raycorp-contents', JSON.stringify(contents));
         this.showToast(`Saved ${this.state.results.length} items to Content Hub! 💾`, 'success');
     },
 

@@ -1,4 +1,4 @@
-// ==================== ULTRA ANALYTICS ====================
+﻿// ==================== ULTRA ANALYTICS ====================
 // Advanced Analytics & Insights System
 // Version 4.0 - December 2025
 
@@ -24,7 +24,7 @@ const UltraAnalytics = {
 
     // Load Data
     loadData() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         this.state.data.content = contents;
         this.calculateMetrics();
     },

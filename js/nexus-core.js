@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ═══════════════════════════════════════════════════════════════════════════
  * NEXUS CORE - Ultra AI Content Platform Engine
  * Main application controller with all modules integrated
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initApp() {
-    console.log('🚀 Initializing Lumakara Nexus...');
+    console.log('🚀 Initializing raycorp Nexus...');
     
     // Load saved data
     loadAppData();
@@ -58,8 +58,8 @@ function initApp() {
     // Setup type checkboxes
     setupTypeCheckboxes();
     
-    console.log('✅ Lumakara Nexus Ready!');
-    showToast('Welcome to Lumakara!', 'success');
+    console.log('✅ raycorp Nexus Ready!');
+    showToast('Welcome to raycorp!', 'success');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -67,10 +67,10 @@ function initApp() {
 // ─────────────────────────────────────────────────────────────────────────────
 function loadAppData() {
     try {
-        const savedProjects = localStorage.getItem('lumakara_projects');
-        const savedContent = localStorage.getItem('lumakara_content');
-        const savedSettings = localStorage.getItem('lumakara_settings');
-        const currentProject = localStorage.getItem('lumakara_current_project');
+        const savedProjects = localStorage.getItem('raycorp_projects');
+        const savedContent = localStorage.getItem('raycorp_content');
+        const savedSettings = localStorage.getItem('raycorp_settings');
+        const currentProject = localStorage.getItem('raycorp_current_project');
         
         if (savedProjects) AppState.projects = JSON.parse(savedProjects);
         if (savedContent) AppState.content = JSON.parse(savedContent);
@@ -84,11 +84,11 @@ function loadAppData() {
 
 function saveAppData() {
     try {
-        localStorage.setItem('lumakara_projects', JSON.stringify(AppState.projects));
-        localStorage.setItem('lumakara_content', JSON.stringify(AppState.content));
-        localStorage.setItem('lumakara_settings', JSON.stringify(AppState.settings));
+        localStorage.setItem('raycorp_projects', JSON.stringify(AppState.projects));
+        localStorage.setItem('raycorp_content', JSON.stringify(AppState.content));
+        localStorage.setItem('raycorp_settings', JSON.stringify(AppState.settings));
         if (AppState.currentProject) {
-            localStorage.setItem('lumakara_current_project', AppState.currentProject);
+            localStorage.setItem('raycorp_current_project', AppState.currentProject);
         }
     } catch (e) {
         console.error('Error saving data:', e);
@@ -635,7 +635,7 @@ const ContentHub = {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `lumakara-content-${Date.now()}.json`;
+        a.download = `raycorp-content-${Date.now()}.json`;
         a.click();
         showToast('Content exported!', 'success');
     }

@@ -3386,3 +3386,58 @@ body {
     gap: 12px;
     margin-bottom: 20px;
     anim
+
+/* ──
+───────────────────────────────────────────────────────────────────────────
+   Smart AI Chat Styling
+   ───────────────────────────────────────────────────────────────────────────── */
+.chat-message .message-content strong {
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+.chat-message .message-content em {
+    color: var(--purple);
+    font-style: italic;
+}
+
+.chat-list-item {
+    display: flex;
+    gap: 8px;
+    margin: 6px 0;
+    padding-left: 4px;
+}
+
+.chat-list-item .list-num {
+    color: var(--cyan);
+    font-weight: 600;
+    min-width: 24px;
+}
+
+.chat-list-item .list-bullet {
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.assistant-messages .message strong {
+    color: var(--cyan);
+}
+
+.assistant-messages .message p {
+    margin-bottom: 8px;
+}
+
+.assistant-messages .message p:last-child {
+    margin-bottom: 0;
+}
+
+/* Loading animation for chat */
+.chat-message.loading .message-content p,
+.assistant-messages .message.loading p {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

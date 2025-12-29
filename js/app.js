@@ -1,5 +1,5 @@
-/**
- * Main Application - LumakaraContent
+﻿/**
+ * Main Application - raycorpContent
  * Omnichannel Content Management System
  */
 
@@ -22,7 +22,7 @@ function initApp() {
     loadProjects();
     loadActiveProject();
     setupDragAndDrop();
-    console.log('🚀 LumakaraContent initialized!');
+    console.log('🚀 raycorpContent initialized!');
 }
 
 function setupNavigation() {
@@ -61,7 +61,7 @@ function loadProjects() {
         projects.map(p => `<option value="${p.id}" ${p.id === activeId ? 'selected' : ''}>${p.name}</option>`).join('');
     
     // Show setup button if no projects
-    const setupBtn = document.getElementById('btn-setup-lumakara');
+    const setupBtn = document.getElementById('btn-setup-raycorp');
     if (setupBtn) {
         setupBtn.style.display = projects.length === 0 ? 'block' : 'none';
     }

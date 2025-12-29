@@ -1,4 +1,4 @@
-// ==================== AI GENERATOR ULTRA ====================
+﻿// ==================== AI GENERATOR ULTRA ====================
 // Enhanced AI Generator with Multi-Type Generation, Content Hub Integration
 // Version 2.0
 
@@ -118,7 +118,7 @@ const GeneratorUltra = {
         prompt += `## Topic/Idea:\n${topic}\n\n`;
         
         prompt += `## Brand Context:\n`;
-        prompt += `- Brand: ${kb.brand?.name || 'Lumakara'}\n`;
+        prompt += `- Brand: ${kb.brand?.name || 'raycorp'}\n`;
         prompt += `- Industry: ${kb.brand?.industry || 'Digital Marketing'}\n`;
         prompt += `- Tone: ${tone}\n`;
         prompt += `- Content Pillar: ${pillar}\n\n`;

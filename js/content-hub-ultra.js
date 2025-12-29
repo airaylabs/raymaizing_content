@@ -1,4 +1,4 @@
-// ==================== CONTENT HUB ULTRA V2 ====================
+﻿// ==================== CONTENT HUB ULTRA V2 ====================
 // Enhanced Content Hub with Full CRUD, Drag & Drop Calendar, Multi-Images Support
 // Version 2.1 - Fixed & Enhanced
 
@@ -256,7 +256,7 @@ const ContentHubUltra = {
         prompt += `Title: ${title}\n`;
         prompt += `Type: ${contentType}\n`;
         prompt += `Pillar: ${pillar}\n`;
-        prompt += `Brand: ${kb.brand?.name || 'Lumakara'}\n`;
+        prompt += `Brand: ${kb.brand?.name || 'raycorp'}\n`;
         prompt += `Audience: ${kb.audience?.demographics || 'Entrepreneurs 25-40'}\n\n`;
 
         switch(contentType) {

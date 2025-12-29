@@ -1,4 +1,4 @@
-// ==================== ULTRA AI ASSISTANT ====================
+﻿// ==================== ULTRA AI ASSISTANT ====================
 // Advanced AI Chat Assistant with Multi-Modal Capabilities
 // Version 4.0 - December 2025
 
@@ -375,7 +375,7 @@ User message: ${message}`;
     },
 
     buildContext() {
-        const settings = JSON.parse(localStorage.getItem('lumakara-settings') || '{}');
+        const settings = JSON.parse(localStorage.getItem('raycorp-settings') || '{}');
         return {
             brand: settings.brand?.name,
             industry: settings.brand?.industry,

@@ -1,4 +1,4 @@
-# LumakaraContent — Omnichannel Content Management System
+﻿# raycorpContent — Omnichannel Content Management System
 
 Sistem manajemen konten omnichannel lengkap dengan AI-powered content generation untuk semua platform social media.
 

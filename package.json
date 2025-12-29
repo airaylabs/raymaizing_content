@@ -1,7 +1,7 @@
-{
-  "name": "lumakara-content",
+﻿{
+  "name": "raycorp-content",
   "version": "1.0.0",
-  "description": "LumakaraContent - Strategic Content System for Social Media",
+  "description": "raycorpContent - Strategic Content System for Social Media",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
@@ -12,6 +12,6 @@
     "ai",
     "pollinations"
   ],
-  "author": "Lumakara",
+  "author": "raycorp",
   "license": "MIT"
 }

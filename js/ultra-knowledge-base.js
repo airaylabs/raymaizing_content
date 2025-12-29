@@ -1,4 +1,4 @@
-// ==================== ULTRA KNOWLEDGE BASE ====================
+﻿// ==================== ULTRA KNOWLEDGE BASE ====================
 // Advanced AI-Powered Knowledge Management System
 // Version 4.0 - December 2025
 
@@ -21,7 +21,7 @@ const UltraKnowledgeBase = {
     },
 
     loadData() {
-        const saved = localStorage.getItem('lumakara-knowledge-base');
+        const saved = localStorage.getItem('raycorp-knowledge-base');
         if (saved) {
             const parsed = JSON.parse(saved);
             this.state.documents = parsed.documents || [];
@@ -30,7 +30,7 @@ const UltraKnowledgeBase = {
     },
 
     saveData() {
-        localStorage.setItem('lumakara-knowledge-base', JSON.stringify({
+        localStorage.setItem('raycorp-knowledge-base', JSON.stringify({
             documents: this.state.documents,
             searchIndex: this.state.searchIndex,
             brandInfo: this.getBrandInfo()
@@ -38,7 +38,7 @@ const UltraKnowledgeBase = {
     },
 
     getBrandInfo() {
-        const settings = JSON.parse(localStorage.getItem('lumakara-settings') || '{}');
+        const settings = JSON.parse(localStorage.getItem('raycorp-settings') || '{}');
         return settings.brand || {};
     },
 

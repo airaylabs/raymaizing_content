@@ -1,7 +1,7 @@
-# 🚀 Lumakara Platform - Major Upgrade Summary
+﻿# 🚀 raycorp Platform - Major Upgrade Summary
 
 ## Overview
-Upgrade besar-besaran untuk platform Lumakara dengan fokus pada:
+Upgrade besar-besaran untuk platform raycorp dengan fokus pada:
 1. Magic Studio Ultra (110 workflows)
 2. Content Hub Ultra (Full CRUD + Drag & Drop)
 3. AI Generator Ultra (Multi-type generation)

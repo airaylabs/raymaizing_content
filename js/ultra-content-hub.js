@@ -1,4 +1,4 @@
-// ==================== ULTRA CONTENT HUB ====================
+﻿// ==================== ULTRA CONTENT HUB ====================
 // Enhanced Content Management System
 // Version 5.0 - December 2025
 
@@ -25,13 +25,13 @@ const UltraContentHub = {
 
     // Load Contents
     loadContents() {
-        this.state.contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        this.state.contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         this.applyFilters();
     },
 
     // Save Contents
     saveContents() {
-        localStorage.setItem('lumakara-contents', JSON.stringify(this.state.contents));
+        localStorage.setItem('raycorp-contents', JSON.stringify(this.state.contents));
         this.updateStats();
     },
 

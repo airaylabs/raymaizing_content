@@ -1,4 +1,4 @@
-// ==================== ULTRA DASHBOARD ====================
+﻿// ==================== ULTRA DASHBOARD ====================
 // Advanced Analytics & Intelligence Dashboard
 // Version 4.0 - December 2025
 
@@ -244,7 +244,7 @@ const UltraDashboard = {
 
     // Get Stats from storage
     getStats() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         return {
             totalContent: contents.length,
             contentGrowth: Math.floor(Math.random() * 20) + 5,
@@ -292,7 +292,7 @@ const UltraDashboard = {
 
     // Render Recent Content
     renderRecentContent() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         const recent = contents.slice(-5).reverse();
 
         if (recent.length === 0) {
@@ -364,7 +364,7 @@ const UltraDashboard = {
 
     // Render Upcoming Schedule
     renderUpcomingSchedule() {
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         const scheduled = contents.filter(c => c.status === 'scheduled').slice(0, 4);
 
         if (scheduled.length === 0) {
@@ -797,7 +797,7 @@ const UltraDashboard = {
     // Export Report
     async exportReport() {
         const stats = this.getStats();
-        const contents = JSON.parse(localStorage.getItem('lumakara-contents') || '[]');
+        const contents = JSON.parse(localStorage.getItem('raycorp-contents') || '[]');
         
         const report = {
             generatedAt: new Date().toISOString(),
@@ -819,7 +819,7 @@ const UltraDashboard = {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `lumakara-report-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `raycorp-report-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
 

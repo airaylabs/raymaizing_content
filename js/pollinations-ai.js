@@ -1,6 +1,6 @@
-/**
+﻿/**
  * ═══════════════════════════════════════════════════════════════════════════
- * POLLINATIONS AI - Free AI Integration for Lumaverse
+ * POLLINATIONS AI - Free AI Integration for raymAIzing
  * Text Generation, Image Generation, and more
  * ═══════════════════════════════════════════════════════════════════════════
  */
@@ -278,7 +278,7 @@ Write in Indonesian language.`
 
     // AI Chat - Smart Assistant
     async chat(message, conversationHistory = []) {
-        const systemPrompt = `Kamu adalah Lumaverse AI, asisten cerdas untuk content creator. Kamu bisa:
+        const systemPrompt = `Kamu adalah raymAIzing AI, asisten cerdas untuk content creator. Kamu bisa:
 - Membuat konten (artikel, caption, script, thread)
 - Memberikan ide dan strategi marketing
 - Merekomendasikan workflow dari 133 tools yang tersedia
@@ -338,7 +338,7 @@ Jawab dengan bahasa yang sama dengan user. Berikan jawaban yang helpful dan acti
         if (msg.includes('ide') || msg.includes('idea')) {
             return '💡 Beberapa ide konten viral:\n1. Behind the scenes bisnis kamu\n2. Tips & tricks di industri kamu\n3. Transformation/before-after\n4. Day in my life\n5. Q&A dengan audience\n\nMau saya bantu develop salah satu ide ini?';
         }
-        return '👋 Hai! Saya Lumaverse AI. Saya bisa membantu kamu dengan:\n\n• Membuat konten (artikel, video script, caption)\n• Ide dan strategi marketing\n• Merekomendasikan workflow yang tepat\n\nCoba tanya sesuatu yang spesifik, misalnya "buatkan caption untuk produk skincare" atau "workflow apa untuk bikin logo?"';
+        return '👋 Hai! Saya raymAIzing AI. Saya bisa membantu kamu dengan:\n\n• Membuat konten (artikel, video script, caption)\n• Ide dan strategi marketing\n• Merekomendasikan workflow yang tepat\n\nCoba tanya sesuatu yang spesifik, misalnya "buatkan caption untuk produk skincare" atau "workflow apa untuk bikin logo?"';
     },
 
     // Suggest topics based on industry
