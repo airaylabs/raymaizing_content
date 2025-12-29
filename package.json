@@ -1,7 +1,7 @@
 ﻿{
-  "name": "raycorp-content",
+  "name": "raymaizing-content",
   "version": "1.0.0",
-  "description": "raycorpContent - Strategic Content System for Social Media",
+  "description": "raymAIzing - AI Content Creation Platform",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
